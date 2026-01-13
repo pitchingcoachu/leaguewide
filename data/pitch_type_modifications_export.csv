@@ -1,3 +1,1 @@
 id,pitcher,date,rel_speed,horz_break,induced_vert_break,original_pitch_type,new_pitch_type,new_pitcher,modified_at,pitch_key,created_at
-1,"Kiemele, Cody",10/10/25,79.84102,11.02556,-1.82492,ChangeUp,Sweeper,NA,173580.0,5e2f8d50-a629-11f0-ae75-978fb1879089,2025
-2,"Cohen, Andrew",2025-10-17,82.48142,-17.10296,7.28142,Slider,Sweeper,"Cohen, Andrew",2025-10-20 03:12:54.302592,55cdba80-abbd-11f0-89e1-4103db18a83a,2025
