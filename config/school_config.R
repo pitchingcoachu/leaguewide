@@ -1,33 +1,14 @@
 # School-specific overrides for the shared app.
 # Copy this file to another repo and keep the same structure when you need to customize colors, logos, APIs, etc.
 school_config <- list(
-  team_code = "OSU",
+  team_code = "LSU",
   # Player filters
   allowed_pitchers = c(
-    "Lee, Aidan",
-    "Limas, Jacob",
-    "Higginbottom, Elijah",
-    "Cunnings, Cam",
-    "Moeller, Luke",
-    "Smith, Jace",
-    "Frey, Chase",
-    "Ahern, Garrett",
-    "McGuire, Tommy",
-    "Robb, Nicholas",
-    "Guerrero, JT",
-    "Gregory, Billy",
-    "Penzkover, Gunnar",
-    "Lewis, JT",
-    "Kiemele, Cody",
-    "Cohen, Andrew",
-    "Lyon, Andrew",
-    "Johns, Tanner",
-    "Toney, Brock",
-    "Sloan, Landon",
-    "Key, Chance",
-    "Orr, Dillon",
-    "Yates, Zach",
-    "New, Cody"
+    "Guidry, Gavin","Schmidt, William","Rizy, Mavrick","Evans, Casan",
+    "Moore, Cooper","Cowan, Zac","Lachenmayer, Danny","Noot, Jaden",
+    "Williams, Cooper","Dathe, Dax","Garcia, Santiago","Ricken, Reagan",
+    "Plog, Ethan","Aase, Jonah","Fontenot, Grant","Primeaux, DJ",
+    "Benge, Connor","Sheerin, Deven","Smart, Ryler","Theophilus, Zion","Paz, Marcos", "Anderson, Kade", "Shahrdar, John"
   ),
   allowed_hitters = c(
     "Wentworth, TP",
@@ -106,30 +87,23 @@ school_config <- list(
     "Moseman, Cody"
   ),
   colors = list(
-    primary             = "#0d1224",   # deep navy used in the dark-mode radial gradient (gcu/app.R:17666-17674)
-    accent              = "#667eea",   # start of the active-tab/btn gradient (gcu/app.R:17464-17515)
-    accent_secondary    = "#764ba2",   # end of that same gradient
-    background          = "#f5f7fa",   # light page background (gcu/app.R:17135)
-    background_secondary= "#e8ecf1"   # the matching secondary background tone
+    primary             = "#461d7c",   # purple from the LSU logo
+    accent              = "#461d7c",   # deep purple gradient start
+    accent_secondary    = "#fdd023",   # LSU gold for highlights
+    background          = "#ffffff",   # clean white page base
+    background_secondary= "#f6f3ff"    # very light purple tint
     
   ),
-  logo = "OSUlogo.png",
+  logo = "LSUlogo.png",
   coaches_emails = c(
-    "Blake.hawksworth@okstate.edu",
-    "Payton.stevens@okstate.edu",
-    "Trey.cobb@okstate.edu",
-    "jared.s.gaynor@gmail.com",
-    "Victor.Romero@okstate.edu",
-    "J.Holliday@okstate.edu",
-    "Mark.Ginther@okstate.edu",
-    "hub.roberts@okstate.edu"
+    "jtutko@lsu.edu"
   ),
   notes_api = list(
-    base_url = "https://script.google.com/macros/s/AKfycby8_RuLj5hKxi129ru32cpEojVimffD2msCSl-I9r9a1LfZe9Ht-yLPbiDHVatm48g/exec",
-    token = "OSUbaseball"
+    base_url = "https://script.google.com/macros/s/AKfycbxkjUyCb1MI8xc7kuLOi3qutPaoKVMzx85hGBzJRTuCOfMWnYwTS-5LWopZDTpwnaa_/exec",
+    token = "pcu_notes_TZ3qj9mY0Nf4WvK1aB7rC6xD2uH8sP5L"
   ),
   extra = list(
-    school_name = "Oklahoma State",
+    school_name = "lsu",
     ftp_folder = "trackman",
     cloudinary_folder = "trackman"
   )
