@@ -18,3 +18,5439 @@
 20251026-BrazellField-Private-4_unverified.csv
 # Bad data from October 26 Private session 5
 20251026-BrazellField-Private-5_unverified.csv
+# Auto-pruned non-team data
+practice_2025_01_07_Pitching_2025-01-07T151751_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_10_Pitching_2025-01-10T144737_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_10_Pitching_2025-01-10T164218_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_24_Pitching_2025-01-24T151930_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_31_Pitching_2025-01-31T161038_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_01_Pitching_2025-02-01T165107_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_08_Pitching_2025-02-08T164818_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_20_Hitting_2025-02-20T200745_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_21_Pitching_2025-02-21T151332_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_25_Hitting_2025-02-25T162436_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_21_Pitching_2025-07-21T143212_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_24_Pitching_2025-07-24T144604_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_25_Pitching_2025-07-25T164012_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_31_Hitting_2025-07-31T010545_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T165900_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T180007_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T181905_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T185240_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_17_Hitting_2025-09-17T172558_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_20_Pitching_2026-01-20T171401_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_27_Pitching_2026-01-27T143938_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_28_Pitching_2026-01-28T235131_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_30_Pitching_2026-01-30T155631_verified.csv
+# Auto-pruned non-team data
+20251018-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+20251026-BrazellField-Private-3_camp.csv
+# Auto-pruned non-team data
+20251026-BrazellField-Private-5_camp.csv
+# Auto-pruned non-team data
+v3_10_03_20251002-BrazellField-Private-2_unverified.csv
+# Auto-pruned non-team data
+v3_10_03_20251003-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_05_20251003-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_10_20251010-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_11_20251011-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_12_20251010-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_13_20251010-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_13_20251011-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_17_20251017-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_21_20251017-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_21_20251018-BrazellField-Private-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_23_20251023-BrazellField-BP-2_unverified.csv
+# Auto-pruned non-team data
+v3_10_24_20251023-BrazellField-BP-1_unverified.csv
+# Auto-pruned non-team data
+v3_10_24_20251023-BrazellField-BP-4_unverified.csv
+# Auto-pruned non-team data
+20250517-OaklandBaseballField-1_unverified.csv
+# Auto-pruned non-team data
+20220305-MercerUniversity-1.csv
+# Auto-pruned non-team data
+20240430-UArizona-1.csv
+# Auto-pruned non-team data
+20220408-RockwellField-1.csv
+# Auto-pruned non-team data
+20240516-DavenportField-1.csv
+# Auto-pruned non-team data
+20240516-LindseyNelsonStadium-1.csv
+# Auto-pruned non-team data
+20250322-PomonaPitzer-2.csv
+# Auto-pruned non-team data
+20250328-OdessaCollege-1.csv
+# Auto-pruned non-team data
+20250328-OdessaCollege-2.csv
+# Auto-pruned non-team data
+20230404-Baylor-1.csv
+# Auto-pruned non-team data
+20250226-UofAkron-1.csv
+# Auto-pruned non-team data
+20250305-UofAkron-1.csv
+# Auto-pruned non-team data
+20250307-UofAkron-1.csv
+# Auto-pruned non-team data
+20250308-UofAkron-1.csv
+# Auto-pruned non-team data
+20250309-UofAkron-1.csv
+# Auto-pruned non-team data
+20250311-UofAkron-1.csv
+# Auto-pruned non-team data
+20250314-UofAkron-1.csv
+# Auto-pruned non-team data
+20250315-UofAkron-1.csv
+# Auto-pruned non-team data
+20250316-UofAkron-1.csv
+# Auto-pruned non-team data
+20250328-UofAkron-1.csv
+# Auto-pruned non-team data
+20250329-UofAkron-1.csv
+# Auto-pruned non-team data
+20250329-UofAkron-2.csv
+# Auto-pruned non-team data
+20250411-UofAkron-1.csv
+# Auto-pruned non-team data
+20250412-UofAkron-2.csv
+# Auto-pruned non-team data
+20250413-UofAkron-1.csv
+# Auto-pruned non-team data
+20250421-UofAkron-1.csv
+# Auto-pruned non-team data
+20250502-UofAkron-1.csv
+# Auto-pruned non-team data
+20250504-UofAkron-1.csv
+# Auto-pruned non-team data
+20250504-UofAkron-2.csv
+# Auto-pruned non-team data
+20250515-UofAkron-1.csv
+# Auto-pruned non-team data
+20220304-Hammons-1.csv
+# Auto-pruned non-team data
+20220308-OKState-1.csv
+# Auto-pruned non-team data
+20220313-Hammons-1.csv
+# Auto-pruned non-team data
+20220319-Hammons-1.csv
+# Auto-pruned non-team data
+20220326-Hammons-1.csv
+# Auto-pruned non-team data
+20220327-IllinoisStateUniversity-1.csv
+# Auto-pruned non-team data
+20220401-FordhamUniversity-1.csv
+# Auto-pruned non-team data
+20220402-SamfordUniversity-1.csv
+# Auto-pruned non-team data
+20220408-DallasBaptist-1.csv
+# Auto-pruned non-team data
+20220410-DallasBaptist-1.csv
+# Auto-pruned non-team data
+20220412-Hammons-1.csv
+# Auto-pruned non-team data
+20220419-TaylorStadium-1.csv
+# Auto-pruned non-team data
+20220427-Hammons-1.csv
+# Auto-pruned non-team data
+20220506-Hammons-1.csv
+# Auto-pruned non-team data
+20220508-Hammons-1.csv
+# Auto-pruned non-team data
+20220513-Hammons-1.csv
+# Auto-pruned non-team data
+20220515-Hammons-1.csv
+# Auto-pruned non-team data
+20220520-DozerPark-1.csv
+# Auto-pruned non-team data
+20220524-Hammons-1.csv
+# Auto-pruned non-team data
+20220528-Hammons-2.csv
+# Auto-pruned non-team data
+20230222-USouthAlabama-1.csv
+# Auto-pruned non-team data
+20230314-USouthAlabama-1.csv
+# Auto-pruned non-team data
+20230318-GeorgiaSouthern-1.csv
+# Auto-pruned non-team data
+20230421-USouthAlabama-1.csv
+# Auto-pruned non-team data
+20230514-USouthAlabama-1.csv
+# Auto-pruned non-team data
+20230520-KellField-1.csv
+# Auto-pruned non-team data
+20240424-SiebertField-1.csv
+# Auto-pruned non-team data
+20240601-DoakField-1.csv
+# Auto-pruned non-team data
+20230307-USouthAlabama-1.csv
+# Auto-pruned non-team data
+20230425-USouthAlabama-1.csv
+# Auto-pruned non-team data
+20240302-USIField-1.csv
+# Auto-pruned non-team data
+20220405-UofPennsylvania-2.csv
+# Auto-pruned non-team data
+20220415-Hammons-2.csv
+# Auto-pruned non-team data
+20230303-DonWeirField-2.csv
+# Auto-pruned non-team data
+20230304-Liberty-1.csv
+# Auto-pruned non-team data
+20230304-Liberty-2.csv
+# Auto-pruned non-team data
+20230324-PKPark-1.csv
+# Auto-pruned non-team data
+20230325-PKPark-1.csv
+# Auto-pruned non-team data
+20230331-BinghamtonUniversity-1.csv
+# Auto-pruned non-team data
+20240216-JimReevesField-2.csv
+# Auto-pruned non-team data
+20240223-TuckerFieldatBarcroftPark-1.csv
+# Auto-pruned non-team data
+20240224-TuckerFieldatBarcroftPark-2.csv
+# Auto-pruned non-team data
+20240225-TuckerFieldatBarcroftPark-1.csv
+# Auto-pruned non-team data
+20240309-TedABroerStadium-1.csv
+# Auto-pruned non-team data
+20240315-JCLoveFieldatPatPattersonPark-1.csv
+# Auto-pruned non-team data
+20240316-JCLoveFieldatPatPattersonPark-1.csv
+# Auto-pruned non-team data
+20240317-DonWeirField-1.csv
+# Auto-pruned non-team data
+20240516-AlumniField-1.csv
+# Auto-pruned non-team data
+20240517-AlumniField-3.csv
+# Auto-pruned non-team data
+20240531-DoakField-2.csv
+# Auto-pruned non-team data
+20250408-HardtField-3.csv
+# Auto-pruned non-team data
+20250512-WinterholterField-1.csv
+# Auto-pruned non-team data
+20250513-WinterholterField-1.csv
+# Auto-pruned non-team data
+20230221-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230304-HighPointUniversity-2.csv
+# Auto-pruned non-team data
+20230307-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230315-UNC-1.csv
+# Auto-pruned non-team data
+20230318-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230321-DavenportField-1.csv
+# Auto-pruned non-team data
+20230326-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230328-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230401-BuddyBoldingStadium-3.csv
+# Auto-pruned non-team data
+20230404-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230411-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230415-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230423-JimPerry-1.csv
+# Auto-pruned non-team data
+20230425-UNCGreensboro-1.csv
+# Auto-pruned non-team data
+20230505-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230518-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230520-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20250312-SolGittlemanPark-1.csv
+# Auto-pruned non-team data
+20250515-RonaldGallagherStad-1.csv
+# Auto-pruned non-team data
+20250515-UNCGreensboro-1.csv
+# Auto-pruned non-team data
+20250516-UTArlington-1.csv
+# Auto-pruned non-team data
+20250518-GeorgeHWBush48Field-2.csv
+# Auto-pruned non-team data
+20220506-RayFisher-1.csv
+# Auto-pruned non-team data
+20220220-TulaneUniversity-1.csv
+# Auto-pruned non-team data
+20220308-DurhamAthleticPark-2.csv
+# Auto-pruned non-team data
+20220309-DurhamAthleticPark-1.csv
+# Auto-pruned non-team data
+20250307-RockwellField-2.csv
+# Auto-pruned non-team data
+20250308-RockwellField-1.csv
+# Auto-pruned non-team data
+20250308-RockwellField-2.csv
+# Auto-pruned non-team data
+20250311-USouthAlabama-1.csv
+# Auto-pruned non-team data
+20250422-DickHowserStadium-1.csv
+# Auto-pruned non-team data
+20250516-AllenField-1.csv
+# Auto-pruned non-team data
+20220301-UNCCharlotte-1.csv
+# Auto-pruned non-team data
+20220408-CarterMemorial-1.csv
+# Auto-pruned non-team data
+20220510-UNC-1.csv
+# Auto-pruned non-team data
+20250426-MillersvilleU-1.csv
+# Auto-pruned non-team data
+20250426-MillersvilleU-2.csv
+# Auto-pruned non-team data
+20250507-MillersvilleU-3.csv
+# Auto-pruned non-team data
+20250301-UCCUBallpark-1.csv
+# Auto-pruned non-team data
+20250214-TedABroerStadium-2.csv
+# Auto-pruned non-team data
+20250307-UofPennsylvania-1.csv
+# Auto-pruned non-team data
+20250312-TalAndersonField-1.csv
+# Auto-pruned non-team data
+20250522-Arlington-1.csv
+# Auto-pruned non-team data
+20250524-GoodwinField-2.csv
+# Auto-pruned non-team data
+20250524-prascopark-1.csv
+# Auto-pruned non-team data
+20250618-TDAmeritrade-1.csv
+# Auto-pruned non-team data
+20250323-DonWeirField-1.csv
+# Auto-pruned non-team data
+20250325-LimestoneUniversity-1.csv
+# Auto-pruned non-team data
+20220409-CarterMemorial-1.csv
+# Auto-pruned non-team data
+20230423-TreveccaNazareneBC-2.csv
+# Auto-pruned non-team data
+20250213-PaulDemieMainieriField-1.csv
+# Auto-pruned non-team data
+20250311-LouisianaLafayette-1.csv
+# Auto-pruned non-team data
+20250315-AlumniField-2.csv
+# Auto-pruned non-team data
+20250316-TalAndersonField-1.csv
+# Auto-pruned non-team data
+20250321-Tulane-1.csv
+# Auto-pruned non-team data
+20250322-MaestriField-1.csv
+# Auto-pruned non-team data
+20250401-AlabamaState-1.csv
+# Auto-pruned non-team data
+20250404-OKState-1.csv
+# Auto-pruned non-team data
+20250405-SouthwesternOregonStadium-3.csv
+# Auto-pruned non-team data
+20250412-MurrayStadium-2.csv
+# Auto-pruned non-team data
+20250419-ClarkeField-2.csv
+# Auto-pruned non-team data
+20250506-AllenField-1.csv
+# Auto-pruned non-team data
+20250214-LPFrans-1.csv
+# Auto-pruned non-team data
+20250311-GrayMinorStadium-1.csv
+# Auto-pruned non-team data
+20250314-SantaAnaStarField-1.csv
+# Auto-pruned non-team data
+20250329-BenedettiDiamond-1.csv
+# Auto-pruned non-team data
+20250426-FalconField-1.csv
+# Auto-pruned non-team data
+20250426-TDAmeritrade-1.csv
+# Auto-pruned non-team data
+20250504-OaklandBaseballField-1.csv
+# Auto-pruned non-team data
+20250510-McKieFieldStad-1.csv
+# Auto-pruned non-team data
+20250524-BallparkAtPatriotPoint-1.csv
+# Auto-pruned non-team data
+20250314-TalAndersonField-1.csv
+# Auto-pruned non-team data
+20250426-IllinoisWesleyan-2.csv
+# Auto-pruned non-team data
+20250516-UofSanDiego-1.csv
+# Auto-pruned non-team data
+20250214-OdessaCollege-1.csv
+# Auto-pruned non-team data
+20250215-OdessaCollege-1.csv
+# Auto-pruned non-team data
+20250404-TedABroerStadium-1.csv
+# Auto-pruned non-team data
+20250515-JohnWSmithsonField-1.csv
+# Auto-pruned non-team data
+20250309-UNCGreensboro-1.csv
+# Auto-pruned non-team data
+20250312-JimReevesField-1.csv
+# Auto-pruned non-team data
+20250513-BallparkAtPatriotPoint-1.csv
+# Auto-pruned non-team data
+20250301-UCCUBallpark-4.csv
+# Auto-pruned non-team data
+20250307-HolmanStadium-1.csv
+# Auto-pruned non-team data
+20250225-JohnEulianoPark-1.csv
+# Auto-pruned non-team data
+20250301-RonaldGallagherStad-1.csv
+# Auto-pruned non-team data
+20250315-SusanKSmithBaseballComplex-1.csv
+# Auto-pruned non-team data
+20250328-IllinoisWesleyan-1.csv
+# Auto-pruned non-team data
+20250511-HighPointUniversity-1.csv
+# Auto-pruned non-team data
+20230425-DuaneBanks-1.csv
+# Auto-pruned non-team data
+20250201-ClevelandCommunityCollegeBaseballField-2.csv
+# Auto-pruned non-team data
+20250215-RockwellField-1.csv
+# Auto-pruned non-team data
+20250216-UofSouthCarolina-1.csv
+# Auto-pruned non-team data
+20250222-TonyGwynnStadium-1.csv
+# Auto-pruned non-team data
+20250301-USNavalAcademy-1.csv
+# Auto-pruned non-team data
+20250308-TonyGwynnStadium-1.csv
+# Auto-pruned non-team data
+20250309-ETStrawFamilyStadium-1.csv
+# Auto-pruned non-team data
+20250309-TonyGwynnStadium-1.csv
+# Auto-pruned non-team data
+20250315-TonyGwynnStadium-2.csv
+# Auto-pruned non-team data
+20250325-DurhamField-1.csv
+# Auto-pruned non-team data
+20250326-OaklandBaseballField-1.csv
+# Auto-pruned non-team data
+20250401-IllinoisWesleyan-1.csv
+# Auto-pruned non-team data
+20250404-DurhamField-1.csv
+# Auto-pruned non-team data
+20250207-SanJacinto-2.csv
+# Auto-pruned non-team data
+20250329-KellField-1.csv
+# Auto-pruned non-team data
+20260120-CypressCollege-1_unverified.csv
+# Auto-pruned non-team data
+20260123-BowiesBallpark-1_unverified.csv
+# Auto-pruned non-team data
+20260123-PaulDemieMainieriField-1_unverified.csv
+# Auto-pruned non-team data
+20260123-PaulDemieMainieriField-2_unverified.csv
+# Auto-pruned non-team data
+20250126-SteinbrennerField-1.csv
+# Auto-pruned non-team data
+20250202-LoyolaMarymount-1.csv
+# Auto-pruned non-team data
+20250409-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250409-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250409-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250409-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250409-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250409-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250409-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250409-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250410-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250410-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250410-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250410-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250410-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250410-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250410-USABBCary3-5.csv
+# Auto-pruned non-team data
+20250410-USABBCary3-6.csv
+# Auto-pruned non-team data
+20250411-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250411-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250411-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250411-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250411-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250411-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250411-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250412-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250412-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250412-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250412-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250412-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250412-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250412-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250412-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250412-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250526-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250526-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250527-CCUP-1.csv
+# Auto-pruned non-team data
+20250527-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250527-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250527-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250527-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250528-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250528-CCUP-1.csv
+# Auto-pruned non-team data
+20250528-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250528-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250528-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250528-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250528-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250529-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250529-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250529-CCUP-1.csv
+# Auto-pruned non-team data
+20250529-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250529-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250529-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250529-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250529-HookerField-1.csv
+# Auto-pruned non-team data
+20250529-McNairField-1.csv
+# Auto-pruned non-team data
+20250529-Peninsula-1.csv
+# Auto-pruned non-team data
+20250529-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250529-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250529-TingStadium-2.csv
+# Auto-pruned non-team data
+20250530-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250530-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250530-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250530-CivicField-2.csv
+# Auto-pruned non-team data
+20250530-DavidStory-1.csv
+# Auto-pruned non-team data
+20250530-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250530-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250530-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250530-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250530-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250530-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250530-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250531-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250531-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250531-DavidStory-1.csv
+# Auto-pruned non-team data
+20250531-FinchField-2.csv
+# Auto-pruned non-team data
+20250531-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250531-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250531-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250531-HookerField-1.csv
+# Auto-pruned non-team data
+20250531-Macon-3.csv
+# Auto-pruned non-team data
+20250531-McNairField-1.csv
+# Auto-pruned non-team data
+20250531-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250531-Peninsula-1.csv
+# Auto-pruned non-team data
+20250531-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250531-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250531-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250531-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250601-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250601-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250601-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250601-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250601-CCUP-1.csv
+# Auto-pruned non-team data
+20250601-CivicField-1.csv
+# Auto-pruned non-team data
+20250601-DavidStory-1.csv
+# Auto-pruned non-team data
+20250601-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250601-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250601-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250601-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250601-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250601-SHEPHERDSTADIUM-2.csv
+# Auto-pruned non-team data
+20250601-TingStadium-1.csv
+# Auto-pruned non-team data
+20250601-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250602-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250602-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250602-CCUP-1.csv
+# Auto-pruned non-team data
+20250602-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250602-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250602-HookerField-1.csv
+# Auto-pruned non-team data
+20250602-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250602-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250602-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250602-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250603-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250603-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250603-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250603-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250603-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250603-CarolinaBankField-2.csv
+# Auto-pruned non-team data
+20250603-CCUP-1.csv
+# Auto-pruned non-team data
+20250603-CivicField-1.csv
+# Auto-pruned non-team data
+20250603-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250603-DavidStory-1.csv
+# Auto-pruned non-team data
+20250603-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250603-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250603-FraserField-1.csv
+# Auto-pruned non-team data
+20250603-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250603-HookerField-1.csv
+# Auto-pruned non-team data
+20250603-JoeMartinStadium-2.csv
+# Auto-pruned non-team data
+20250603-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250603-Macon-1.csv
+# Auto-pruned non-team data
+20250603-McNairField-1.csv
+# Auto-pruned non-team data
+20250603-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250603-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250603-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250603-RogersPark-1.csv
+# Auto-pruned non-team data
+20250603-SharkTank-1.csv
+# Auto-pruned non-team data
+20250603-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250603-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250604-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250604-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250604-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250604-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250604-CardinesField-1.csv
+# Auto-pruned non-team data
+20250604-CivicField-1.csv
+# Auto-pruned non-team data
+20250604-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250604-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250604-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250604-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250604-Keene-1.csv
+# Auto-pruned non-team data
+20250604-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250604-Macon-1.csv
+# Auto-pruned non-team data
+20250604-McNairField-1.csv
+# Auto-pruned non-team data
+20250604-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250604-ReMaxField-2.csv
+# Auto-pruned non-team data
+20250604-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250604-RogersPark-1.csv
+# Auto-pruned non-team data
+20250604-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250604-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250604-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250604-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250604-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250605-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250605-CivicField-1.csv
+# Auto-pruned non-team data
+20250605-DavidStory-1.csv
+# Auto-pruned non-team data
+20250605-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250605-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250605-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250605-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250605-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250605-Keene-1.csv
+# Auto-pruned non-team data
+20250605-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250605-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250605-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250605-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250605-Peninsula-1.csv
+# Auto-pruned non-team data
+20250605-ReMaxField-3.csv
+# Auto-pruned non-team data
+20250605-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250605-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250605-SharkTank-1.csv
+# Auto-pruned non-team data
+20250605-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250605-TingStadium-1.csv
+# Auto-pruned non-team data
+20250605-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250605-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250605-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250606-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250606-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250606-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250606-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250606-CardinesField-1.csv
+# Auto-pruned non-team data
+20250606-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250606-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250606-CCUP-1.csv
+# Auto-pruned non-team data
+20250606-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250606-FraserField-1.csv
+# Auto-pruned non-team data
+20250606-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250606-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250606-HookerField-1.csv
+# Auto-pruned non-team data
+20250606-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250606-Macon-1.csv
+# Auto-pruned non-team data
+20250606-McNairField-2.csv
+# Auto-pruned non-team data
+20250606-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250606-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250606-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250606-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250606-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250606-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250606-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250606-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250606-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250606-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250606-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250606-TingStadium-1.csv
+# Auto-pruned non-team data
+20250606-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250606-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250606-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250606-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250607-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250607-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250607-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250607-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250607-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250607-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250607-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250607-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250607-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250607-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250607-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250607-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250607-Macon-1.csv
+# Auto-pruned non-team data
+20250607-OldMountain-1.csv
+# Auto-pruned non-team data
+20250607-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250607-Peninsula-1.csv
+# Auto-pruned non-team data
+20250607-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250607-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250607-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250607-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250607-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250607-TingStadium-1.csv
+# Auto-pruned non-team data
+20250607-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250607-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250607-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250607-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250607-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250607-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250608-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250608-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250608-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250608-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250608-CCUP-1.csv
+# Auto-pruned non-team data
+20250608-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250608-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250608-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250608-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250608-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250608-JimBettieSmith-3.csv
+# Auto-pruned non-team data
+20250608-Keene-1.csv
+# Auto-pruned non-team data
+20250608-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250608-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250608-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250608-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250608-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250608-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250608-Peninsula-1.csv
+# Auto-pruned non-team data
+20250608-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250608-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250608-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250608-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250608-TingStadium-1.csv
+# Auto-pruned non-team data
+20250608-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250608-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250608-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250608-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250609-CardinesField-1.csv
+# Auto-pruned non-team data
+20250609-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250609-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250609-FinchField-2.csv
+# Auto-pruned non-team data
+20250609-FraserField-1.csv
+# Auto-pruned non-team data
+20250609-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250609-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250609-MaxfieldSC-3.csv
+# Auto-pruned non-team data
+20250609-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250609-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250609-RiverfrontStadium-2.csv
+# Auto-pruned non-team data
+20250609-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250610-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250610-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250610-CivicField-1.csv
+# Auto-pruned non-team data
+20250610-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250610-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250610-DavidStory-1.csv
+# Auto-pruned non-team data
+20250610-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250610-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250610-FlemingStadium-5.csv
+# Auto-pruned non-team data
+20250610-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250610-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250610-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250610-Keene-1.csv
+# Auto-pruned non-team data
+20250610-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250610-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250610-Peninsula-1.csv
+# Auto-pruned non-team data
+20250610-RidgefieldComplex-2.csv
+# Auto-pruned non-team data
+20250610-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250610-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250610-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250610-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250610-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250610-USABBCary0-4.csv
+# Auto-pruned non-team data
+20250610-USABBCary0-5.csv
+# Auto-pruned non-team data
+20250610-USABBCary0-6.csv
+# Auto-pruned non-team data
+20250610-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250610-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250610-USABBCary1-4.csv
+# Auto-pruned non-team data
+20250610-USABBCary1-6.csv
+# Auto-pruned non-team data
+20250610-USABBCary2-5.csv
+# Auto-pruned non-team data
+20250610-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250610-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250610-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250610-USABBCary3-4.csv
+# Auto-pruned non-team data
+20250610-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250611-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250611-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250611-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250611-CardinesField-1.csv
+# Auto-pruned non-team data
+20250611-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250611-CivicField-1.csv
+# Auto-pruned non-team data
+20250611-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250611-DavidStory-1.csv
+# Auto-pruned non-team data
+20250611-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250611-FinchField-2.csv
+# Auto-pruned non-team data
+20250611-FraserField-1.csv
+# Auto-pruned non-team data
+20250611-GossStadium-1.csv
+# Auto-pruned non-team data
+20250611-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250611-Keene-1.csv
+# Auto-pruned non-team data
+20250611-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250611-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250611-McNairField-2.csv
+# Auto-pruned non-team data
+20250611-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250611-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250611-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250611-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250611-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250611-SparkyAnderson-2.csv
+# Auto-pruned non-team data
+20250611-TingStadium-2.csv
+# Auto-pruned non-team data
+20250611-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250611-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250611-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250611-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250611-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250611-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250611-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250611-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250611-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250611-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250611-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250611-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250611-USABBCary3-4.csv
+# Auto-pruned non-team data
+20250611-USABBCary3-5.csv
+# Auto-pruned non-team data
+20250611-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250612-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250612-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250612-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250612-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250612-CivicField-1.csv
+# Auto-pruned non-team data
+20250612-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250612-DavidStory-1.csv
+# Auto-pruned non-team data
+20250612-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250612-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250612-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250612-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250612-GossStadium-1.csv
+# Auto-pruned non-team data
+20250612-GuySmithField-2.csv
+# Auto-pruned non-team data
+20250612-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250612-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250612-Macon-1.csv
+# Auto-pruned non-team data
+20250612-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250612-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250612-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250612-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250612-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250612-RogersPark-1.csv
+# Auto-pruned non-team data
+20250612-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250612-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250612-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250612-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250612-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250612-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250612-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250612-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250612-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250612-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250612-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250612-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250612-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250612-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250612-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250612-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250613-ArnoldField-2.csv
+# Auto-pruned non-team data
+20250613-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250613-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250613-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250613-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250613-CardinesField-1.csv
+# Auto-pruned non-team data
+20250613-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250613-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250613-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250613-FinchField-1.csv
+# Auto-pruned non-team data
+20250613-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250613-GossStadium-1.csv
+# Auto-pruned non-team data
+20250613-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250613-HerrBakerField-2.csv
+# Auto-pruned non-team data
+20250613-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250613-Keene-1.csv
+# Auto-pruned non-team data
+20250613-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250613-McNairField-1.csv
+# Auto-pruned non-team data
+20250613-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250613-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250613-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250613-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250613-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250613-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250613-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250613-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250613-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250613-SharkTank-1.csv
+# Auto-pruned non-team data
+20250613-TingStadium-1.csv
+# Auto-pruned non-team data
+20250613-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250613-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250613-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250613-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250613-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250613-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250613-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250613-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250613-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250613-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250613-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250614-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250614-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250614-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250614-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250614-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250614-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250614-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250614-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250614-CCUP-1.csv
+# Auto-pruned non-team data
+20250614-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250614-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250614-FinchField-2.csv
+# Auto-pruned non-team data
+20250614-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250614-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250614-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250614-FraserField-1.csv
+# Auto-pruned non-team data
+20250614-GossStadium-1.csv
+# Auto-pruned non-team data
+20250614-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250614-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250614-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250614-HookerField-1.csv
+# Auto-pruned non-team data
+20250614-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250614-Macon-1.csv
+# Auto-pruned non-team data
+20250614-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250614-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250614-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250614-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250614-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250614-Peninsula-1.csv
+# Auto-pruned non-team data
+20250614-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250614-RogersPark-1.csv
+# Auto-pruned non-team data
+20250614-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250614-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250614-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250614-SharkTank-1.csv
+# Auto-pruned non-team data
+20250614-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250614-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250614-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250614-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250615-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250615-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250615-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250615-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250615-CarsonPark-3.csv
+# Auto-pruned non-team data
+20250615-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250615-CCBLFalmouth-2.csv
+# Auto-pruned non-team data
+20250615-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250615-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250615-CCUP-1.csv
+# Auto-pruned non-team data
+20250615-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250615-CollegeofSanMateo-2.csv
+# Auto-pruned non-team data
+20250615-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250615-ElksStadium-2.csv
+# Auto-pruned non-team data
+20250615-FinchField-1.csv
+# Auto-pruned non-team data
+20250615-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250615-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250615-GossStadium-1.csv
+# Auto-pruned non-team data
+20250615-GossStadium-2.csv
+# Auto-pruned non-team data
+20250615-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250615-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250615-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250615-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250615-HookerField-1.csv
+# Auto-pruned non-team data
+20250615-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250615-McNairField-1.csv
+# Auto-pruned non-team data
+20250615-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250615-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250615-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250615-OldMountain-1.csv
+# Auto-pruned non-team data
+20250615-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250615-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250615-RidgefieldComplex-2.csv
+# Auto-pruned non-team data
+20250615-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250615-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250615-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250615-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250615-TingStadium-1.csv
+# Auto-pruned non-team data
+20250615-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250616-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250616-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250616-CardinesField-1.csv
+# Auto-pruned non-team data
+20250616-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250616-CCBLHyannis-2.csv
+# Auto-pruned non-team data
+20250616-CCBLWareham-2.csv
+# Auto-pruned non-team data
+20250616-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250616-CCUP-1.csv
+# Auto-pruned non-team data
+20250616-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250616-GossStadium-1.csv
+# Auto-pruned non-team data
+20250616-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250616-Macon-1.csv
+# Auto-pruned non-team data
+20250616-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250616-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250616-RiverfrontStadium-2.csv
+# Auto-pruned non-team data
+20250616-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250616-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250616-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250616-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250616-USABBCary1-4.csv
+# Auto-pruned non-team data
+20250616-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250616-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250616-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250616-USABBCary3-4.csv
+# Auto-pruned non-team data
+20250616-USABBCary3-6.csv
+# Auto-pruned non-team data
+20250617-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250617-BISMARKMUNI-2.csv
+# Auto-pruned non-team data
+20250617-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250617-CCBLBrewster-2.csv
+# Auto-pruned non-team data
+20250617-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250617-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250617-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250617-CCUP-1.csv
+# Auto-pruned non-team data
+20250617-CivicField-1.csv
+# Auto-pruned non-team data
+20250617-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250617-DavidStory-1.csv
+# Auto-pruned non-team data
+20250617-FinchField-1.csv
+# Auto-pruned non-team data
+20250617-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250617-FraserField-1.csv
+# Auto-pruned non-team data
+20250617-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250617-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250617-Macon-1.csv
+# Auto-pruned non-team data
+20250617-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250617-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250617-OldMountain-1.csv
+# Auto-pruned non-team data
+20250617-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250617-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250617-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250617-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250617-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250617-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250617-SinsheimerPark-3.csv
+# Auto-pruned non-team data
+20250617-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250617-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250617-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250617-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250617-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250617-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250617-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250617-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250617-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250617-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250617-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250617-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250618-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250618-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250618-BillTauntonStadium-3.csv
+# Auto-pruned non-team data
+20250618-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250618-BorleskeStadium-2.csv
+# Auto-pruned non-team data
+20250618-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250618-CardinesField-1.csv
+# Auto-pruned non-team data
+20250618-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250618-CivicField-1.csv
+# Auto-pruned non-team data
+20250618-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250618-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250618-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250618-HerrBakerField-2.csv
+# Auto-pruned non-team data
+20250618-Keene-1.csv
+# Auto-pruned non-team data
+20250618-Keene-2.csv
+# Auto-pruned non-team data
+20250618-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250618-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250618-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250618-Peninsula-1.csv
+# Auto-pruned non-team data
+20250618-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250618-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250618-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250618-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250618-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250618-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250618-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250618-VinceGennaStadium-2.csv
+# Auto-pruned non-team data
+20250618-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250619-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250619-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250619-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250619-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250619-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250619-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250619-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250619-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250619-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250619-CivicField-1.csv
+# Auto-pruned non-team data
+20250619-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250619-DavidStory-1.csv
+# Auto-pruned non-team data
+20250619-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250619-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250619-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250619-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250619-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250619-Macon-1.csv
+# Auto-pruned non-team data
+20250619-MaxfieldSC-2.csv
+# Auto-pruned non-team data
+20250619-MaxfieldSC-3.csv
+# Auto-pruned non-team data
+20250619-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250619-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250619-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250619-OldMountain-1.csv
+# Auto-pruned non-team data
+20250619-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250619-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250619-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250619-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250619-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250619-SharkTank-1.csv
+# Auto-pruned non-team data
+20250619-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250619-SimmonsField-2.csv
+# Auto-pruned non-team data
+20250619-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250619-TingStadium-1.csv
+# Auto-pruned non-team data
+20250619-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250619-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250619-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250619-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250619-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250619-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250619-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250620-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250620-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250620-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250620-CardinesField-1.csv
+# Auto-pruned non-team data
+20250620-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250620-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250620-CCBLFalmouth-2.csv
+# Auto-pruned non-team data
+20250620-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250620-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250620-FinchField-1.csv
+# Auto-pruned non-team data
+20250620-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250620-GossStadium-1.csv
+# Auto-pruned non-team data
+20250620-HamlinSC-3.csv
+# Auto-pruned non-team data
+20250620-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250620-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250620-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250620-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250620-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250620-McNairField-1.csv
+# Auto-pruned non-team data
+20250620-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250620-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250620-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250620-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250620-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250620-OldMountain-1.csv
+# Auto-pruned non-team data
+20250620-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250620-Peninsula-1.csv
+# Auto-pruned non-team data
+20250620-ReMaxField-2.csv
+# Auto-pruned non-team data
+20250620-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250620-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250620-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250620-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250620-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250620-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250620-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250620-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250620-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250620-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250620-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250620-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250620-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250621-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250621-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250621-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250621-CCBLChatham-2.csv
+# Auto-pruned non-team data
+20250621-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250621-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250621-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250621-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250621-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250621-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250621-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250621-HookerField-1.csv
+# Auto-pruned non-team data
+20250621-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250621-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250621-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250621-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250621-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250621-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250621-NorbrockStadium-2.csv
+# Auto-pruned non-team data
+20250621-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250621-OldMountain-1.csv
+# Auto-pruned non-team data
+20250621-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250621-Peninsula-1.csv
+# Auto-pruned non-team data
+20250621-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250621-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250621-RogersPark-1.csv
+# Auto-pruned non-team data
+20250621-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250621-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250621-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250621-TingStadium-1.csv
+# Auto-pruned non-team data
+20250621-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250621-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250622-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250622-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250622-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250622-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250622-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250622-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250622-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250622-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250622-FinchField-1.csv
+# Auto-pruned non-team data
+20250622-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250622-GossStadium-1.csv
+# Auto-pruned non-team data
+20250622-GossStadium-2.csv
+# Auto-pruned non-team data
+20250622-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250622-HamlinSC-2.csv
+# Auto-pruned non-team data
+20250622-HamlinSC-3.csv
+# Auto-pruned non-team data
+20250622-HOMERSTRYKER-2.csv
+# Auto-pruned non-team data
+20250622-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250622-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250622-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250622-MontpelierRecreation-2.csv
+# Auto-pruned non-team data
+20250622-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250622-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250622-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250622-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250622-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250622-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250622-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250622-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250622-SharkTank-1.csv
+# Auto-pruned non-team data
+20250622-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250622-TingStadium-1.csv
+# Auto-pruned non-team data
+20250622-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250622-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250622-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250623-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250623-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250623-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250623-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250623-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250623-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250623-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250623-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250623-HookerField-1.csv
+# Auto-pruned non-team data
+20250623-Keene-1.csv
+# Auto-pruned non-team data
+20250623-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250623-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250623-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250623-SharkTank-1.csv
+# Auto-pruned non-team data
+20250624-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250624-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250624-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250624-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250624-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250624-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250624-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250624-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250624-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250624-CCUP-1.csv
+# Auto-pruned non-team data
+20250624-CCUP-2.csv
+# Auto-pruned non-team data
+20250624-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250624-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250624-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250624-DavidStory-1.csv
+# Auto-pruned non-team data
+20250624-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250624-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250624-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250624-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250624-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250624-Keene-1.csv
+# Auto-pruned non-team data
+20250624-Macon-1.csv
+# Auto-pruned non-team data
+20250624-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250624-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250624-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250624-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250624-OldMountain-1.csv
+# Auto-pruned non-team data
+20250624-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250624-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250624-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250624-RiverfrontStadium-2.csv
+# Auto-pruned non-team data
+20250624-RogersPark-1.csv
+# Auto-pruned non-team data
+20250624-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250624-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250624-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250624-SimmonsField-2.csv
+# Auto-pruned non-team data
+20250624-SinsheimerPark-2.csv
+# Auto-pruned non-team data
+20250624-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250624-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250624-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250624-USABBCary0-4.csv
+# Auto-pruned non-team data
+20250624-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250624-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250624-USABBCary1-4.csv
+# Auto-pruned non-team data
+20250624-USABBCary1-5.csv
+# Auto-pruned non-team data
+20250624-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250624-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250624-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250624-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250624-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250624-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250624-USABBCary3-5.csv
+# Auto-pruned non-team data
+20250624-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250625-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250625-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250625-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250625-CardinesField-1.csv
+# Auto-pruned non-team data
+20250625-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250625-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250625-CCBLHyannis-2.csv
+# Auto-pruned non-team data
+20250625-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250625-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250625-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250625-DavidStory-1.csv
+# Auto-pruned non-team data
+20250625-FinchField-1.csv
+# Auto-pruned non-team data
+20250625-FitchHighSchool-2.csv
+# Auto-pruned non-team data
+20250625-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250625-HookerField-1.csv
+# Auto-pruned non-team data
+20250625-JoeMartinStadium-4.csv
+# Auto-pruned non-team data
+20250625-McNairField-1.csv
+# Auto-pruned non-team data
+20250625-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250625-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250625-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250625-Peninsula-1.csv
+# Auto-pruned non-team data
+20250625-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250625-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250625-SharkTank-1.csv
+# Auto-pruned non-team data
+20250625-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250625-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250625-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250625-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250625-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250625-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250625-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250625-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250625-USABBCary1-4.csv
+# Auto-pruned non-team data
+20250625-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250625-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250625-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250625-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250625-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250625-USABBCary3-4.csv
+# Auto-pruned non-team data
+20250625-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250626-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250626-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250626-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250626-CCUP-1.csv
+# Auto-pruned non-team data
+20250626-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250626-DavidStory-1.csv
+# Auto-pruned non-team data
+20250626-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250626-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250626-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250626-HOMERSTRYKER-2.csv
+# Auto-pruned non-team data
+20250626-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250626-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250626-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250626-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250626-Macon-1.csv
+# Auto-pruned non-team data
+20250626-MaxfieldSC-2.csv
+# Auto-pruned non-team data
+20250626-MaxfieldSC-3.csv
+# Auto-pruned non-team data
+20250626-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250626-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250626-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250626-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250626-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250626-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250626-RogersPark-1.csv
+# Auto-pruned non-team data
+20250626-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250626-TingStadium-1.csv
+# Auto-pruned non-team data
+20250626-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250626-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250626-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250626-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250626-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250626-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250626-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250626-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250626-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250626-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250626-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250626-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250627-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250627-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250627-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250627-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250627-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250627-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250627-CardinesField-1.csv
+# Auto-pruned non-team data
+20250627-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250627-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250627-CCBLFalmouth-2.csv
+# Auto-pruned non-team data
+20250627-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250627-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250627-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250627-CivicField-1.csv
+# Auto-pruned non-team data
+20250627-FinchField-1.csv
+# Auto-pruned non-team data
+20250627-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250627-GossStadium-1.csv
+# Auto-pruned non-team data
+20250627-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250627-HookerField-1.csv
+# Auto-pruned non-team data
+20250627-Keene-1.csv
+# Auto-pruned non-team data
+20250627-Keene-2.csv
+# Auto-pruned non-team data
+20250627-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250627-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250627-Macon-1.csv
+# Auto-pruned non-team data
+20250627-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250627-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250627-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250627-Peninsula-1.csv
+# Auto-pruned non-team data
+20250627-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250627-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250627-SharkTank-2.csv
+# Auto-pruned non-team data
+20250627-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250627-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250627-TingStadium-1.csv
+# Auto-pruned non-team data
+20250627-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250627-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250627-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250627-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250627-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250627-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250627-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250627-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250627-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250627-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250627-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250627-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250627-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250628-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250628-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250628-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250628-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250628-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250628-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250628-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250628-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250628-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250628-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250628-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250628-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250628-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250628-CivicField-1.csv
+# Auto-pruned non-team data
+20250628-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250628-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250628-FraserField-1.csv
+# Auto-pruned non-team data
+20250628-GossStadium-1.csv
+# Auto-pruned non-team data
+20250628-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250628-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250628-Keene-1.csv
+# Auto-pruned non-team data
+20250628-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250628-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250628-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250628-McNairField-1.csv
+# Auto-pruned non-team data
+20250628-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250628-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250628-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250628-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250628-RogersPark-1.csv
+# Auto-pruned non-team data
+20250628-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250628-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250628-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250628-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250628-TingStadium-1.csv
+# Auto-pruned non-team data
+20250628-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250628-VinceGennaStadium-2.csv
+# Auto-pruned non-team data
+20250628-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250629-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250629-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250629-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250629-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250629-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250629-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250629-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250629-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250629-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250629-CivicField-1.csv
+# Auto-pruned non-team data
+20250629-FraserField-1.csv
+# Auto-pruned non-team data
+20250629-FraserField-2.csv
+# Auto-pruned non-team data
+20250629-GossStadium-1.csv
+# Auto-pruned non-team data
+20250629-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250629-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250629-HookerField-1.csv
+# Auto-pruned non-team data
+20250629-HookerField-2.csv
+# Auto-pruned non-team data
+20250629-IntimidatorStadium-1.csv
+# Auto-pruned non-team data
+20250629-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250629-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250629-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250629-MontpelierRecreation-2.csv
+# Auto-pruned non-team data
+20250629-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250629-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250629-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250629-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250629-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250629-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250629-TingStadium-1.csv
+# Auto-pruned non-team data
+20250629-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250629-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250629-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250629-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250629-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250629-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250629-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250629-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250629-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250629-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250629-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250629-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250629-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250629-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250629-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250630-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250630-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250630-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250630-CardinesField-1.csv
+# Auto-pruned non-team data
+20250630-CardinesField-2.csv
+# Auto-pruned non-team data
+20250630-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250630-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250630-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250630-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250630-FraserField-1.csv
+# Auto-pruned non-team data
+20250630-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250630-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250630-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250630-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250630-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250630-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250630-OrangeCountyGreatParkStadium-2.csv
+# Auto-pruned non-team data
+20250630-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250630-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250630-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250630-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250630-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250630-USABBCary0-4.csv
+# Auto-pruned non-team data
+20250630-USABBCary0-5.csv
+# Auto-pruned non-team data
+20250630-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250630-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250630-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250630-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250630-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250630-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250630-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250630-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250630-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250701-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250701-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250701-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250701-CCBLChatham-2.csv
+# Auto-pruned non-team data
+20250701-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250701-CCBLFalmouth-2.csv
+# Auto-pruned non-team data
+20250701-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250701-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250701-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250701-FinchField-1.csv
+# Auto-pruned non-team data
+20250701-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250701-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250701-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250701-GossStadium-2.csv
+# Auto-pruned non-team data
+20250701-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250701-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250701-Macon-1.csv
+# Auto-pruned non-team data
+20250701-MaxfieldSC-2.csv
+# Auto-pruned non-team data
+20250701-McNairField-1.csv
+# Auto-pruned non-team data
+20250701-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250701-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250701-OldMountain-1.csv
+# Auto-pruned non-team data
+20250701-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250701-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250701-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250701-SharkTank-1.csv
+# Auto-pruned non-team data
+20250701-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250701-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250701-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250701-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250701-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250701-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250701-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250701-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250701-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250701-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250701-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250701-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250701-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250701-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250701-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250702-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250702-CardinesField-1.csv
+# Auto-pruned non-team data
+20250702-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250702-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250702-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250702-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250702-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250702-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250702-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250702-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250702-GoodallPark-2.csv
+# Auto-pruned non-team data
+20250702-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250702-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250702-HookerField-1.csv
+# Auto-pruned non-team data
+20250702-HookerField-2.csv
+# Auto-pruned non-team data
+20250702-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250702-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250702-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250702-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250702-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250702-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250702-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250702-Peninsula-1.csv
+# Auto-pruned non-team data
+20250702-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250702-RogersPark-1.csv
+# Auto-pruned non-team data
+20250702-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250702-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250702-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250702-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250702-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250702-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250702-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250702-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250703-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250703-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250703-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250703-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250703-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250703-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250703-CCBLChatham-2.csv
+# Auto-pruned non-team data
+20250703-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250703-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250703-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250703-CCUP-1.csv
+# Auto-pruned non-team data
+20250703-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250703-FinchField-1.csv
+# Auto-pruned non-team data
+20250703-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250703-GossStadium-1.csv
+# Auto-pruned non-team data
+20250703-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250703-HOMERSTRYKER-2.csv
+# Auto-pruned non-team data
+20250703-Keene-1.csv
+# Auto-pruned non-team data
+20250703-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250703-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250703-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250703-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250703-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250703-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250703-RiverfrontStadium-2.csv
+# Auto-pruned non-team data
+20250703-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250703-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250703-SegraStadium-2.csv
+# Auto-pruned non-team data
+20250703-SharkTank-1.csv
+# Auto-pruned non-team data
+20250703-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250703-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250703-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250703-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250703-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250703-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250703-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250703-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250703-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250703-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250703-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250703-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250703-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250704-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250704-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250704-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250704-CardinesField-1.csv
+# Auto-pruned non-team data
+20250704-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250704-CCBLBrewster-2.csv
+# Auto-pruned non-team data
+20250704-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250704-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250704-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250704-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250704-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250704-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250704-DavidStory-1.csv
+# Auto-pruned non-team data
+20250704-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250704-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250704-GoodallPark-3.csv
+# Auto-pruned non-team data
+20250704-GossStadium-1.csv
+# Auto-pruned non-team data
+20250704-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250704-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250704-IntimidatorStadium-1.csv
+# Auto-pruned non-team data
+20250704-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250704-JoeMartinStadium-9.csv
+# Auto-pruned non-team data
+20250704-Macon-1.csv
+# Auto-pruned non-team data
+20250704-MontpelierRecreation-2.csv
+# Auto-pruned non-team data
+20250704-MontpelierRecreation-3.csv
+# Auto-pruned non-team data
+20250704-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250704-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250704-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250704-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250704-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250704-RiverfrontStadium-2.csv
+# Auto-pruned non-team data
+20250704-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250704-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250704-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250704-TingStadium-1.csv
+# Auto-pruned non-team data
+20250705-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250705-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250705-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250705-BrooksidePark-2.csv
+# Auto-pruned non-team data
+20250705-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250705-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250705-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250705-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250705-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250705-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250705-CCUP-1.csv
+# Auto-pruned non-team data
+20250705-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250705-DavidStory-1.csv
+# Auto-pruned non-team data
+20250705-ElksStadium-2.csv
+# Auto-pruned non-team data
+20250705-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250705-FraserField-1.csv
+# Auto-pruned non-team data
+20250705-GossStadium-1.csv
+# Auto-pruned non-team data
+20250705-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250705-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250705-HookerField-1.csv
+# Auto-pruned non-team data
+20250705-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250705-Keene-1.csv
+# Auto-pruned non-team data
+20250705-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250705-McNairField-1.csv
+# Auto-pruned non-team data
+20250705-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250705-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250705-Peninsula-1.csv
+# Auto-pruned non-team data
+20250705-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250705-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250705-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250705-RogersPark-1.csv
+# Auto-pruned non-team data
+20250705-RogersPark-2.csv
+# Auto-pruned non-team data
+20250705-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250705-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250705-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250705-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250706-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250706-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250706-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250706-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250706-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250706-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250706-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250706-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250706-CCUP-1.csv
+# Auto-pruned non-team data
+20250706-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250706-DavidStory-2.csv
+# Auto-pruned non-team data
+20250706-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250706-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250706-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250706-GossStadium-1.csv
+# Auto-pruned non-team data
+20250706-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250706-JoeMartinStadium-2.csv
+# Auto-pruned non-team data
+20250706-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250706-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250706-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250706-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250706-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250706-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250706-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250706-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250706-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250706-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250706-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250707-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250707-CardinesField-2.csv
+# Auto-pruned non-team data
+20250707-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250707-CCUP-1.csv
+# Auto-pruned non-team data
+20250707-CivicField-1.csv
+# Auto-pruned non-team data
+20250707-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250707-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250707-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250707-Macon-4.csv
+# Auto-pruned non-team data
+20250707-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250707-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250707-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250707-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250708-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250708-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250708-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250708-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250708-CCBLChatham-2.csv
+# Auto-pruned non-team data
+20250708-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250708-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250708-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250708-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250708-CivicField-1.csv
+# Auto-pruned non-team data
+20250708-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250708-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250708-CopelandPark-2.csv
+# Auto-pruned non-team data
+20250708-DavidStory-1.csv
+# Auto-pruned non-team data
+20250708-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250708-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250708-HerrBakerField-2.csv
+# Auto-pruned non-team data
+20250708-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250708-HOMERSTRYKER-2.csv
+# Auto-pruned non-team data
+20250708-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250708-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250708-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250708-OldMountain-1.csv
+# Auto-pruned non-team data
+20250708-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250708-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250708-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250708-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250708-SharkTank-1.csv
+# Auto-pruned non-team data
+20250708-SharkTank-2.csv
+# Auto-pruned non-team data
+20250708-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250708-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250708-TURTLECREEK-2.csv
+# Auto-pruned non-team data
+20250708-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250708-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250708-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250708-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250708-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250708-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250708-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250708-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250708-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250708-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250708-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250709-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250709-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250709-CardinesField-1.csv
+# Auto-pruned non-team data
+20250709-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250709-CarsonPark-2.csv
+# Auto-pruned non-team data
+20250709-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250709-CCBLYarmouth-2.csv
+# Auto-pruned non-team data
+20250709-CCUP-1.csv
+# Auto-pruned non-team data
+20250709-CCUP-2.csv
+# Auto-pruned non-team data
+20250709-CivicField-1.csv
+# Auto-pruned non-team data
+20250709-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250709-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250709-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250709-FranklinRogersPark-2.csv
+# Auto-pruned non-team data
+20250709-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250709-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250709-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250709-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250709-Keene-1.csv
+# Auto-pruned non-team data
+20250709-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250709-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250709-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250709-NorthAdams-2.csv
+# Auto-pruned non-team data
+20250709-OldMountain-1.csv
+# Auto-pruned non-team data
+20250709-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250709-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250709-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250709-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250709-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250709-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250709-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250709-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250709-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250709-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250709-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250709-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250709-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250709-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250709-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250709-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250709-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250709-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250709-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250710-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250710-BigRockStadium-3.csv
+# Auto-pruned non-team data
+20250710-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250710-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250710-DavidStory-1.csv
+# Auto-pruned non-team data
+20250710-FinchField-1.csv
+# Auto-pruned non-team data
+20250710-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250710-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250710-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250710-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250710-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250710-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250710-Keene-1.csv
+# Auto-pruned non-team data
+20250710-Keene-2.csv
+# Auto-pruned non-team data
+20250710-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250710-Macon-1.csv
+# Auto-pruned non-team data
+20250710-McNairField-1.csv
+# Auto-pruned non-team data
+20250710-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250710-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250710-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250710-RogersPark-1.csv
+# Auto-pruned non-team data
+20250710-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250710-SharkTank-1.csv
+# Auto-pruned non-team data
+20250710-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250710-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250710-TingStadium-1.csv
+# Auto-pruned non-team data
+20250710-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250711-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250711-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250711-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250711-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250711-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250711-CardinesField-1.csv
+# Auto-pruned non-team data
+20250711-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250711-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250711-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250711-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250711-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250711-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250711-CivicField-1.csv
+# Auto-pruned non-team data
+20250711-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250711-DavidStory-1.csv
+# Auto-pruned non-team data
+20250711-FinchField-2.csv
+# Auto-pruned non-team data
+20250711-FinchField-3.csv
+# Auto-pruned non-team data
+20250711-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250711-GuySmithField-2.csv
+# Auto-pruned non-team data
+20250711-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250711-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250711-HookerField-1.csv
+# Auto-pruned non-team data
+20250711-HookerField-2.csv
+# Auto-pruned non-team data
+20250711-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250711-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250711-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250711-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250711-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250711-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250711-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250711-Peninsula-1.csv
+# Auto-pruned non-team data
+20250711-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250711-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250711-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250711-SharkTank-1.csv
+# Auto-pruned non-team data
+20250711-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250711-SimmonsField-2.csv
+# Auto-pruned non-team data
+20250711-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250711-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250711-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250711-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250711-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250711-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250711-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250711-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250711-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250711-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250711-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250712-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250712-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250712-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250712-BrooksidePark-5.csv
+# Auto-pruned non-team data
+20250712-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250712-BuckHardee-2.csv
+# Auto-pruned non-team data
+20250712-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250712-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250712-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250712-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250712-CivicField-1.csv
+# Auto-pruned non-team data
+20250712-DavidStory-1.csv
+# Auto-pruned non-team data
+20250712-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250712-FraserField-2.csv
+# Auto-pruned non-team data
+20250712-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250712-HerrBakerField-3.csv
+# Auto-pruned non-team data
+20250712-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250712-Macon-1.csv
+# Auto-pruned non-team data
+20250712-Macon-2.csv
+# Auto-pruned non-team data
+20250712-MaxfieldSC-2.csv
+# Auto-pruned non-team data
+20250712-McNairField-1.csv
+# Auto-pruned non-team data
+20250712-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250712-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250712-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250712-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250712-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250712-OldMountain-1.csv
+# Auto-pruned non-team data
+20250712-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250712-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250712-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250712-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250712-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250712-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250712-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250712-TingStadium-1.csv
+# Auto-pruned non-team data
+20250712-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250712-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250712-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250712-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250712-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250712-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250712-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250712-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250712-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250712-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250712-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250712-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250713-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250713-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250713-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250713-CCBLHarwich-2.csv
+# Auto-pruned non-team data
+20250713-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250713-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250713-CivicField-1.csv
+# Auto-pruned non-team data
+20250713-FinchField-1.csv
+# Auto-pruned non-team data
+20250713-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250713-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250713-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250713-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250713-HookerField-1.csv
+# Auto-pruned non-team data
+20250713-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250713-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250713-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250713-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250713-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250713-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250713-Peninsula-1.csv
+# Auto-pruned non-team data
+20250713-Peninsula-2.csv
+# Auto-pruned non-team data
+20250713-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250713-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250713-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250713-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250713-SharkTank-1.csv
+# Auto-pruned non-team data
+20250713-SharkTank-2.csv
+# Auto-pruned non-team data
+20250713-SinsheimerPark-2.csv
+# Auto-pruned non-team data
+20250713-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250713-TingStadium-1.csv
+# Auto-pruned non-team data
+20250713-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250713-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250714-CardinesField-1.csv
+# Auto-pruned non-team data
+20250714-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250714-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250714-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250714-McNairField-1.csv
+# Auto-pruned non-team data
+20250714-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250714-Peninsula-1.csv
+# Auto-pruned non-team data
+20250714-RidgefieldComplex-2.csv
+# Auto-pruned non-team data
+20250715-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250715-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250715-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250715-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250715-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250715-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250715-CCBLHyannis-2.csv
+# Auto-pruned non-team data
+20250715-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250715-CivicField-1.csv
+# Auto-pruned non-team data
+20250715-FraserField-1.csv
+# Auto-pruned non-team data
+20250715-FraserField-2.csv
+# Auto-pruned non-team data
+20250715-GossStadium-1.csv
+# Auto-pruned non-team data
+20250715-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250715-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250715-Keene-1.csv
+# Auto-pruned non-team data
+20250715-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250715-Macon-1.csv
+# Auto-pruned non-team data
+20250715-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250715-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250715-RogersPark-1.csv
+# Auto-pruned non-team data
+20250715-RoyalPark-2.csv
+# Auto-pruned non-team data
+20250715-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250715-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250715-SharkTank-1.csv
+# Auto-pruned non-team data
+20250715-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250716-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250716-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250716-BuckHardee-2.csv
+# Auto-pruned non-team data
+20250716-CardinesField-1.csv
+# Auto-pruned non-team data
+20250716-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250716-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250716-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250716-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250716-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250716-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250716-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250716-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250716-GoodallPark-2.csv
+# Auto-pruned non-team data
+20250716-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250716-JoeMartinStadium-2.csv
+# Auto-pruned non-team data
+20250716-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250716-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250716-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250716-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250716-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250717-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250717-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250717-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250717-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250717-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250717-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250717-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250717-CivicField-1.csv
+# Auto-pruned non-team data
+20250717-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250717-FinchField-1.csv
+# Auto-pruned non-team data
+20250717-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250717-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250717-GuySmithField-2.csv
+# Auto-pruned non-team data
+20250717-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250717-HookerField-1.csv
+# Auto-pruned non-team data
+20250717-Keene-1.csv
+# Auto-pruned non-team data
+20250717-LexingtonCounty-2.csv
+# Auto-pruned non-team data
+20250717-MaxfieldSC-2.csv
+# Auto-pruned non-team data
+20250717-MaxfieldSC-3.csv
+# Auto-pruned non-team data
+20250717-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250717-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250717-OldMountain-1.csv
+# Auto-pruned non-team data
+20250717-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250717-Peninsula-1.csv
+# Auto-pruned non-team data
+20250717-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250717-RogersPark-1.csv
+# Auto-pruned non-team data
+20250717-RogersPark-2.csv
+# Auto-pruned non-team data
+20250717-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250717-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250717-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250717-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250717-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250718-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250718-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250718-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250718-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250718-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250718-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250718-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250718-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250718-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250718-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250718-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250718-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250718-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250718-FinchField-1.csv
+# Auto-pruned non-team data
+20250718-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250718-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250718-GossStadium-1.csv
+# Auto-pruned non-team data
+20250718-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250718-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250718-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250718-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250718-Keene-1.csv
+# Auto-pruned non-team data
+20250718-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250718-Macon-1.csv
+# Auto-pruned non-team data
+20250718-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250718-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250718-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250718-OldMountain-1.csv
+# Auto-pruned non-team data
+20250718-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250718-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250718-RidgefieldComplex-2.csv
+# Auto-pruned non-team data
+20250718-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250718-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250718-SharkTank-3.csv
+# Auto-pruned non-team data
+20250718-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250718-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250718-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250718-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250718-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250718-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250718-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250719-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250719-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250719-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250719-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250719-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250719-CCUP-1.csv
+# Auto-pruned non-team data
+20250719-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250719-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250719-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250719-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250719-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250719-FraserField-1.csv
+# Auto-pruned non-team data
+20250719-GossStadium-1.csv
+# Auto-pruned non-team data
+20250719-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250719-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250719-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250719-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250719-Macon-1.csv
+# Auto-pruned non-team data
+20250719-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250719-McNairField-1.csv
+# Auto-pruned non-team data
+20250719-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250719-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250719-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250719-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250719-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250719-Peninsula-1.csv
+# Auto-pruned non-team data
+20250719-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250719-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250719-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250719-RogersPark-1.csv
+# Auto-pruned non-team data
+20250719-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250719-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250719-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250719-TingStadium-1.csv
+# Auto-pruned non-team data
+20250719-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250719-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250719-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250719-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250719-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250720-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250720-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250720-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250720-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250720-CarsonPark-2.csv
+# Auto-pruned non-team data
+20250720-CCUP-1.csv
+# Auto-pruned non-team data
+20250720-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250720-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250720-FinchField-4.csv
+# Auto-pruned non-team data
+20250720-GossStadium-1.csv
+# Auto-pruned non-team data
+20250720-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250720-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250720-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250720-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250720-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250720-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250720-SantaBarbaraHighSchool-1.csv
+# Auto-pruned non-team data
+20250720-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250720-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250720-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250720-TingStadium-1.csv
+# Auto-pruned non-team data
+20250720-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250720-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250720-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250721-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250721-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250721-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250721-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250721-CarolinaBankField-2.csv
+# Auto-pruned non-team data
+20250721-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250721-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250721-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250721-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250721-HookerField-1.csv
+# Auto-pruned non-team data
+20250721-MaxfieldSC-2.csv
+# Auto-pruned non-team data
+20250721-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250721-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250721-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250721-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250721-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250722-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250722-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250722-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250722-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250722-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250722-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250722-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250722-CCBLYarmouth-3.csv
+# Auto-pruned non-team data
+20250722-CCUP-1.csv
+# Auto-pruned non-team data
+20250722-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250722-CivicField-1.csv
+# Auto-pruned non-team data
+20250722-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250722-DavidStory-1.csv
+# Auto-pruned non-team data
+20250722-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250722-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250722-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250722-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250722-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250722-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250722-MonteVistaHighSchool-2.csv
+# Auto-pruned non-team data
+20250722-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250722-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250722-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250722-NorthAdams-2.csv
+# Auto-pruned non-team data
+20250722-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250722-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250722-Peninsula-1.csv
+# Auto-pruned non-team data
+20250722-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250722-RogersPark-1.csv
+# Auto-pruned non-team data
+20250722-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250722-SanBrunoPark-1.csv
+# Auto-pruned non-team data
+20250722-SharkTank-1.csv
+# Auto-pruned non-team data
+20250722-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250722-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250722-TURTLECREEK-2.csv
+# Auto-pruned non-team data
+20250722-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250722-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250722-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250723-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250723-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250723-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250723-CardinesField-1.csv
+# Auto-pruned non-team data
+20250723-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250723-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250723-CivicField-1.csv
+# Auto-pruned non-team data
+20250723-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250723-DavidStory-1.csv
+# Auto-pruned non-team data
+20250723-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250723-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250723-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250723-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250723-Keene-1.csv
+# Auto-pruned non-team data
+20250723-Macon-1.csv
+# Auto-pruned non-team data
+20250723-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250723-McNairField-1.csv
+# Auto-pruned non-team data
+20250723-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250723-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250723-OldMountain-1.csv
+# Auto-pruned non-team data
+20250723-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250723-Peninsula-2.csv
+# Auto-pruned non-team data
+20250723-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250723-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250723-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250723-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250723-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250723-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250723-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250723-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250724-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250724-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250724-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250724-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250724-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250724-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250724-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250724-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250724-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250724-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250724-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250724-CivicField-1.csv
+# Auto-pruned non-team data
+20250724-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250724-DavidStory-1.csv
+# Auto-pruned non-team data
+20250724-FlemingStadium-3.csv
+# Auto-pruned non-team data
+20250724-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250724-HookerField-1.csv
+# Auto-pruned non-team data
+20250724-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250724-Keene-1.csv
+# Auto-pruned non-team data
+20250724-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250724-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250724-OldMountain-1.csv
+# Auto-pruned non-team data
+20250724-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250724-RogersPark-1.csv
+# Auto-pruned non-team data
+20250724-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250724-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250724-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250724-TingStadium-1.csv
+# Auto-pruned non-team data
+20250724-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250724-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250724-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250724-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250725-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250725-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250725-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250725-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250725-CardinesField-1.csv
+# Auto-pruned non-team data
+20250725-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250725-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250725-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250725-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250725-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250725-CCUP-1.csv
+# Auto-pruned non-team data
+20250725-CollegeofSanMateo-1.csv
+# Auto-pruned non-team data
+20250725-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250725-CopelandPark-2.csv
+# Auto-pruned non-team data
+20250725-DavidStory-1.csv
+# Auto-pruned non-team data
+20250725-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250725-FinchField-1.csv
+# Auto-pruned non-team data
+20250725-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250725-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250725-FraserField-1.csv
+# Auto-pruned non-team data
+20250725-FraserField-2.csv
+# Auto-pruned non-team data
+20250725-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250725-GossStadium-1.csv
+# Auto-pruned non-team data
+20250725-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250725-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250725-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250725-HOMERSTRYKER-2.csv
+# Auto-pruned non-team data
+20250725-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250725-Keene-1.csv
+# Auto-pruned non-team data
+20250725-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250725-Macon-1.csv
+# Auto-pruned non-team data
+20250725-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250725-McNairField-1.csv
+# Auto-pruned non-team data
+20250725-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250725-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250725-OldMountain-2.csv
+# Auto-pruned non-team data
+20250725-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250725-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250725-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250725-SHEPHERDSTADIUM-2.csv
+# Auto-pruned non-team data
+20250725-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250725-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250726-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250726-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250726-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250726-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250726-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250726-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250726-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250726-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250726-CCUP-1.csv
+# Auto-pruned non-team data
+20250726-CopelandPark-2.csv
+# Auto-pruned non-team data
+20250726-DavidStory-1.csv
+# Auto-pruned non-team data
+20250726-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250726-FraserField-1.csv
+# Auto-pruned non-team data
+20250726-GossStadium-1.csv
+# Auto-pruned non-team data
+20250726-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250726-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250726-HookerField-1.csv
+# Auto-pruned non-team data
+20250726-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250726-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250726-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250726-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250726-Macon-1.csv
+# Auto-pruned non-team data
+20250726-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250726-MLBAcademy-1.csv
+# Auto-pruned non-team data
+20250726-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250726-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250726-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250726-OrangeCountyGreatParkStadium-1.csv
+# Auto-pruned non-team data
+20250726-Peninsula-1.csv
+# Auto-pruned non-team data
+20250726-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250726-RogersPark-1.csv
+# Auto-pruned non-team data
+20250726-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250726-SharkTank-1.csv
+# Auto-pruned non-team data
+20250726-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250726-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250726-TingStadium-1.csv
+# Auto-pruned non-team data
+20250726-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250726-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250726-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250726-USABBCary0-4.csv
+# Auto-pruned non-team data
+20250726-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250726-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250726-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250726-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250726-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250726-USABBCary3-4.csv
+# Auto-pruned non-team data
+20250727-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250727-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250727-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250727-BrooksidePark-1.csv
+# Auto-pruned non-team data
+20250727-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250727-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250727-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250727-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250727-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250727-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250727-DavidStory-1.csv
+# Auto-pruned non-team data
+20250727-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250727-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250727-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250727-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250727-FraserField-1.csv
+# Auto-pruned non-team data
+20250727-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250727-GossStadium-1.csv
+# Auto-pruned non-team data
+20250727-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250727-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250727-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250727-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250727-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250727-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250727-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250727-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250727-OldMountain-1.csv
+# Auto-pruned non-team data
+20250727-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250727-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250727-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250727-SinsheimerPark-1.csv
+# Auto-pruned non-team data
+20250727-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250727-TingStadium-2.csv
+# Auto-pruned non-team data
+20250727-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250727-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250727-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250727-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250727-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250727-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250727-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250727-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250727-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250728-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250728-CardinesField-1.csv
+# Auto-pruned non-team data
+20250728-CardinesField-2.csv
+# Auto-pruned non-team data
+20250728-CarolinaBankField-1.csv
+# Auto-pruned non-team data
+20250728-CivicField-1.csv
+# Auto-pruned non-team data
+20250728-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250728-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250728-HookerField-1.csv
+# Auto-pruned non-team data
+20250728-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250728-JimBettieSmith-2.csv
+# Auto-pruned non-team data
+20250728-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250728-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250728-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250728-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250728-SharkTank-1.csv
+# Auto-pruned non-team data
+20250728-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250728-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250728-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250729-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250729-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250729-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250729-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250729-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250729-CCBLYarmouth-2.csv
+# Auto-pruned non-team data
+20250729-CCUP-1.csv
+# Auto-pruned non-team data
+20250729-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250729-CivicField-1.csv
+# Auto-pruned non-team data
+20250729-FinchField-1.csv
+# Auto-pruned non-team data
+20250729-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250729-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250729-FraserField-1.csv
+# Auto-pruned non-team data
+20250729-FraserField-2.csv
+# Auto-pruned non-team data
+20250729-GossStadium-1.csv
+# Auto-pruned non-team data
+20250729-GuySmithField-1.csv
+# Auto-pruned non-team data
+20250729-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250729-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250729-Macon-1.csv
+# Auto-pruned non-team data
+20250729-MonteVistaHighSchool-1.csv
+# Auto-pruned non-team data
+20250729-MontpelierRecreation-1.csv
+# Auto-pruned non-team data
+20250729-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250729-OrangeCountyGreatParkStadium-2.csv
+# Auto-pruned non-team data
+20250729-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250729-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250729-RogersPark-1.csv
+# Auto-pruned non-team data
+20250729-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250729-SharkTank-1.csv
+# Auto-pruned non-team data
+20250729-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250729-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250730-ArnoldField-1.csv
+# Auto-pruned non-team data
+20250730-BigRockStadium-1.csv
+# Auto-pruned non-team data
+20250730-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250730-CardinesField-3.csv
+# Auto-pruned non-team data
+20250730-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250730-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250730-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250730-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250730-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250730-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250730-CCUP-1.csv
+# Auto-pruned non-team data
+20250730-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250730-CivicField-1.csv
+# Auto-pruned non-team data
+20250730-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250730-FraserField-1.csv
+# Auto-pruned non-team data
+20250730-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250730-GossStadium-1.csv
+# Auto-pruned non-team data
+20250730-HerrBakerField-2.csv
+# Auto-pruned non-team data
+20250730-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250730-Keene-1.csv
+# Auto-pruned non-team data
+20250730-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250730-MackenzieStadium-1.csv
+# Auto-pruned non-team data
+20250730-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250730-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250730-OldMountain-1.csv
+# Auto-pruned non-team data
+20250730-Peninsula-1.csv
+# Auto-pruned non-team data
+20250730-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250730-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250730-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250730-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250730-SHEPHERDSTADIUM-2.csv
+# Auto-pruned non-team data
+20250730-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250730-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250730-VinceGennaStadium-2.csv
+# Auto-pruned non-team data
+20250730-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250731-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250731-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250731-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250731-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250731-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250731-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250731-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250731-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250731-FinchField-1.csv
+# Auto-pruned non-team data
+20250731-GossStadium-1.csv
+# Auto-pruned non-team data
+20250731-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250731-Macon-1.csv
+# Auto-pruned non-team data
+20250731-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250731-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250731-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250731-SHEPHERDSTADIUM-2.csv
+# Auto-pruned non-team data
+20250731-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250731-TingStadium-1.csv
+# Auto-pruned non-team data
+20250731-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250731-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250731-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250731-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250801-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250801-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250801-CardinesField-1.csv
+# Auto-pruned non-team data
+20250801-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250801-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250801-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250801-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250801-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250801-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250801-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250801-CivicField-1.csv
+# Auto-pruned non-team data
+20250801-DavidStory-1.csv
+# Auto-pruned non-team data
+20250801-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250801-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250801-HookerField-1.csv
+# Auto-pruned non-team data
+20250801-HooverMetropolitan-Private-1.csv
+# Auto-pruned non-team data
+20250801-Keene-1.csv
+# Auto-pruned non-team data
+20250801-McCraryPark-1.csv
+# Auto-pruned non-team data
+20250801-MuzzyField-1.csv
+# Auto-pruned non-team data
+20250801-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250801-Peninsula-1.csv
+# Auto-pruned non-team data
+20250801-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250801-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250801-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250801-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250801-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250801-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250801-TingStadium-1.csv
+# Auto-pruned non-team data
+20250801-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250801-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250802-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250802-BlairField-1.csv
+# Auto-pruned non-team data
+20250802-BlairField-2.csv
+# Auto-pruned non-team data
+20250802-BlairField-3.csv
+# Auto-pruned non-team data
+20250802-BlairField-4.csv
+# Auto-pruned non-team data
+20250802-BuckHardee-1.csv
+# Auto-pruned non-team data
+20250802-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250802-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250802-CCBLOrleans-2.csv
+# Auto-pruned non-team data
+20250802-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250802-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250802-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250802-CivicField-1.csv
+# Auto-pruned non-team data
+20250802-DavidStory-1.csv
+# Auto-pruned non-team data
+20250802-FitchHighSchool-1.csv
+# Auto-pruned non-team data
+20250802-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250802-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250802-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250802-HooverMetropolitan-1.csv
+# Auto-pruned non-team data
+20250802-HooverMetropolitan-2.csv
+# Auto-pruned non-team data
+20250802-HooverMetropolitan-3.csv
+# Auto-pruned non-team data
+20250802-HooverMetropolitan-4.csv
+# Auto-pruned non-team data
+20250802-MaxfieldSC-1.csv
+# Auto-pruned non-team data
+20250802-McNairField-1.csv
+# Auto-pruned non-team data
+20250802-NorthAdams-1.csv
+# Auto-pruned non-team data
+20250802-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250802-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250802-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250802-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250802-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250802-SharkTank-1.csv
+# Auto-pruned non-team data
+20250802-SHEPHERDSTADIUM-1.csv
+# Auto-pruned non-team data
+20250802-SparkyAnderson-1.csv
+# Auto-pruned non-team data
+20250802-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250802-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250803-BillTauntonStadium-2.csv
+# Auto-pruned non-team data
+20250803-BlairField-1.csv
+# Auto-pruned non-team data
+20250803-BlairField-2.csv
+# Auto-pruned non-team data
+20250803-BlairField-3.csv
+# Auto-pruned non-team data
+20250803-BlairField-4.csv
+# Auto-pruned non-team data
+20250803-CardinesField-1.csv
+# Auto-pruned non-team data
+20250803-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250803-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250803-CCBLChatham-1.csv
+# Auto-pruned non-team data
+20250803-CCBLFalmouth-1.csv
+# Auto-pruned non-team data
+20250803-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250803-CivicField-1.csv
+# Auto-pruned non-team data
+20250803-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250803-DavidStory-1.csv
+# Auto-pruned non-team data
+20250803-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250803-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250803-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250803-HamlinSC-1.csv
+# Auto-pruned non-team data
+20250803-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250803-HooverMetropolitan-1.csv
+# Auto-pruned non-team data
+20250803-HooverMetropolitan-2.csv
+# Auto-pruned non-team data
+20250803-HooverMetropolitan-3.csv
+# Auto-pruned non-team data
+20250803-HooverMetropolitan-4.csv
+# Auto-pruned non-team data
+20250803-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250803-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250803-RidgefieldComplex-1.csv
+# Auto-pruned non-team data
+20250803-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250803-SerauxmenStadium-1.csv
+# Auto-pruned non-team data
+20250803-TingStadium-1.csv
+# Auto-pruned non-team data
+20250803-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250803-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250804-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250804-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250804-BlairField-1.csv
+# Auto-pruned non-team data
+20250804-BlairField-2.csv
+# Auto-pruned non-team data
+20250804-BlairField-3.csv
+# Auto-pruned non-team data
+20250804-BlairField-4.csv
+# Auto-pruned non-team data
+20250804-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250804-CardinesField-1.csv
+# Auto-pruned non-team data
+20250804-CCUP-1.csv
+# Auto-pruned non-team data
+20250804-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250804-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250804-GossStadium-1.csv
+# Auto-pruned non-team data
+20250804-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250804-HooverMetropolitan-1.csv
+# Auto-pruned non-team data
+20250804-HooverMetropolitan-2.csv
+# Auto-pruned non-team data
+20250804-HooverMetropolitan-3.csv
+# Auto-pruned non-team data
+20250804-JoeMartinStadium-2.csv
+# Auto-pruned non-team data
+20250804-Keene-1.csv
+# Auto-pruned non-team data
+20250804-LexingtonCounty-1.csv
+# Auto-pruned non-team data
+20250804-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250804-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250804-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250804-RoyalPark-2.csv
+# Auto-pruned non-team data
+20250804-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250804-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250804-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250804-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250804-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250805-BillTauntonStadium-1.csv
+# Auto-pruned non-team data
+20250805-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250805-BlairField-1.csv
+# Auto-pruned non-team data
+20250805-BlairField-2.csv
+# Auto-pruned non-team data
+20250805-BlairField-3.csv
+# Auto-pruned non-team data
+20250805-BlairField-4.csv
+# Auto-pruned non-team data
+20250805-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250805-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250805-CCBLOrleans-1.csv
+# Auto-pruned non-team data
+20250805-CCBLWareham-1.csv
+# Auto-pruned non-team data
+20250805-CCUP-1.csv
+# Auto-pruned non-team data
+20250805-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250805-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250805-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250805-GoodallPark-1.csv
+# Auto-pruned non-team data
+20250805-GossStadium-1.csv
+# Auto-pruned non-team data
+20250805-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250805-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250805-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250805-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250805-SharkTank-1.csv
+# Auto-pruned non-team data
+20250805-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250805-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250805-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250805-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250805-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250806-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250806-BorleskeStadium-1.csv
+# Auto-pruned non-team data
+20250806-CardinesField-1.csv
+# Auto-pruned non-team data
+20250806-CCBLBrewster-1.csv
+# Auto-pruned non-team data
+20250806-CCBLCotuit-1.csv
+# Auto-pruned non-team data
+20250806-CCBLHyannis-1.csv
+# Auto-pruned non-team data
+20250806-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250806-CCUP-1.csv
+# Auto-pruned non-team data
+20250806-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250806-ElksStadium-1.csv
+# Auto-pruned non-team data
+20250806-GossStadium-1.csv
+# Auto-pruned non-team data
+20250806-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250806-JimBettieSmith-1.csv
+# Auto-pruned non-team data
+20250806-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250806-NorbrockStadium-1.csv
+# Auto-pruned non-team data
+20250806-Peninsula-1.csv
+# Auto-pruned non-team data
+20250806-RiverfrontStadium-2.csv
+# Auto-pruned non-team data
+20250806-RoyalPark-1.csv
+# Auto-pruned non-team data
+20250806-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250806-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250806-YakimaCo-1.csv
+# Auto-pruned non-team data
+20250807-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250807-BlairField-1.csv
+# Auto-pruned non-team data
+20250807-BlairField-2.csv
+# Auto-pruned non-team data
+20250807-BlairField-3.csv
+# Auto-pruned non-team data
+20250807-BlairField-4.csv
+# Auto-pruned non-team data
+20250807-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250807-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250807-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250807-CCUP-1.csv
+# Auto-pruned non-team data
+20250807-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250807-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250807-Keene-1.csv
+# Auto-pruned non-team data
+20250807-McNairField-1.csv
+# Auto-pruned non-team data
+20250807-RiverfrontStadium-1.csv
+# Auto-pruned non-team data
+20250807-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250807-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250807-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250807-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250807-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250807-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250807-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250807-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250807-USABBCary2-5.csv
+# Auto-pruned non-team data
+20250807-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250807-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250807-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250807-USABBCary3-4.csv
+# Auto-pruned non-team data
+20250807-USABBCary3-5.csv
+# Auto-pruned non-team data
+20250808-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250808-BlairField-1.csv
+# Auto-pruned non-team data
+20250808-BlairField-2.csv
+# Auto-pruned non-team data
+20250808-BlairField-3.csv
+# Auto-pruned non-team data
+20250808-BlairField-4.csv
+# Auto-pruned non-team data
+20250808-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250808-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250808-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250808-CCUP-1.csv
+# Auto-pruned non-team data
+20250808-CCUP-2.csv
+# Auto-pruned non-team data
+20250808-ChemeketaCC-1.csv
+# Auto-pruned non-team data
+20250808-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250808-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250808-PaulThomasSr-1.csv
+# Auto-pruned non-team data
+20250808-RoyalPark-3.csv
+# Auto-pruned non-team data
+20250808-SharkTank-1.csv
+# Auto-pruned non-team data
+20250808-TingStadium-1.csv
+# Auto-pruned non-team data
+20250808-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250808-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250808-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250808-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250808-USABBCary0-4.csv
+# Auto-pruned non-team data
+20250808-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250808-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250808-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250808-USABBCary2-4.csv
+# Auto-pruned non-team data
+20250808-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250808-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250808-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250808-USABBCary3-4.csv
+# Auto-pruned non-team data
+20250808-VinceGennaStadium-1.csv
+# Auto-pruned non-team data
+20250809-BISMARKMUNI-1.csv
+# Auto-pruned non-team data
+20250809-BlairField-1.csv
+# Auto-pruned non-team data
+20250809-BlairField-2.csv
+# Auto-pruned non-team data
+20250809-BlairField-3.csv
+# Auto-pruned non-team data
+20250809-BlairField-4.csv
+# Auto-pruned non-team data
+20250809-CarsonPark-1.csv
+# Auto-pruned non-team data
+20250809-CCBLYarmouth-2.csv
+# Auto-pruned non-team data
+20250809-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250809-FlemingStadium-1.csv
+# Auto-pruned non-team data
+20250809-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250809-GossStadium-1.csv
+# Auto-pruned non-team data
+20250809-HerrBakerField-1.csv
+# Auto-pruned non-team data
+20250809-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250809-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250809-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250809-SimmonsField-1.csv
+# Auto-pruned non-team data
+20250809-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250809-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250809-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250809-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250809-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250809-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250809-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250809-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250809-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250809-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250809-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250809-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250810-BlairField-1.csv
+# Auto-pruned non-team data
+20250810-BlairField-2.csv
+# Auto-pruned non-team data
+20250810-BlairField-3.csv
+# Auto-pruned non-team data
+20250810-BlairField-4.csv
+# Auto-pruned non-team data
+20250810-CCBLBourne-1.csv
+# Auto-pruned non-team data
+20250810-CCBLHarwich-1.csv
+# Auto-pruned non-team data
+20250810-CCUP-1.csv
+# Auto-pruned non-team data
+20250810-CopelandPark-1.csv
+# Auto-pruned non-team data
+20250810-FranklinRogersPark-1.csv
+# Auto-pruned non-team data
+20250810-GossStadium-1.csv
+# Auto-pruned non-team data
+20250810-HOMERSTRYKER-1.csv
+# Auto-pruned non-team data
+20250810-JoeMartinStadium-1.csv
+# Auto-pruned non-team data
+20250810-McNairField-1.csv
+# Auto-pruned non-team data
+20250810-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250810-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250810-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250810-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250810-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250810-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250810-USABBCary1-3.csv
+# Auto-pruned non-team data
+20250810-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250810-USABBCary2-5.csv
+# Auto-pruned non-team data
+20250810-USABBCary2-8.csv
+# Auto-pruned non-team data
+20250810-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250810-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250810-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250811-BlairField-1.csv
+# Auto-pruned non-team data
+20250811-BlairField-2.csv
+# Auto-pruned non-team data
+20250811-BlairField-3.csv
+# Auto-pruned non-team data
+20250811-BlairField-4.csv
+# Auto-pruned non-team data
+20250811-CCBLBourne-2.csv
+# Auto-pruned non-team data
+20250811-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250812-CCBLYarmouth-1.csv
+# Auto-pruned non-team data
+20250812-ReMaxField-1.csv
+# Auto-pruned non-team data
+20250812-TURTLECREEK-1.csv
+# Auto-pruned non-team data
+20250812-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250814-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250814-USABBCary2-5.csv
+# Auto-pruned non-team data
+20250814-USABBCary2-6.csv
+# Auto-pruned non-team data
+20250814-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250814-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250814-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250814-WalkerStadium-1.csv
+# Auto-pruned non-team data
+20250815-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250815-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250815-USABBCary2-3.csv
+# Auto-pruned non-team data
+20250815-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250815-USABBCary3-3.csv
+# Auto-pruned non-team data
+20250816-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250816-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250816-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250816-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250816-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250816-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250817-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250817-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250817-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250817-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250817-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250817-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250817-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250817-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250821-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250821-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250821-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250821-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250821-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250821-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250822-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250822-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250822-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250822-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250822-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250822-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250823-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250823-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250823-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250823-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250823-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250824-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250824-USABBCary0-2.csv
+# Auto-pruned non-team data
+20250824-USABBCary0-3.csv
+# Auto-pruned non-team data
+20250824-USABBCary1-1.csv
+# Auto-pruned non-team data
+20250824-USABBCary1-2.csv
+# Auto-pruned non-team data
+20250824-USABBCary2-1.csv
+# Auto-pruned non-team data
+20250824-USABBCary2-2.csv
+# Auto-pruned non-team data
+20250824-USABBCary3-1.csv
+# Auto-pruned non-team data
+20250824-USABBCary3-2.csv
+# Auto-pruned non-team data
+20250825-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250826-USABBCary0-1.csv
+# Auto-pruned non-team data
+20250827-USABBCary0-1.csv
+# Auto-pruned non-team data
+20251015-USABBCary0-1.csv
+# Auto-pruned non-team data
+20251015-USABBCary3-1.csv
+# Auto-pruned non-team data
+20251016-USABBCary0-1.csv
+# Auto-pruned non-team data
+20251016-USABBCary0-2.csv
+# Auto-pruned non-team data
+20260123-BowiesBallpark-1.csv
+# Auto-pruned non-team data
+20260123-CypressCollege-1.csv
+# Auto-pruned non-team data
+20260123-GoldenWestCollege-1_unverified.csv
+# Auto-pruned non-team data
+20260123-GoldenWestCollege-1.csv
+# Auto-pruned non-team data
+20260123-MarichFieldLaptop-2_unverified.csv
+# Auto-pruned non-team data
+20260124-BowiesBallpark-1_unverified.csv
+# Auto-pruned non-team data
+20260124-BowiesBallpark-2_unverified.csv
+# Auto-pruned non-team data
+20260124-PaulDemieMainieriField-1_unverified.csv
+# Auto-pruned non-team data
+20260124-PershingPark-1_unverified.csv
+# Auto-pruned non-team data
+20260124-BowiesBallpark-1.csv
+# Auto-pruned non-team data
+20260124-BowiesBallpark-2.csv
+# Auto-pruned non-team data
+20260124-PaulDemieMainieriField-1.csv
+# Auto-pruned non-team data
+20260124-PershingPark-1.csv
+# Auto-pruned non-team data
+20260127-CypressCollege-2_unverified.csv
+# Auto-pruned non-team data
+20260127-DubHerringPark-2_unverified.csv
+# Auto-pruned non-team data
+20260127-CypressCollege-2.csv
+# Auto-pruned non-team data
+20260129-700-HughAdamsPark-1_unverified.csv
+# Auto-pruned non-team data
+20260129-LoyolaNewOrleans-1_unverified.csv
+# Auto-pruned non-team data
+20260129-LoyolaNewOrleans-2_unverified.csv
+# Auto-pruned non-team data
+20260129-PershingPark-2_unverified.csv
+# Auto-pruned non-team data
+20260129-TedABroerStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260129-JackBowlingField-1.csv
+# Auto-pruned non-team data
+20260129-JackBowlingField-2_unverified.csv
+# Auto-pruned non-team data
+20260129-JackBowlingField-2.csv
+# Auto-pruned non-team data
+20260129-LoyolaNewOrleans-1.csv
+# Auto-pruned non-team data
+20260129-LoyolaNewOrleans-2.csv
+# Auto-pruned non-team data
+20260129-TedABroerStadium-1.csv
+# Auto-pruned non-team data
+20260130-700-HughAdamsPark-1_unverified.csv
+# Auto-pruned non-team data
+20260130-BowiesBallpark-1_unverified.csv
+# Auto-pruned non-team data
+20260130-BowiesBallpark-2_unverified.csv
+# Auto-pruned non-team data
+20260130-CarsonNewman-1_unverified.csv
+# Auto-pruned non-team data
+20260130-JohnKurtzField-1_unverified.csv
+# Auto-pruned non-team data
+20260130-JohnKurtzField-2_unverified.csv
+# Auto-pruned non-team data
+20260130-LamarHennonField-1_unverified.csv
+# Auto-pruned non-team data
+20260130-LamarHennonField-2_unverified.csv
+# Auto-pruned non-team data
+20260130-LeeUniversity-1_unverified.csv
+# Auto-pruned non-team data
+20260130-LeeUniversity-2_unverified.csv
+# Auto-pruned non-team data
+20260130-LoyolaNewOrleans-1_unverified.csv
+# Auto-pruned non-team data
+20260130-LoyolaNewOrleans-2_unverified.csv
+# Auto-pruned non-team data
+20260130-McBean-2_unverified.csv
+# Auto-pruned non-team data
+20260130-PaulDemieMainieriField-1_unverified.csv
+# Auto-pruned non-team data
+20260130-PointLomaNazarene-1_unverified.csv
+# Auto-pruned non-team data
+20260130-SammyCoxField-1_unverified.csv
+# Auto-pruned non-team data
+20260130-SammyCoxField-2_unverified.csv
+# Auto-pruned non-team data
+20260130-StephenBDolnyStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260130-StephenBDolnyStadium-2_unverified.csv
+# Auto-pruned non-team data
+20260130-SusanKSmithBaseballComplex-3_unverified.csv
+# Auto-pruned non-team data
+20260130-TedABroerStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260130-TedABroerStadium-2_unverified.csv
+# Auto-pruned non-team data
+20260130-CarsonNewman-2_unverified.csv
+# Auto-pruned non-team data
+20260130-CarsonNewman-2.csv
+# Auto-pruned non-team data
+20260130-JohnKurtzField-2.csv
+# Auto-pruned non-team data
+20260130-PershingPark-4_unverified.csv
+# Auto-pruned non-team data
+20260130-TedABroerStadium-1.csv
+# Auto-pruned non-team data
+20260130-TedABroerStadium-2.csv
+# Auto-pruned non-team data
+20260130-UofMontevallo-1_unverified.csv
+# Auto-pruned non-team data
+20260130-UofMontevallo-2_unverified.csv
+# Auto-pruned non-team data
+20260131-GoldenWestCollege-1_unverified.csv
+# Auto-pruned non-team data
+20260131-PaulDemieMainieriField-1_unverified.csv
+# Auto-pruned non-team data
+20260131-PaulDemieMainieriField-2_unverified.csv
+# Auto-pruned non-team data
+20260131-RodenField-1_unverified.csv
+# Auto-pruned non-team data
+20260131-SusanKSmithBaseballComplex-1_unverified.csv
+# Auto-pruned non-team data
+20260131-TedABroerStadium-1_unverified.csv
