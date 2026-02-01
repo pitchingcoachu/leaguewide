@@ -43,7 +43,7 @@ school_config <- list(
     token = "pcu_notes_TZ3qj9mY0Nf4WvK1aB7rC6xD2uH8sP5L"
   ),
   extra = list(
-    school_name = "lsu",
+    school_name = "LSU",
     ftp_folder = "trackman",
     cloudinary_folder = "trackman"
   )
