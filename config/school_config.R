@@ -35,7 +35,8 @@ school_config <- list(
   ),
   logo = "LSUlogo.png",
   coaches_emails = c(
-    "jtutko@lsu.edu"
+    "jtutko@lsu.edu",
+    "Corralf34@gmail.com"
   ),
   notes_api = list(
     base_url = "https://script.google.com/macros/s/AKfycbxkjUyCb1MI8xc7kuLOi3qutPaoKVMzx85hGBzJRTuCOfMWnYwTS-5LWopZDTpwnaa_/exec",
