@@ -4,13 +4,13 @@ school_config <- list(
   team_code = "LSU",
   # Additional school-code markers used in TrackMan team columns (optional).
   # These are checked alongside team_code during allowed-player verification.
-  team_code_markers = c("LSU_TIG", "LSU"),
+  team_code_markers = c("LSU_TIG", "LSU", "LSU_FAL"),
   allowed_pitchers = c(
     "Guidry, Gavin","Schmidt, William","Rizy, Mavrick","Evans, Casan",
     "Moore, Cooper","Cowan, Zac","Lachenmayer, Danny","Noot, Jaden",
     "Williams, Cooper","Dathe, Dax","Garcia, Santiago","Ricken, Reagan",
     "Plog, Ethan","Aase, Jonah","Fontenot, Grant","Primeaux, DJ",
-    "Benge, Connor","Sheerin, Deven","Smart, Ryler","Theophilus, Zion","Paz, Marcos", "Anderson, Kade", "Shahrdar, John"
+    "Benge, Connor","Sheerin, Deven","Smart, Ryler","Theophilus, Zion","Paz, Marcos", "Shahrdar, John"
   ),
   allowed_hitters = c(
     "Guidry, Gavin","Schmidt, William","Rizy, Mavrick","Evans, Casan",
