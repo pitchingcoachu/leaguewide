@@ -2,7 +2,9 @@
 # Copy this file to another repo and keep the same structure when you need to customize colors, logos, APIs, etc.
 school_config <- list(
   team_code = "LSU",
-  # Player filters
+  # Additional school-code markers used in TrackMan team columns (optional).
+  # These are checked alongside team_code during allowed-player verification.
+  team_code_markers = c("LSU_TIG", "LSU"),
   allowed_pitchers = c(
     "Guidry, Gavin","Schmidt, William","Rizy, Mavrick","Evans, Casan",
     "Moore, Cooper","Cowan, Zac","Lachenmayer, Danny","Noot, Jaden",
