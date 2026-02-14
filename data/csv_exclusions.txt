@@ -7554,3 +7554,147 @@ practice_2026_02_05_Pitching_2026-02-05T173737_verified.csv
 20260213-WilliamCarey-1_unverified.csv
 # Auto-pruned non-team data
 20260213-WinthropUniversity-1_unverified.csv
+# Auto-pruned non-team data
+practice_2025_01_07_Pitching_2025-01-07T151751_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_10_Pitching_2025-01-10T144737_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_10_Pitching_2025-01-10T164218_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_24_Pitching_2025-01-24T151930_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_31_Pitching_2025-01-31T161038_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_01_Pitching_2025-02-01T165107_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_08_Pitching_2025-02-08T164818_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_20_Hitting_2025-02-20T200745_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_21_Pitching_2025-02-21T151332_verified.csv
+# Auto-pruned non-team data
+practice_2025_02_25_Hitting_2025-02-25T162436_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_21_Pitching_2025-07-21T143212_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_24_Pitching_2025-07-24T144604_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_25_Pitching_2025-07-25T164012_verified.csv
+# Auto-pruned non-team data
+practice_2025_07_31_Hitting_2025-07-31T010545_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T165900_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T180007_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T181905_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_09_Hitting_2025-09-09T185240_verified.csv
+# Auto-pruned non-team data
+practice_2025_09_17_Hitting_2025-09-17T172558_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_20_Pitching_2026-01-20T171401_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_27_Pitching_2026-01-27T143938_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_28_Pitching_2026-01-28T235131_verified.csv
+# Auto-pruned non-team data
+practice_2026_01_30_Pitching_2026-01-30T155631_verified.csv
+# Auto-pruned non-team data
+practice_2026_02_05_Pitching_2026-02-05T173737_verified.csv
+# Auto-pruned non-team data
+20260213-AlabamaState-1_unverified.csv
+# Auto-pruned non-team data
+20260213-AngelinaCollege-5_unverified.csv
+# Auto-pruned non-team data
+20260213-Arlington-2_unverified.csv
+# Auto-pruned non-team data
+20260213-BenedettiDiamond-1_unverified.csv
+# Auto-pruned non-team data
+20260213-CondronBallpark-1_unverified.csv
+# Auto-pruned non-team data
+20260213-DickHowserStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260213-DubHerringPark-2_unverified.csv
+# Auto-pruned non-team data
+20260213-FAUBaseballStadium-2_unverified.csv
+# Auto-pruned non-team data
+20260213-FedExPark-1_unverified.csv
+# Auto-pruned non-team data
+20260213-FIUBaseballStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260213-HenleyField-1_unverified.csv
+# Auto-pruned non-team data
+20260213-IrwinField-3_unverified.csv
+# Auto-pruned non-team data
+20260213-JayceesField-2_unverified.csv
+# Auto-pruned non-team data
+20260213-JCLoveFieldatPatPattersonPark-1_unverified.csv
+# Auto-pruned non-team data
+20260213-JimPerry-1_unverified.csv
+# Auto-pruned non-team data
+20260213-JohnEulianoPark-1_unverified.csv
+# Auto-pruned non-team data
+20260213-JohnKurtzField-1_unverified.csv
+# Auto-pruned non-team data
+20260213-KellField-2_unverified.csv
+# Auto-pruned non-team data
+20260213-KennesawState-1.csv
+# Auto-pruned non-team data
+20260213-McBean-2_unverified.csv
+# Auto-pruned non-team data
+20260213-MercerUniversity-1_unverified.csv
+# Auto-pruned non-team data
+20260213-MikeDLaneField-1_unverified.csv
+# Auto-pruned non-team data
+20260213-MikeDLaneField-2_unverified.csv
+# Auto-pruned non-team data
+20260213-MSST-1_unverified.csv
+# Auto-pruned non-team data
+20260213-OleMiss-1_unverified.csv
+# Auto-pruned non-team data
+20260213-PaulDemieMainieriField-3_unverified.csv
+# Auto-pruned non-team data
+20260213-PKPark-1_unverified.csv
+# Auto-pruned non-team data
+20260213-PlainsmanPark-1_unverified.csv
+# Auto-pruned non-team data
+20260213-PresbyterianCollege-3_unverified.csv
+# Auto-pruned non-team data
+20260213-RonaldGallagherStad-1_unverified.csv
+# Auto-pruned non-team data
+20260213-RudyAbbottField-1_unverified.csv
+# Auto-pruned non-team data
+20260213-SamfordUniversity-3_unverified.csv
+# Auto-pruned non-team data
+20260213-SEMissouriState-1_unverified.csv
+# Auto-pruned non-team data
+20260213-SEMissouriState-2_unverified.csv
+# Auto-pruned non-team data
+20260213-SwansonStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260213-SwellThomasStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260213-TerryParkField1-1_unverified.csv
+# Auto-pruned non-team data
+20260213-Texas-1_unverified.csv
+# Auto-pruned non-team data
+20260213-TreveccaNazareneBC-2_unverified.csv
+# Auto-pruned non-team data
+20260213-UNCCharlotte-1_unverified.csv
+# Auto-pruned non-team data
+20260213-UNorthFlorida-1_unverified.csv
+# Auto-pruned non-team data
+20260213-UofMontevallo-1_unverified.csv
+# Auto-pruned non-team data
+20260213-UofMontevallo-2_unverified.csv
+# Auto-pruned non-team data
+20260213-UofSouthCarolina-2_unverified.csv
+# Auto-pruned non-team data
+20260213-USFBaseballStadium-1_unverified.csv
+# Auto-pruned non-team data
+20260213-UTSanAntonio-1_unverified.csv
+# Auto-pruned non-team data
+20260213-WilsonField-1_unverified.csv
+# Auto-pruned non-team data
+20260213-WoffordCollege-1_unverified.csv
