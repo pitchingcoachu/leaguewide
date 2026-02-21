@@ -11022,3 +11022,9 @@ practice_2026_02_05_Pitching_2026-02-05T173737_verified.csv
 20260220-WeberField-1_unverified.csv
 # Auto-pruned non-team data
 20260220-WoernerField-1_unverified.csv
+# Auto-pruned non-team data
+practice_2025_01_07_Pitching_2025-01-07T151751_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_10_Pitching_2025-01-10T144737_verified.csv
+# Auto-pruned non-team data
+practice_2025_01_10_Pitching_2025-01-10T164218_verified.csv
