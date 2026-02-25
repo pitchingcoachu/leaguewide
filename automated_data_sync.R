@@ -151,7 +151,7 @@ is_date_in_range <- function(file_path) {
   file_date <- as.Date(paste(date_match[2], date_match[3], date_match[4], sep = "-"))
   
   # Start date: August 1, 2025 (nothing before this)
-  start_date <- as.Date("2026-01-10")
+  start_date <- as.Date("2026-02-13")
   
   # Include all data from August 1, 2025 onwards (no future year restrictions)
   return(file_date >= start_date)
@@ -373,6 +373,17 @@ file_contains_patterns <- function(path, patterns) {
   patterns <- unique(patterns[nzchar(patterns)])
   if (!length(patterns)) return(TRUE)
 
+  escape_regex <- function(x) {
+    chars <- strsplit(as.character(x), "", fixed = TRUE)[[1]]
+    specials <- c("\\", ".", "|", "(", ")", "[", "]", "{", "}", "^", "$", "*", "+", "?")
+    paste(vapply(chars, function(ch) if (ch %in% specials) paste0("\\", ch) else ch, character(1)), collapse = "")
+  }
+  has_exact_token <- function(lines, token) {
+    if (!nzchar(token)) return(FALSE)
+    pattern <- paste0("(^|[^A-Z0-9])", escape_regex(token), "([^A-Z0-9]|$)")
+    any(grepl(pattern, lines, perl = TRUE))
+  }
+
   con <- file(path, "r")
   on.exit(close(con))
 
@@ -381,7 +392,7 @@ file_contains_patterns <- function(path, patterns) {
     if (!length(lines)) break
     upper_lines <- toupper(lines)
     for (pattern in patterns) {
-      if (any(grepl(pattern, upper_lines, fixed = TRUE))) {
+      if (has_exact_token(upper_lines, pattern)) {
         return(TRUE)
       }
     }
