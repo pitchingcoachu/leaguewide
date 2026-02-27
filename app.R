@@ -5901,12 +5901,18 @@ if (length(video_maps) > 0) {
     
     if (nrow(vm_wide)) {
       pitch_data <- pitch_data %>%
+        dplyr::mutate(
+          VideoClip = as.character(VideoClip),
+          VideoClip2 = as.character(VideoClip2),
+          VideoClip3 = as.character(VideoClip3)
+        ) %>%
         dplyr::mutate(.play_lower = tolower(as.character(PlayID))) %>%
         dplyr::left_join(vm_wide, by = c(".play_lower" = "play_id"), suffix = c("", ".vm")) %>%
         { 
           vm_cols <- paste0(c("VideoClip","VideoClip2","VideoClip3"), ".vm")
           for (vm_col in vm_cols) {
             if (!vm_col %in% names(.)) .[[vm_col]] <- rep(NA_character_, nrow(.))
+            .[[vm_col]] <- as.character(.[[vm_col]])
           }
           .
         } %>%

@@ -673,11 +673,18 @@ load_pitch_data_from_postgres <- function(school_code = "", startup_logger = NUL
   cached <- pitch_data_load_cached(cache_file, ttl)
   if (!is.null(cached) && is.list(cached) && !is.null(cached$data)) {
     required_cols <- c("Distance", "Direction", "ThrowSpeed", "ExchangeTime", "PopTime")
-    if (all(required_cols %in% names(cached$data))) {
+    min_cache_rows <- suppressWarnings(as.integer(Sys.getenv("PITCH_DATA_CACHE_MIN_ROWS", "100")))
+    if (is.na(min_cache_rows) || min_cache_rows < 0L) min_cache_rows <- 0L
+    cache_rows <- nrow(cached$data)
+    if (all(required_cols %in% names(cached$data)) && cache_rows >= min_cache_rows) {
       pitch_data_logger(startup_logger, sprintf("Loaded pitch_data from cache (%d rows)", nrow(cached$data)))
       return(cached)
     }
-    pitch_data_logger(startup_logger, "Ignoring stale cache snapshot missing required spray/catching columns")
+    if (!all(required_cols %in% names(cached$data))) {
+      pitch_data_logger(startup_logger, "Ignoring stale cache snapshot missing required spray/catching columns")
+    } else {
+      pitch_data_logger(startup_logger, sprintf("Ignoring undersized cache snapshot (%d rows < min %d); loading from Neon", cache_rows, min_cache_rows))
+    }
   }
 
   con <- do.call(DBI::dbConnect, c(list(RPostgres::Postgres()), cfg))
