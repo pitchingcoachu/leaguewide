@@ -10,6 +10,13 @@ pitch_data_parse_bool <- function(x, default = FALSE) {
   tolower(trimws(as.character(x))) %in% c("1", "true", "t", "yes", "y", "on")
 }
 
+pitch_data_normalize_school_code <- function(x) {
+  if (is.null(x) || length(x) == 0L) return("")
+  val <- suppressWarnings(as.character(x[[1]]))
+  if (!length(val) || is.na(val) || !nzchar(trimws(val))) return("")
+  toupper(trimws(val))
+}
+
 pitch_data_default_columns <- function() {
   c(
     "Date", "Pitcher", "Email", "PitcherThrows", "TaggedPitchType",
@@ -442,6 +449,7 @@ pitch_data_save_cache <- function(path, obj) {
 }
 
 pitch_data_build_select_sql <- function(con, cols_present, school_code, start_date = NULL, end_date = NULL, chunk_size = 100000L, key_state = NULL) {
+  school_code <- pitch_data_normalize_school_code(school_code)
   all_cols <- pitch_data_default_columns()
   name_map <- pitch_data_storage_name_map()
   if (!length(cols_present)) cols_present <- character(0)
@@ -644,6 +652,7 @@ pitch_data_monthly_ranges <- function(con, school_code = "") {
 }
 
 load_pitch_data_from_postgres <- function(school_code = "", startup_logger = NULL) {
+  school_code <- pitch_data_normalize_school_code(school_code)
   cfg_raw <- pitch_data_backend_config()
   if (!identical(cfg_raw$type, "postgres")) return(NULL)
 
@@ -717,6 +726,7 @@ load_pitch_data_from_postgres <- function(school_code = "", startup_logger = NUL
 }
 
 load_pitch_data_with_backend <- function(local_data_dir = file.path(getwd(), "data"), school_code = "", startup_logger = NULL) {
+  school_code <- pitch_data_normalize_school_code(school_code)
   cfg <- pitch_data_backend_config()
   if (!identical(cfg$type, "postgres")) return(NULL)
   max_attempts <- suppressWarnings(as.integer(Sys.getenv("PITCH_DATA_DB_RETRIES", "3")))

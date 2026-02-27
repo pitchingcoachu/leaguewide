@@ -5458,7 +5458,14 @@ if (!is.null(pitch_data_backend_result) &&
 }
 
 # Find every CSV under data/, keep only those under practice/ or V3/
-if (!pitch_data_loaded_from_backend) {
+if (!pitch_data_loaded_from_backend && isTRUE(postgres_backend_required)) {
+  all_csvs <- character(0)
+  pitch_data <- data.frame()
+  warning(
+    "PITCH_DATA_BACKEND=", backend_mode,
+    " requires Neon/Postgres, but backend load failed. CSV fallback is disabled in strict backend mode."
+  )
+} else if (!pitch_data_loaded_from_backend) {
   all_csvs <- list.files(
     path       = data_parent,
     pattern    = "\\.csv$",
@@ -5469,13 +5476,6 @@ if (!pitch_data_loaded_from_backend) {
   log_startup_timing(sprintf("Discovered %d practice/v3 CSV files", length(all_csvs)))
 
   if (!length(all_csvs)) {
-    if (isTRUE(postgres_backend_required)) {
-      warning(
-        "PITCH_DATA_BACKEND=", backend_mode,
-        " load failed and no local CSV fallback files were found under ", data_parent,
-        ". Starting with empty pitch_data."
-      )
-    }
     pitch_data <- data.frame()
   }
 } else {
@@ -5754,7 +5754,7 @@ draw_heat <- function(grid, bins = HEAT_BINS, pal_fun = heat_pal_red,
 }
 
 
-if (!pitch_data_loaded_from_backend) {
+if (!pitch_data_loaded_from_backend && !isTRUE(postgres_backend_required)) {
   pitch_data <- purrr::map_dfr(all_csvs, read_one)
   log_startup_timing(sprintf("Read %d CSV files into pitch_data (%d rows)", length(all_csvs), nrow(pitch_data)))
 }

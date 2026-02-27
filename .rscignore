@@ -1,3 +1,6 @@
 renv.lock
 packrat/
 .github
+data/practice/
+data/v3/
+data/V3/
