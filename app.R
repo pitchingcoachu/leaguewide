@@ -5836,15 +5836,17 @@ manual_map_path <- file.path(data_parent, "video_map_manual.csv")
 if (!"VideoClip"  %in% names(pitch_data)) pitch_data$VideoClip  <- NA_character_
 if (!"VideoClip2" %in% names(pitch_data)) pitch_data$VideoClip2 <- NA_character_
 if (!"VideoClip3" %in% names(pitch_data)) pitch_data$VideoClip3 <- NA_character_
+pitch_play_ids <- unique(tolower(trimws(as.character(pitch_data$PlayID %||% character(0)))))
+pitch_play_ids <- pitch_play_ids[nzchar(pitch_play_ids)]
 
 # Combine EdgeR and manual/iPhone video maps
 video_maps <- list()
 enable_neon_video_map <- isTRUE(school_setting("enable_neon_video_map", TRUE))
 if (enable_neon_video_map && exists("video_map_read_all_neon", mode = "function")) {
-  neon_raw <- tryCatch(video_map_read_all_neon(), error = function(e) tibble::tibble())
+  neon_raw <- tryCatch(video_map_read_all_neon(play_ids = pitch_play_ids), error = function(e) tibble::tibble())
   if (nrow(neon_raw) > 0) {
     video_maps[["neon"]] <- neon_raw
-    message("☁️ Loaded ", nrow(neon_raw), " videos from Neon")
+    message("☁️ Loaded ", nrow(neon_raw), " scoped videos from Neon")
   }
 } else if (!enable_neon_video_map) {
   message("🎥 Neon video map disabled for this school config")
