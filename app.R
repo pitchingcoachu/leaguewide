@@ -1109,7 +1109,7 @@ db_get_query_safe <- function(con, sql, params = NULL) {
     error = function(e1) {
       msg <- conditionMessage(e1)
       recoverable <- grepl(
-        "unnamed prepared statement does not exist|query needs to be bound before fetching|Failed to retrieve query result metadata",
+        "unnamed prepared statement does not exist|query needs to be bound before fetching|Failed to retrieve query result metadata|Query requires [0-9]+ params; [0-9]+ supplied|bind message supplies [0-9]+ parameters, but prepared statement .* requires [0-9]+",
         msg,
         ignore.case = TRUE
       )
@@ -1135,7 +1135,7 @@ db_execute_safe <- function(con, sql, params = NULL) {
     error = function(e1) {
       msg <- conditionMessage(e1)
       recoverable <- grepl(
-        "unnamed prepared statement does not exist|query needs to be bound before fetching|Failed to retrieve query result metadata",
+        "unnamed prepared statement does not exist|query needs to be bound before fetching|Failed to retrieve query result metadata|Query requires [0-9]+ params; [0-9]+ supplied|bind message supplies [0-9]+ parameters, but prepared statement .* requires [0-9]+",
         msg,
         ignore.case = TRUE
       )
@@ -21150,17 +21150,14 @@ load_newtforce_data <- function(app_id) {
   con <- biomech_db_connect()
   if (is.null(con)) return(NULL)
   
-  backend <- get_biomech_backend()
-  
   tryCatch({
-    # Use appropriate parameterized query syntax
-    if (backend$type == "sqlite") {
-      query <- "SELECT * FROM newtforce_data WHERE app_id = ? ORDER BY date DESC, last_name, first_name"
-      result <- db_get_query_safe(con, query, params = list(app_id))
-    } else {
-      query <- "SELECT * FROM newtforce_data WHERE app_id = $1 ORDER BY date DESC, last_name, first_name"
-      result <- db_get_query_safe(con, query, params = list(app_id))
-    }
+    app_id_sql <- as.character(DBI::dbQuoteLiteral(con, app_id))
+    query <- paste0(
+      "SELECT * FROM newtforce_data WHERE app_id = ",
+      app_id_sql,
+      " ORDER BY date DESC, last_name, first_name"
+    )
+    result <- db_get_query_safe(con, query)
     DBI::dbDisconnect(con)
     
     if (nrow(result) == 0) return(NULL)
@@ -21210,17 +21207,14 @@ get_newtforce_pitchers <- function(app_id) {
   con <- biomech_db_connect()
   if (is.null(con)) return(character(0))
   
-  backend <- get_biomech_backend()
-  
   tryCatch({
-    # Use appropriate parameterized query syntax
-    if (backend$type == "sqlite") {
-      query <- "SELECT DISTINCT first_name, last_name FROM newtforce_data WHERE app_id = ? ORDER BY last_name, first_name"
-      result <- db_get_query_safe(con, query, params = list(app_id))
-    } else {
-      query <- "SELECT DISTINCT first_name, last_name FROM newtforce_data WHERE app_id = $1 ORDER BY last_name, first_name"
-      result <- db_get_query_safe(con, query, params = list(app_id))
-    }
+    app_id_sql <- as.character(DBI::dbQuoteLiteral(con, app_id))
+    query <- paste0(
+      "SELECT DISTINCT first_name, last_name FROM newtforce_data WHERE app_id = ",
+      app_id_sql,
+      " ORDER BY last_name, first_name"
+    )
+    result <- db_get_query_safe(con, query)
     DBI::dbDisconnect(con)
     
     if (nrow(result) == 0) return(character(0))
@@ -21604,8 +21598,16 @@ biomech_server <- function(input, output, session, app_id_fn) {
     
     # Filter by date range (accept both mm/dd/YYYY and yyyy-mm-dd data values).
     range_vals <- input$newtforce_date_range
-    range_start <- suppressWarnings(as.Date(range_vals[1]))
-    range_end <- suppressWarnings(as.Date(range_vals[2]))
+    range_start <- as.Date(NA)
+    range_end <- as.Date(NA)
+    if (!is.null(range_vals) && length(range_vals) >= 2) {
+      if (!is.null(range_vals[[1]]) && nzchar(as.character(range_vals[[1]]))) {
+        range_start <- suppressWarnings(as.Date(as.character(range_vals[[1]])))
+      }
+      if (!is.null(range_vals[[2]]) && nzchar(as.character(range_vals[[2]]))) {
+        range_end <- suppressWarnings(as.Date(as.character(range_vals[[2]])))
+      }
+    }
     data <- data %>%
       mutate(
         date_obj = suppressWarnings(as.Date(Date, format = "%m/%d/%Y")),
