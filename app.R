@@ -5847,6 +5847,8 @@ if (enable_neon_video_map && exists("video_map_read_all_neon", mode = "function"
   if (nrow(neon_raw) > 0) {
     video_maps[["neon"]] <- neon_raw
     message("☁️ Loaded ", nrow(neon_raw), " scoped videos from Neon")
+  } else {
+    message("☁️ Loaded 0 scoped videos from Neon (play_ids=", length(pitch_play_ids), ")")
   }
 } else if (!enable_neon_video_map) {
   message("🎥 Neon video map disabled for this school config")
@@ -5926,6 +5928,9 @@ if (length(video_maps) > 0) {
         dplyr::select(-dplyr::ends_with(".vm"), -.play_lower)
       matched_videos <- sum(nzchar(pitch_data$VideoClip %||% ""))
       message("✅ Attached videos for ", matched_videos, " pitches from combined maps")
+      if (!matched_videos) {
+        message("⚠️  No video matches found for current pitch_data PlayID values.")
+      }
     } else {
       message("⚠️  Video maps loaded but no rows matched PlayID in pitch data.")
     }
