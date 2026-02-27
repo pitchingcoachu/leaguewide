@@ -362,7 +362,12 @@ pitch_data_db_get_query <- function(con, sql) {
     error = function(e1) {
       msg <- conditionMessage(e1)
       recoverable <- grepl(
-        "unnamed prepared statement does not exist|query needs to be bound before fetching",
+        paste(
+          "unnamed prepared statement does not exist",
+          "query needs to be bound before fetching",
+          "bind message supplies [0-9]+ parameters, but prepared statement .* requires [0-9]+",
+          sep = "|"
+        ),
         msg,
         ignore.case = TRUE
       )
@@ -385,7 +390,12 @@ pitch_data_db_execute <- function(con, sql) {
     error = function(e1) {
       msg <- conditionMessage(e1)
       recoverable <- grepl(
-        "unnamed prepared statement does not exist|query needs to be bound before fetching",
+        paste(
+          "unnamed prepared statement does not exist",
+          "query needs to be bound before fetching",
+          "bind message supplies [0-9]+ parameters, but prepared statement .* requires [0-9]+",
+          sep = "|"
+        ),
         msg,
         ignore.case = TRUE
       )
