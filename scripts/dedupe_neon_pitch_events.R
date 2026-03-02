@@ -11,7 +11,7 @@ if (file.exists(".Renviron")) {
 source("pitch_data_service.R")
 
 args <- commandArgs(trailingOnly = TRUE)
-school_code <- if (length(args) >= 1L) args[[1]] else Sys.getenv("TEAM_CODE", "GCU")
+school_code <- if (length(args) >= 1L) args[[1]] else Sys.getenv("TEAM_CODE", "LSU")
 school_code <- toupper(trimws(school_code))
 if (!nzchar(school_code)) school_code <- "LSU"
 
