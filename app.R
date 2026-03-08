@@ -159,6 +159,31 @@ zone_nine_square_layers <- function(color = "black", linewidth = 0.5, alpha = 1)
   )
 }
 
+comp_zone_connector_layers <- function(color = "black", linewidth = 0.6, alpha = 1) {
+  mid_x <- (ZONE_LEFT + ZONE_RIGHT) / 2
+  mid_y <- (ZONE_BOTTOM + ZONE_TOP) / 2
+  comp_left <- -1.5
+  comp_right <- 1.5
+  comp_bottom <- mid_y - 1.5
+  comp_top <- mid_y + 1.5
+  seg_df <- data.frame(
+    x = c(mid_x, mid_x, ZONE_LEFT, ZONE_RIGHT),
+    y = c(ZONE_BOTTOM, ZONE_TOP, mid_y, mid_y),
+    xend = c(mid_x, mid_x, comp_left, comp_right),
+    yend = c(comp_bottom, comp_top, mid_y, mid_y)
+  )
+  list(
+    geom_segment(
+      data = seg_df,
+      aes(x = x, y = y, xend = xend, yend = yend),
+      inherit.aes = FALSE,
+      color = color,
+      linewidth = linewidth,
+      alpha = alpha
+    )
+  )
+}
+
 # Frequency (keep multi-color)
 heat_pal_freq <- function(n = HEAT_BINS) colorRampPalette(
   c("white","pink","red")
@@ -269,7 +294,7 @@ draw_heat <- function(grid, bins = HEAT_BINS, pal_fun = heat_pal_red,
     scale_fill_manual(values = fill_vals, guide = "none") +
     geom_polygon(data = home, aes(x, y), fill = NA, color = line_col, inherit.aes = FALSE) +
     geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-              fill = NA, color = line_col, inherit.aes = FALSE) +
+              fill = NA, color = line_col, linewidth = 1.15, inherit.aes = FALSE) +
     { if (!is.null(peak_df))
       geom_point(data = peak_df, aes(x = px, y = py), inherit.aes = FALSE,
                  size = 3.8, shape = 21, fill = "red", color = "black", stroke = 0.5)
@@ -368,7 +393,7 @@ draw_heat_binned <- function(grid, bin_size = 0.4, pal_fun = heat_pal_red,
     scale_fill_gradientn(colors = grad_vals, limits = scale_limits, na.value = "#00000000") +
     geom_polygon(data = home, aes(x, y), fill = NA, color = line_col, inherit.aes = FALSE) +
     geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-              fill = NA, color = line_col, inherit.aes = FALSE) +
+              fill = NA, color = line_col, linewidth = 1.15, inherit.aes = FALSE) +
     coord_fixed(ratio = 1, xlim = c(-2.5, 2.5), ylim = c(0, 4.5)) +
     theme_void() + 
     theme(legend.position = "none",
@@ -1582,6 +1607,27 @@ ensure_pitch_keys <- function(df) {
     df$PitchKey[missing] <- compute_pitch_key(df[missing, , drop = FALSE])
   }
   df
+}
+
+safe_date_pair <- function(x) {
+  if (is.null(x) || length(x) != 2) return(NULL)
+  d <- suppressWarnings(as.Date(x))
+  if (length(d) != 2 || any(is.na(d)) || any(!is.finite(d))) return(NULL)
+  d
+}
+
+safe_update_date_range_input <- function(session, input_id, start, end) {
+  d <- safe_date_pair(c(start, end))
+  if (is.null(d)) return(invisible(FALSE))
+  s <- d[[1]]
+  e <- d[[2]]
+  if (e < s) {
+    tmp <- s
+    s <- e
+    e <- tmp
+  }
+  updateDateRangeInput(session, input_id, start = s, end = e)
+  invisible(TRUE)
 }
 
 deduplicate_pitch_rows <- function(df, fast = FALSE) {
@@ -5529,7 +5575,13 @@ read_one <- function(fp) {
     VertApprAngle    = c("VAA"),
     HorzApprAngle    = c("HAA"),
     PlateLocSide     = c("PlateX"),
-    PlateLocHeight   = c("PlateZ")
+    PlateLocHeight   = c("PlateZ"),
+    ContactPositionX = c("contactpositionx", "contact_position_x"),
+    ContactPositionY = c("contactpositiony", "contact_position_y"),
+    ContactPositionZ = c("contactpositionz", "contact_position_z"),
+    VerticalAttackAngle = c("verticalattackangle", "vertical_attack_angle"),
+    HorizontalAttackAngle = c("horizontalattackangle", "horizontal_attack_angle"),
+    BatSpeed = c("batspeed", "bat_speed")
   )
   
   nm <- names(df)
@@ -5678,7 +5730,7 @@ draw_heat <- function(grid, bins = HEAT_BINS, pal_fun = heat_pal_red,
     scale_fill_manual(values = fill_vals, guide = "none") +
     geom_polygon(data = home, aes(x, y), fill = NA, color = line_col, inherit.aes = FALSE) +
     geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-              fill = NA, color = line_col, inherit.aes = FALSE) +
+              fill = NA, color = line_col, linewidth = 1.15, inherit.aes = FALSE) +
     { if (!is.null(peak_df))
       geom_point(data = peak_df, aes(x = px, y = py), inherit.aes = FALSE,
                  size = 3.8, shape = 21, fill = "red", color = "black", stroke = 0.5)
@@ -5771,6 +5823,8 @@ need_cols <- c(
   "ThrowSpeed","ExchangeTime","PopTime","TimeToBase",
   "BasePositionX","BasePositionY","BasePositionZ","TargetBase",
   "PlayResult","TaggedHitType","OutsOnPlay",
+  "ContactPositionX","ContactPositionY","ContactPositionZ",
+  "VerticalAttackAngle","HorizontalAttackAngle","BatSpeed",
   "Batter", "Catcher",
   "VideoClip","VideoClip2","VideoClip3",
   "SourceFile"
@@ -5801,6 +5855,12 @@ pitch_data <- pitch_data %>%
     HorzApprAngle   = as.numeric(HorzApprAngle),
     PlateLocSide    = as.numeric(PlateLocSide),
     PlateLocHeight  = as.numeric(PlateLocHeight),
+    ContactPositionX = as.numeric(ContactPositionX),
+    ContactPositionY = as.numeric(ContactPositionY),
+    ContactPositionZ = as.numeric(ContactPositionZ),
+    VerticalAttackAngle = as.numeric(VerticalAttackAngle),
+    HorizontalAttackAngle = as.numeric(HorizontalAttackAngle),
+    BatSpeed = as.numeric(BatSpeed),
     Extension       = as.numeric(Extension),
     ExitSpeed       = as.numeric(ExitSpeed),   # ← NEW
     Angle           = as.numeric(Angle),       # ← NEW
@@ -6204,7 +6264,9 @@ live_bp_mask <- function(df) {
 
 season_mask <- function(df) {
   if (!nrow(df)) return(logical(0))
-  as.character(df$SessionType) == "Live"
+  # "Season" should represent the full in-season dataset, not just Live BP.
+  # Keep "Live BP" as the strict Live-only subset.
+  rep(TRUE, nrow(df))
 }
 
 normalize_session_filter_value <- function(session_value) {
@@ -6281,11 +6343,12 @@ workload_filter_players_by_team <- function(names, team_type = "All") {
   norm_names <- norm_name_ci(names)
   campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
   pitchers_norm <- norm_name_ci(ALLOWED_PITCHERS_DL)
+  team_only_norm <- setdiff(pitchers_norm, campers_norm)
   known_norm <- unique(c(campers_norm, pitchers_norm))
   if (team_type == "Campers") {
     mask <- norm_names %in% campers_norm
   } else if (team_type == TEAM_CODE) {
-    mask <- norm_names %in% pitchers_norm
+    mask <- norm_names %in% team_only_norm
   } else if (team_type == "Opponents") {
     mask <- !(norm_names %in% known_norm)
   } else {
@@ -8122,6 +8185,152 @@ mod_hit_ui <- function(id, show_header = FALSE) {
                 )
               )
             )
+          ),
+          tabPanel(
+            "Swing Data",
+            tabsetPanel(
+              id = ns("contactTabs"),
+              tabPanel(
+                "2D Contact",
+                fluidRow(
+                  column(
+                    3,
+                    selectInput(
+                      ns("contact2dMode"),
+                      "Display:",
+                      choices = c("Individual Pitches" = "individual", "Average by Pitch Type" = "average_pitch_type"),
+                      selected = "individual"
+                    ),
+                    selectInput(
+                      ns("contact2dColorBy"),
+                      "Color By:",
+                      choices = c("Pitch Type" = "pitch_type", "Exit Velocity" = "exit_velocity", "Result" = "result"),
+                      selected = "pitch_type"
+                    ),
+                    tags$div(
+                      style = "font-weight:bold; text-align:left; margin-bottom:6px;",
+                      "Color Key"
+                    ),
+                    plotOutput(ns("contact_pitch_type_key"), height = "560px")
+                  ),
+                  column(
+                    9,
+                    ggiraph::girafeOutput(ns("contactPoint2d"), height = "560px")
+                  )
+                )
+              ),
+              tabPanel(
+                "3D Contact",
+                fluidRow(
+                  column(
+                    3,
+                    selectInput(
+                      ns("contact3dMode"),
+                      "Display:",
+                      choices = c("Individual Pitches" = "individual", "Average by Pitch Type" = "average_pitch_type"),
+                      selected = "individual"
+                    ),
+                    selectInput(
+                      ns("contact3dColorBy"),
+                      "Color By:",
+                      choices = c("Pitch Type" = "pitch_type", "Exit Velocity" = "exit_velocity", "Result" = "result"),
+                      selected = "pitch_type"
+                    )
+                  ),
+                  column(9)
+                ),
+                plotly::plotlyOutput(ns("contactPoint3d"), height = "620px")
+              ),
+              tabPanel(
+                "Attack Angles",
+                fluidRow(
+                  column(
+                    3,
+                    selectInput(
+                      ns("attackAngleType"),
+                      "Angle View:",
+                      choices = c("Horizontal Attack", "Vertical Attack"),
+                      selected = "Horizontal Attack"
+                    ),
+                    radioButtons(
+                      ns("attackScope"),
+                      "Display:",
+                      choices = c("Average" = "average", "Individual Pitch" = "pitch"),
+                      selected = "average",
+                      inline = FALSE
+                    ),
+                    conditionalPanel(
+                      sprintf("input['%s']=='pitch'", ns("attackScope")),
+                      selectInput(
+                        ns("attackPitchId"),
+                        "Pitch:",
+                        choices = c("No pitches available" = ""),
+                        selected = ""
+                      )
+                    ),
+                    uiOutput(ns("attackAngleSummary"))
+                  ),
+                  column(
+                    9,
+                    uiOutput(ns("attackAngleHeader")),
+                    plotOutput(ns("attackAnglePlot"), height = "620px")
+                  )
+                )
+              ),
+              tabPanel(
+                "Bat Speed",
+                fluidRow(
+                  column(
+                    3,
+                    selectInput(
+                      ns("batSpeedDisplay"),
+                      "Display:",
+                      choices = c("Average" = "average", "Individual Pitches" = "individual"),
+                      selected = "average"
+                    ),
+                    selectInput(
+                      ns("batSpeedColorBy"),
+                      "Color By:",
+                      choices = c("Pitch Type" = "pitch_type", "Exit Velocity" = "exit_velocity", "Result" = "result"),
+                      selected = "pitch_type"
+                    ),
+                    uiOutput(ns("batSpeedSummary")),
+                    tags$div(
+                      style = "font-weight:bold; text-align:left; margin:8px 0 6px 0;",
+                      "Color Key"
+                    ),
+                    plotOutput(ns("batSpeedKey"), height = "250px")
+                  ),
+                  column(
+                    9,
+                    ggiraph::girafeOutput(ns("batSpeedGauge"), height = "620px")
+                  )
+                )
+              ),
+              tabPanel(
+                "EV and LA",
+                fluidRow(
+                  column(
+                    3,
+                    selectInput(
+                      ns("evlaColorBy"),
+                      "Color By:",
+                      choices = c("Result" = "result", "Pitch Type" = "pitch_type"),
+                      selected = "result"
+                    ),
+                    tags$div(
+                      style = "font-weight:bold; text-align:left; margin:8px 0 6px 0;",
+                      "Color Key"
+                    ),
+                    plotOutput(ns("evlaKey"), height = "300px")
+                  ),
+                  column(
+                    9,
+                    ggiraph::girafeOutput(ns("evlaPlot"), height = "620px")
+                  )
+                )
+              )
+            )
           )
         )
       )
@@ -8374,18 +8583,14 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
     # Sync local date input with global date range
     if (!is.null(global_date_range)) {
       observe({
-        if (!is.null(global_date_range()) && length(global_date_range()) == 2) {
-          updateDateRangeInput(session, "dates", 
-                               start = global_date_range()[1], 
-                               end = global_date_range()[2])
-        }
+        gd <- safe_date_pair(global_date_range())
+        if (!is.null(gd)) safe_update_date_range_input(session, "dates", gd[[1]], gd[[2]])
       })
       
       # Update global date range when local input changes
       observeEvent(input$dates, {
-        if (!is.null(input$dates) && length(input$dates) == 2) {
-          global_date_range(input$dates)
-        }
+        d_in <- safe_date_pair(input$dates)
+        if (!is.null(d_in)) global_date_range(d_in)
       })
     }
     ns <- session$ns
@@ -8402,18 +8607,8 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
     pd_team <- reactive({
       req(is_active())
       d <- pitch_data
-      
-      # If specific hitter or pitcher is selected, skip team filtering
-      # This allows selecting any opponent player
-      has_specific_hitter <- !is.null(input$hitter) && input$hitter != "All"
-      has_specific_pitcher <- !is.null(input$oppPitcher) && input$oppPitcher != "All"
-      
-      if (has_specific_hitter || has_specific_pitcher) {
-        # When specific player selected, show all data (team filter ignored)
-        return(d)
-      }
-      
-      # Apply team filtering based on selection when no specific player chosen
+
+      # Apply team filtering based on Team selector
       # For HITTING suite: filter by Batter (our hitters)
       if (!is.null(input$teamType)) {
         if (input$teamType == "Campers") {
@@ -8449,7 +8644,7 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
       if (nrow(d)) {
         rng <- range(d$Date, na.rm = TRUE)
         if (all(is.finite(rng))) {
-          updateDateRangeInput(session, "dates", start = rng[1], end = rng[2])
+          safe_update_date_range_input(session, "dates", rng[1], rng[2])
         }
       }
     }, ignoreInit = FALSE)
@@ -8519,10 +8714,10 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
       c(list(
         geom_polygon(data = home, aes(x, y), fill = NA, color = line_col),
         geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                  fill = NA, color = line_col, linetype = "dashed"),
+                  fill = NA, color = line_col),
         geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                  fill = NA, color = line_col)
-      ), zone_nine_square_layers(color = line_col))
+                  fill = NA, color = line_col, linewidth = 1.15)
+      ), comp_zone_connector_layers(color = line_col), zone_nine_square_layers(color = line_col))
     }
     
     # ---------- AB Report: date choices + default ----------
@@ -8838,6 +9033,29 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
     
     # Helper to create location plot with green box
     make_location_plot <- function(df_subset) {
+      make_hitting_summary_hover <- function(df_in, include_contact = FALSE) {
+        pr <- as.character(df_in$PlayResult)
+        pc <- as.character(df_in$PitchCall)
+        result_txt <- dplyr::if_else(!is.na(pr) & nzchar(pr) & pr != "Undefined", pr,
+                                     dplyr::coalesce(pc, "—"))
+        tip <- paste0(
+          "<b>", dplyr::coalesce(as.character(df_in$TaggedPitchType), "—"), "</b><br>",
+          "PitchCall: ", dplyr::coalesce(pc, "—"), "<br>",
+          "Result: ", result_txt, "<br>",
+          "Velo: ", ifelse(is.finite(as.numeric(df_in$RelSpeed)), sprintf("%.1f mph", as.numeric(df_in$RelSpeed)), "—"), "<br>",
+          "EV: ", ifelse(is.finite(as.numeric(df_in$ExitSpeed)), sprintf("%.1f mph", as.numeric(df_in$ExitSpeed)), "—"), "<br>",
+          "LA: ", ifelse(is.finite(as.numeric(df_in$Angle)), sprintf("%.1f°", as.numeric(df_in$Angle)), "—")
+        )
+        if (isTRUE(include_contact)) {
+          tip <- paste0(
+            tip,
+            "<br>Height: ", ifelse(is.finite(as.numeric(df_in$ContactPositionY)), sprintf("%.1f ft", round(as.numeric(df_in$ContactPositionY), 1)), "—"),
+            "<br>Side: ", ifelse(is.finite(as.numeric(df_in$ContactPositionZ)), sprintf("%.1f ft", round(as.numeric(df_in$ContactPositionZ), 1)), "—")
+          )
+        }
+        tip
+      }
+      
       if (!"Result" %in% names(df_subset)) {
         df_subset$Result <- compute_result(df_subset$PitchCall, df_subset$PlayResult)
       }
@@ -8868,14 +9086,7 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
             TRUE ~ NA_character_
           ),
           ResultDisplay = factor(ResultDisplay, levels = hit_result_levels),
-          tooltip = paste0(
-            "<b>", TaggedPitchType, "</b><br>",
-            "PitchCall: ", ifelse(is.na(PitchCall), "—", as.character(PitchCall)), "<br>",
-            "Result: ", ifelse(is.na(ResultDisplay), "—", as.character(ResultDisplay)), "<br>",
-            "Velo: ", ifelse(is.finite(as.numeric(RelSpeed)), sprintf("%.1f mph", as.numeric(RelSpeed)), "—"), "<br>",
-            "EV: ", ifelse(is.finite(as.numeric(ExitSpeed)), sprintf("%.1f mph", as.numeric(ExitSpeed)), "—"), "<br>",
-            "LA: ", ifelse(is.finite(as.numeric(Angle)), sprintf("%.1f°", as.numeric(Angle)), "—")
-          ),
+          tooltip = make_hitting_summary_hover(., include_contact = FALSE),
           rid = dplyr::row_number()
         )
       
@@ -8926,7 +9137,7 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
       p <- ggplot() +
         geom_polygon(data = home, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col) +
         geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                  inherit.aes = FALSE, fill = NA, color = line_col) +
+                  inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 1.15) +
         geom_rect(data = green_box,
                   aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                   inherit.aes = FALSE,
@@ -9012,7 +9223,7 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
       }
       win <- recent_date_window(date_pool, n_days = 7L)
       if (!is.null(win)) {
-        updateDateRangeInput(session, "dates", start = win[[1]], end = win[[2]])
+        safe_update_date_range_input(session, "dates", win[[1]], win[[2]])
       }
     }, ignoreInit = TRUE)
     
@@ -9274,6 +9485,9 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
     output$heatmapsPitchPlot <- ggiraph::renderGirafe({
       req(input$hmChartType == "Pitch")
       df <- filtered_hit(); if (!nrow(df)) return(NULL)
+      dark_on <- is_dark_mode()
+      cols <- colors_for_mode(dark_on)
+      line_col <- if (dark_on) "#ffffff" else "black"
       
       types <- intersect(names(all_colors), as.character(unique(df$TaggedPitchType)))
       types_chr <- as.character(types)
@@ -9296,9 +9510,10 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
       p <- ggplot() +
         geom_polygon(data = home, aes(x, y), fill = NA, color = line_col) +
         geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                  fill = NA, color = line_col, linetype = "dashed") +
-        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                   fill = NA, color = line_col) +
+        comp_zone_connector_layers(color = line_col) +
+        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                  fill = NA, color = line_col, linewidth = 1.15) +
         zone_nine_square_layers(color = line_col) +
         ggiraph::geom_point_interactive(
           data = df_other,
@@ -9342,6 +9557,1261 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
       df <- filtered_hit()
       df <- dplyr::filter(df, PitcherThrows == "Left")
       make_location_plot(df)
+    })
+    
+    # ---- Contact Point 2D ----
+    output$contactPoint2d <- ggiraph::renderGirafe({
+      df <- filtered_hit()
+      if (!all(c("ContactPositionX", "ContactPositionZ") %in% names(df))) {
+        p_missing <- ggplot() +
+          annotate("text", x = 0, y = 0, label = "Missing ContactPositionX/ContactPositionZ columns", size = 5) +
+          theme_void()
+        return(girafe_transparent(ggobj = p_missing))
+      }
+      
+      dark_on <- is_dark_mode()
+      line_col <- if (dark_on) "#ffffff" else "black"
+      text_col <- if (dark_on) "#e5e7eb" else "#111827"
+      cols <- colors_for_mode(dark_on)
+      ev_palette <- c(
+        "<70" = "#1f4e79", "70-75" = "#2f6fa3", "75-80" = "#3f8fc6", "80-85" = "#59b4d8",
+        "85-90" = "#7ccf9b", "90-95" = "#f4d35e", "95-100" = "#f59e0b", ">100" = "#ef4444",
+        "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      result_palette <- c(
+        "Single" = "#22c55e", "Double" = "#3b82f6", "Triple" = "#a855f7", "HomeRun" = "#ef4444",
+        "Out" = if (dark_on) "#e5e7eb" else "#111827", "Error" = "#f59e0b", "FieldersChoice" = "#06b6d4",
+        "Sacrifice" = "#14b8a6", "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      ev_bin <- function(x) {
+        dplyr::case_when(
+          !is.finite(x) ~ "Unknown",
+          x < 70 ~ "<70",
+          x < 75 ~ "70-75",
+          x < 80 ~ "75-80",
+          x < 85 ~ "80-85",
+          x < 90 ~ "85-90",
+          x < 95 ~ "90-95",
+          x < 100 ~ "95-100",
+          TRUE ~ ">100"
+        )
+      }
+      result_label <- function(x) {
+        out <- trimws(as.character(x))
+        out[!is.na(out) & out == "Undefined"] <- "Foul Ball"
+        out[is.na(out) | !nzchar(out)] <- "Unknown"
+        out
+      }
+      mode_chr <- function(x) {
+        x <- result_label(x)
+        x <- x[x != "Unknown"]
+        if (!length(x)) return("Unknown")
+        names(sort(table(x), decreasing = TRUE))[1]
+      }
+      
+      mode_2d <- input$contact2dMode %||% "individual"
+      color_by_2d <- input$contact2dColorBy %||% "pitch_type"
+      df_base <- df %>%
+        dplyr::mutate(
+          ContactPositionX = suppressWarnings(as.numeric(ContactPositionX)),
+          ContactPositionZ = suppressWarnings(as.numeric(ContactPositionZ)),
+          ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+          TaggedPitchType = as.character(TaggedPitchType),
+          ResultLabel = result_label(PlayResult)
+        ) %>%
+        dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionZ))
+      
+      if (identical(mode_2d, "average_pitch_type")) {
+        df_plot <- df_base %>%
+          dplyr::group_by(TaggedPitchType) %>%
+          dplyr::summarise(
+            ContactPositionX = mean(ContactPositionX, na.rm = TRUE),
+            ContactPositionZ = mean(ContactPositionZ, na.rm = TRUE),
+            ExitSpeed = mean(ExitSpeed, na.rm = TRUE),
+            ResultLabel = mode_chr(ResultLabel),
+            n = dplyr::n(),
+            .groups = "drop"
+          ) %>%
+          dplyr::mutate(
+            tooltip = paste0(
+              "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+              "Display: Average by Pitch Type<br>",
+              "Pitches: ", n, "<br>",
+              "Forward: ", ifelse(is.finite(ContactPositionX), sprintf("%.1f ft", round(ContactPositionX, 1)), "—"), "<br>",
+              "Side: ", ifelse(is.finite(ContactPositionZ), sprintf("%.1f ft", round(ContactPositionZ, 1)), "—")
+            ),
+            rid = dplyr::row_number()
+          )
+      } else {
+        df_plot <- df_base %>%
+          dplyr::mutate(
+            tooltip = {
+              paste0(
+                "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+                "Result: ", ResultLabel, "<br>",
+                "Velo: ", ifelse(is.finite(as.numeric(RelSpeed)), sprintf("%.1f mph", as.numeric(RelSpeed)), "—"), "<br>",
+                "EV: ", ifelse(is.finite(ExitSpeed), sprintf("%.1f mph", ExitSpeed), "—"), "<br>",
+                "LA: ", ifelse(is.finite(as.numeric(Angle)), sprintf("%.1f°", as.numeric(Angle)), "—"), "<br>",
+                "Forward: ", ifelse(is.finite(ContactPositionX), sprintf("%.1f ft", round(ContactPositionX, 1)), "—"), "<br>",
+                "Side: ", ifelse(is.finite(ContactPositionZ), sprintf("%.1f ft", round(ContactPositionZ, 1)), "—")
+              )
+            },
+            rid = dplyr::row_number()
+          )
+      }
+      
+      if (!nrow(df_plot)) {
+        p_empty <- ggplot() +
+          annotate("text", x = 0, y = 2, label = "No contact-position data for current filters", size = 5, color = text_col) +
+          theme_void()
+        return(girafe_transparent(ggobj = p_empty))
+      }
+      
+      df_plot <- df_plot %>%
+        dplyr::mutate(
+          ColorGroup = dplyr::case_when(
+            color_by_2d == "exit_velocity" ~ ev_bin(ExitSpeed),
+            color_by_2d == "result" ~ ResultLabel,
+            TRUE ~ dplyr::coalesce(TaggedPitchType, "Unknown")
+          )
+        )
+      groups <- unique(as.character(df_plot$ColorGroup))
+      if (color_by_2d == "exit_velocity") {
+        groups <- names(ev_palette)[names(ev_palette) %in% groups]
+        col_vals <- ev_palette[groups]
+      } else if (color_by_2d == "result") {
+        known <- names(result_palette)[names(result_palette) %in% groups]
+        unknown <- setdiff(groups, names(result_palette))
+        col_vals <- c(result_palette[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+      } else {
+        groups <- intersect(names(cols), groups)
+        extra <- setdiff(unique(as.character(df_plot$ColorGroup)), names(cols))
+        col_vals <- c(cols[groups], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(extra)), extra))
+      }
+      col_vals[is.na(col_vals)] <- "gray70"
+      y_min <- floor(min(c(df_base$ContactPositionX, -0.6), na.rm = TRUE))
+      y_max <- ceiling(max(c(df_base$ContactPositionX, 1.0), na.rm = TRUE))
+      if (!is.finite(y_min) || !is.finite(y_max) || y_max <= y_min) {
+        y_min <- -1
+        y_max <- 6
+      }
+      y_breaks <- seq(y_min, y_max, by = 1)
+      
+      # Smaller home plate (shared with Attack Angles horizontal view), tip to bottom.
+      home_plate <- data.frame(
+        x = c(-0.708, 0.708, 0.708, 0.000, -0.708, -0.708),
+        y = c(0.62, 0.62, 0.35, 0.00, 0.35, 0.62)
+      )
+      box_left <- data.frame(xmin = -1.90, xmax = -0.90, ymin = -0.45, ymax = 0.90)
+      box_right <- data.frame(xmin = 0.90, xmax = 1.90, ymin = -0.45, ymax = 0.90)
+      
+      p <- ggplot() +
+        geom_rect(data = box_left, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                  inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+        geom_rect(data = box_right, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                  inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+        geom_polygon(data = home_plate, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 0.7) +
+        ggiraph::geom_point_interactive(
+          data = df_plot,
+          aes(ContactPositionZ, ContactPositionX,
+              color = ColorGroup, fill = ColorGroup,
+              tooltip = tooltip, data_id = rid),
+          size = 2.4, alpha = 0.9, shape = 21, stroke = 0.45
+        ) +
+        scale_color_manual(values = col_vals, limits = names(col_vals), drop = FALSE, name = NULL) +
+        scale_fill_manual(values = col_vals, limits = names(col_vals), drop = FALSE, name = NULL) +
+        scale_y_continuous(breaks = y_breaks, limits = c(y_min, y_max), minor_breaks = NULL) +
+        coord_fixed(ratio = 1, xlim = c(-2.5, 2.5), ylim = c(y_min, y_max)) +
+        labs(x = "Side (ft)", y = "Forward (ft)") +
+        theme_minimal(base_size = 12) +
+        theme(
+          legend.position = "none",
+          axis.title = element_text(color = text_col, face = "bold"),
+          axis.text = element_text(color = text_col),
+          axis.ticks = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "transparent", color = NA),
+          plot.background = element_rect(fill = "transparent", color = NA)
+        )
+      
+      girafe_transparent(
+        ggobj = p,
+        options = list(
+          ggiraph::opts_tooltip(use_fill = TRUE, use_stroke = TRUE,
+                                css = "color:#fff !important;font-weight:600;padding:6px;border-radius:8px;text-shadow:0 1px 1px rgba(0,0,0,.4);"),
+          ggiraph::opts_hover(css = "stroke-width:1.5px;"),
+          ggiraph::opts_hover_inv(css = "opacity:0.15;")
+        )
+      )
+    })
+    
+    # ---- Contact Point 3D ----
+    output$contactPoint3d <- plotly::renderPlotly({
+      df <- filtered_hit()
+      if (!all(c("ContactPositionX", "ContactPositionY", "ContactPositionZ") %in% names(df))) {
+        return(plotly::plot_ly() %>% plotly::layout(
+          title = "Missing ContactPositionX/ContactPositionY/ContactPositionZ columns"
+        ))
+      }
+      
+      dark_on <- is_dark_mode()
+      cols <- colors_for_mode(dark_on)
+      line_col <- if (dark_on) "#e5e7eb" else "#111827"
+      axis_col <- if (dark_on) "#e5e7eb" else "#111827"
+      ev_palette <- c(
+        "<70" = "#1f4e79", "70-75" = "#2f6fa3", "75-80" = "#3f8fc6", "80-85" = "#59b4d8",
+        "85-90" = "#7ccf9b", "90-95" = "#f4d35e", "95-100" = "#f59e0b", ">100" = "#ef4444",
+        "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      result_palette <- c(
+        "Single" = "#22c55e", "Double" = "#3b82f6", "Triple" = "#a855f7", "HomeRun" = "#ef4444",
+        "Out" = if (dark_on) "#e5e7eb" else "#111827", "Error" = "#f59e0b", "FieldersChoice" = "#06b6d4",
+        "Sacrifice" = "#14b8a6", "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      ev_bin <- function(x) {
+        dplyr::case_when(
+          !is.finite(x) ~ "Unknown",
+          x < 70 ~ "<70",
+          x < 75 ~ "70-75",
+          x < 80 ~ "75-80",
+          x < 85 ~ "80-85",
+          x < 90 ~ "85-90",
+          x < 95 ~ "90-95",
+          x < 100 ~ "95-100",
+          TRUE ~ ">100"
+        )
+      }
+      result_label <- function(x) {
+        out <- trimws(as.character(x))
+        out[!is.na(out) & out == "Undefined"] <- "Foul Ball"
+        out[is.na(out) | !nzchar(out)] <- "Unknown"
+        out
+      }
+      mode_chr <- function(x) {
+        x <- result_label(x)
+        x <- x[x != "Unknown"]
+        if (!length(x)) return("Unknown")
+        names(sort(table(x), decreasing = TRUE))[1]
+      }
+      
+      mode_3d <- input$contact3dMode %||% "individual"
+      color_by_3d <- input$contact3dColorBy %||% "pitch_type"
+      df_base <- df %>%
+        dplyr::mutate(
+          ContactPositionX = suppressWarnings(as.numeric(ContactPositionX)),
+          ContactPositionY = suppressWarnings(as.numeric(ContactPositionY)),
+          ContactPositionZ = suppressWarnings(as.numeric(ContactPositionZ)),
+          ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+          TaggedPitchType = as.character(TaggedPitchType),
+          ResultLabel = result_label(PlayResult)
+        ) %>%
+        dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionY), is.finite(ContactPositionZ))
+      
+      if (identical(mode_3d, "average_pitch_type")) {
+        df_plot <- df_base %>%
+          dplyr::group_by(TaggedPitchType) %>%
+          dplyr::summarise(
+            ContactPositionX = mean(ContactPositionX, na.rm = TRUE),
+            ContactPositionY = mean(ContactPositionY, na.rm = TRUE),
+            ContactPositionZ = mean(ContactPositionZ, na.rm = TRUE),
+            ExitSpeed = mean(ExitSpeed, na.rm = TRUE),
+            ResultLabel = mode_chr(ResultLabel),
+            n = dplyr::n(),
+            .groups = "drop"
+          ) %>%
+          dplyr::mutate(
+            tooltip = paste0(
+              "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+              "Display: Average by Pitch Type<br>",
+              "Pitches: ", n, "<br>",
+              "Forward: ", ifelse(is.finite(ContactPositionX), sprintf("%.1f ft", round(ContactPositionX, 1)), "—"), "<br>",
+              "Height: ", ifelse(is.finite(ContactPositionY), sprintf("%.1f ft", round(ContactPositionY, 1)), "—"), "<br>",
+              "Side: ", ifelse(is.finite(ContactPositionZ), sprintf("%.1f ft", round(ContactPositionZ, 1)), "—")
+            )
+          )
+      } else {
+        df_plot <- df_base %>%
+          dplyr::mutate(
+            tooltip = {
+              paste0(
+                "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+                "Result: ", ResultLabel, "<br>",
+                "Velo: ", ifelse(is.finite(as.numeric(RelSpeed)), sprintf("%.1f mph", as.numeric(RelSpeed)), "—"), "<br>",
+                "EV: ", ifelse(is.finite(ExitSpeed), sprintf("%.1f mph", ExitSpeed), "—"), "<br>",
+                "LA: ", ifelse(is.finite(as.numeric(Angle)), sprintf("%.1f°", as.numeric(Angle)), "—"), "<br>",
+                "Forward: ", ifelse(is.finite(ContactPositionX), sprintf("%.1f ft", round(ContactPositionX, 1)), "—"), "<br>",
+                "Height: ", ifelse(is.finite(ContactPositionY), sprintf("%.1f ft", round(ContactPositionY, 1)), "—"), "<br>",
+                "Side: ", ifelse(is.finite(ContactPositionZ), sprintf("%.1f ft", round(ContactPositionZ, 1)), "—")
+              )
+            }
+          )
+      }
+      
+      if (!nrow(df_plot)) {
+        return(plotly::plot_ly() %>% plotly::layout(
+          title = "No contact-position data for current filters"
+        ))
+      }
+      
+      df_plot <- df_plot %>%
+        dplyr::mutate(
+          ColorGroup = dplyr::case_when(
+            color_by_3d == "exit_velocity" ~ ev_bin(ExitSpeed),
+            color_by_3d == "result" ~ ResultLabel,
+            TRUE ~ dplyr::coalesce(TaggedPitchType, "Unknown")
+          )
+        )
+      groups <- unique(as.character(df_plot$ColorGroup))
+      if (color_by_3d == "exit_velocity") {
+        groups <- names(ev_palette)[names(ev_palette) %in% groups]
+        col_vals <- ev_palette[groups]
+      } else if (color_by_3d == "result") {
+        known <- names(result_palette)[names(result_palette) %in% groups]
+        unknown <- setdiff(groups, names(result_palette))
+        col_vals <- c(result_palette[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+      } else {
+        groups <- intersect(names(cols), groups)
+        extra <- setdiff(unique(as.character(df_plot$ColorGroup)), names(cols))
+        col_vals <- c(cols[groups], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(extra)), extra))
+      }
+      col_vals[is.na(col_vals)] <- "gray70"
+      
+      plate <- data.frame(
+        x = c(0.00, 0.58, 1.42, 1.42, 0.58, 0.00),
+        y = c(0.00, 0.71, 0.71, -0.71, -0.71, 0.00),
+        z = 0
+      )
+      
+      zone_x <- 1.42
+      zone_left <- ZONE_LEFT
+      zone_right <- ZONE_RIGHT
+      zone_bottom <- ZONE_BOTTOM
+      zone_top <- ZONE_TOP
+      zone_dx <- (zone_right - zone_left) / 3
+      zone_dy <- (zone_top - zone_bottom) / 3
+      
+      zone_outer <- data.frame(
+        x = c(zone_x, zone_x, zone_x, zone_x, zone_x),
+        y = c(zone_left, zone_right, zone_right, zone_left, zone_left),
+        z = c(zone_bottom, zone_bottom, zone_top, zone_top, zone_bottom)
+      )
+      zone_v1 <- data.frame(x = zone_x, y = zone_left + zone_dx, z = c(zone_bottom, zone_top))
+      zone_v2 <- data.frame(x = zone_x, y = zone_left + 2 * zone_dx, z = c(zone_bottom, zone_top))
+      zone_h1 <- data.frame(x = zone_x, y = c(zone_left, zone_right), z = zone_bottom + zone_dy)
+      zone_h2 <- data.frame(x = zone_x, y = c(zone_left, zone_right), z = zone_bottom + 2 * zone_dy)
+      
+      p <- plotly::plot_ly()
+      for (grp in names(col_vals)) {
+        dpt <- df_plot[df_plot$ColorGroup == grp, , drop = FALSE]
+        p <- p %>%
+          plotly::add_markers(
+            data = dpt,
+            x = ~ContactPositionX, y = ~ContactPositionZ, z = ~ContactPositionY,
+            type = "scatter3d", mode = "markers",
+            name = grp,
+            marker = list(size = 4.5, color = unname(col_vals[[grp]]), opacity = 0.88),
+            text = ~tooltip,
+            hoverinfo = "text"
+          )
+      }
+      
+      p %>%
+        plotly::add_trace(
+          data = plate,
+          x = ~x, y = ~y, z = ~z,
+          type = "scatter3d", mode = "lines",
+          line = list(color = line_col, width = 6),
+          hoverinfo = "skip", showlegend = FALSE
+        ) %>%
+        plotly::add_trace(
+          data = zone_outer, x = ~x, y = ~y, z = ~z,
+          type = "scatter3d", mode = "lines",
+          line = list(color = line_col, width = 5),
+          hoverinfo = "skip", showlegend = FALSE
+        ) %>%
+        plotly::add_trace(
+          data = zone_v1, x = ~x, y = ~y, z = ~z,
+          type = "scatter3d", mode = "lines",
+          line = list(color = line_col, width = 3),
+          hoverinfo = "skip", showlegend = FALSE
+        ) %>%
+        plotly::add_trace(
+          data = zone_v2, x = ~x, y = ~y, z = ~z,
+          type = "scatter3d", mode = "lines",
+          line = list(color = line_col, width = 3),
+          hoverinfo = "skip", showlegend = FALSE
+        ) %>%
+        plotly::add_trace(
+          data = zone_h1, x = ~x, y = ~y, z = ~z,
+          type = "scatter3d", mode = "lines",
+          line = list(color = line_col, width = 3),
+          hoverinfo = "skip", showlegend = FALSE
+        ) %>%
+        plotly::add_trace(
+          data = zone_h2, x = ~x, y = ~y, z = ~z,
+          type = "scatter3d", mode = "lines",
+          line = list(color = line_col, width = 3),
+          hoverinfo = "skip", showlegend = FALSE
+        ) %>%
+        plotly::layout(
+          paper_bgcolor = "rgba(0,0,0,0)",
+          plot_bgcolor = "rgba(0,0,0,0)",
+          scene = list(
+            xaxis = list(title = "Forward (ft)", color = axis_col, gridcolor = if (dark_on) "#374151" else "#e5e7eb"),
+            yaxis = list(title = "Side (ft)", color = axis_col, gridcolor = if (dark_on) "#374151" else "#e5e7eb"),
+            zaxis = list(title = "Height (ft)", color = axis_col, gridcolor = if (dark_on) "#374151" else "#e5e7eb"),
+            dragmode = "orbit",
+            aspectmode = "manual",
+            aspectratio = list(x = 1.4, y = 1.2, z = 1.1),
+            camera = list(eye = list(x = 1.6, y = -1.5, z = 0.9)),
+            bgcolor = "rgba(0,0,0,0)"
+          ),
+          legend = list(orientation = "h", x = 0, y = 1.02)
+        )
+    })
+    
+    attack_hand_selected <- reactive({
+      hand <- input$batterSide %||% "All"
+      hand %in% c("Left", "Right")
+    })
+    
+    attack_angle_base <- reactive({
+      df <- filtered_hit()
+      req(is.data.frame(df))
+      req(all(c("VerticalAttackAngle", "HorizontalAttackAngle",
+                "ContactPositionX", "ContactPositionY", "ContactPositionZ") %in% names(df)))
+      df <- df %>%
+        dplyr::mutate(
+          VerticalAttackAngle = suppressWarnings(as.numeric(VerticalAttackAngle)),
+          HorizontalAttackAngle = suppressWarnings(as.numeric(HorizontalAttackAngle)),
+          ContactPositionX = suppressWarnings(as.numeric(ContactPositionX)),
+          ContactPositionY = suppressWarnings(as.numeric(ContactPositionY)),
+          ContactPositionZ = suppressWarnings(as.numeric(ContactPositionZ)),
+          ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+          Angle = suppressWarnings(as.numeric(Angle)),
+          PlayResult = as.character(PlayResult),
+          BatterSide = as.character(BatterSide),
+          .attack_row_id = dplyr::row_number()
+        )
+      if (!attack_hand_selected()) {
+        return(df[0, , drop = FALSE])
+      }
+      hand <- input$batterSide %||% "All"
+      df %>% dplyr::filter(BatterSide == hand)
+    })
+    
+    attack_angle_data <- reactive({
+      df <- attack_angle_base()
+      view_type <- input$attackAngleType %||% "Horizontal Attack"
+      if (identical(view_type, "Horizontal Attack")) {
+        df <- df %>%
+          dplyr::filter(
+            is.finite(HorizontalAttackAngle),
+            is.finite(ContactPositionX),
+            is.finite(ContactPositionZ)
+          )
+      } else {
+        df <- df %>%
+          dplyr::filter(
+            is.finite(VerticalAttackAngle),
+            is.finite(ContactPositionX),
+            is.finite(ContactPositionY),
+            is.finite(ContactPositionZ)
+          )
+      }
+      df %>%
+        dplyr::mutate(
+          .attack_pitch_id = as.character(.attack_row_id),
+          .attack_pitch_label = paste0(
+            "#", .attack_row_id, " | ",
+            if ("Date" %in% names(.)) format(as.Date(Date), "%m/%d/%y") else "Date N/A",
+            " | ", dplyr::coalesce(as.character(TaggedPitchType), "Unknown"),
+            " | VAA ", sprintf("%.1f", VerticalAttackAngle),
+            " | HAA ", sprintf("%.1f", HorizontalAttackAngle)
+          )
+        )
+    })
+    
+    observe({
+      df <- attack_angle_data()
+      if (!attack_hand_selected()) {
+        updateSelectInput(session, "attackPitchId", choices = c("Select Left or Right batter hand" = ""), selected = "")
+        return()
+      }
+      if (!nrow(df)) {
+        updateSelectInput(session, "attackPitchId", choices = c("No pitches available" = ""), selected = "")
+        return()
+      }
+      choices <- stats::setNames(df$.attack_pitch_id, df$.attack_pitch_label)
+      cur <- isolate(input$attackPitchId)
+      sel <- if (!is.null(cur) && nzchar(cur) && cur %in% df$.attack_pitch_id) cur else df$.attack_pitch_id[[1]]
+      updateSelectInput(session, "attackPitchId", choices = choices, selected = sel)
+    })
+    
+    selected_attack_row <- reactive({
+      df <- attack_angle_data()
+      base <- attack_angle_base()
+      view_type <- input$attackAngleType %||% "Horizontal Attack"
+      if (!nrow(df) || !nrow(base)) return(NULL)
+      scope <- input$attackScope %||% "average"
+      if (identical(scope, "pitch")) {
+        sel <- input$attackPitchId %||% ""
+        one <- df[df$.attack_pitch_id == sel, , drop = FALSE]
+        if (nrow(one)) return(one[1, , drop = FALSE])
+      }
+
+      if (identical(view_type, "Horizontal Attack")) {
+        contact_pool <- base %>%
+          dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionZ))
+        angle_pool <- base %>%
+          dplyr::filter(is.finite(HorizontalAttackAngle), is.finite(ContactPositionX), is.finite(ContactPositionZ))
+      } else {
+        contact_pool <- base %>%
+          dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionY))
+        angle_pool <- base %>%
+          dplyr::filter(is.finite(VerticalAttackAngle), is.finite(ContactPositionX), is.finite(ContactPositionY))
+      }
+      if (!nrow(contact_pool) || !nrow(angle_pool)) return(NULL)
+
+      side_tab <- table(contact_pool$BatterSide)
+      side_mode <- if (length(side_tab)) names(which.max(side_tab)) else "Right"
+      avg_ev <- if ("ExitSpeed" %in% names(contact_pool)) mean(contact_pool$ExitSpeed, na.rm = TRUE) else NA_real_
+      avg_la <- if ("Angle" %in% names(contact_pool)) mean(contact_pool$Angle, na.rm = TRUE) else NA_real_
+      tibble::tibble(
+        VerticalAttackAngle = mean(angle_pool$VerticalAttackAngle, na.rm = TRUE),
+        HorizontalAttackAngle = mean(angle_pool$HorizontalAttackAngle, na.rm = TRUE),
+        ContactPositionX = mean(contact_pool$ContactPositionX, na.rm = TRUE),
+        ContactPositionY = mean(contact_pool$ContactPositionY, na.rm = TRUE),
+        ContactPositionZ = mean(contact_pool$ContactPositionZ, na.rm = TRUE),
+        ExitSpeed = avg_ev,
+        Angle = avg_la,
+        PlayResult = NA_character_,
+        BatterSide = side_mode,
+        .attack_pitch_label = "Average"
+      )
+    })
+    
+    output$attackAngleSummary <- renderUI({
+      if (!attack_hand_selected()) {
+        return(tags$div(style = "margin-top:10px; color:#9ca3af;", "Select Batter Hand = Left or Right to view Attack Angles."))
+      }
+      row <- selected_attack_row()
+      if (is.null(row) || !nrow(row)) {
+        return(tags$div(style = "margin-top:10px; color:#9ca3af;", "No attack-angle contact data for current filters."))
+      }
+      title <- if (identical(input$attackScope, "pitch")) "Selected Pitch" else "Average"
+      tags$div(
+        style = "margin-top:10px; padding:10px; border:1px solid rgba(148,163,184,.35); border-radius:8px;",
+        tags$div(style = "font-weight:700; margin-bottom:4px;", title),
+        tags$div(paste0("VAA: ", sprintf("%.1f", row$VerticalAttackAngle[[1]]), "°")),
+        tags$div(paste0("HAA: ", sprintf("%.1f", row$HorizontalAttackAngle[[1]]), "°")),
+        tags$div(paste0("Forward (X): ", sprintf("%.1f", row$ContactPositionX[[1]]), " ft")),
+        tags$div(paste0("Height (Y): ", sprintf("%.1f", row$ContactPositionY[[1]]), " ft")),
+        tags$div(paste0("Side (Z): ", sprintf("%.1f", row$ContactPositionZ[[1]]), " ft")),
+        tags$div(paste0("Batter Side: ", row$BatterSide[[1]] %||% "Unknown"))
+      )
+    })
+    
+    output$attackAngleHeader <- renderUI({
+      if (!attack_hand_selected()) return(NULL)
+      row <- selected_attack_row()
+      if (is.null(row) || !nrow(row)) return(NULL)
+      view_type <- input$attackAngleType %||% "Horizontal Attack"
+      scope <- input$attackScope %||% "average"
+      angle_val <- if (identical(view_type, "Horizontal Attack")) {
+        suppressWarnings(as.numeric(row$HorizontalAttackAngle[[1]]))
+      } else {
+        suppressWarnings(as.numeric(row$VerticalAttackAngle[[1]]))
+      }
+      ev_val <- suppressWarnings(as.numeric(row$ExitSpeed[[1]]))
+      la_val <- suppressWarnings(as.numeric(row$Angle[[1]]))
+      result_val <- trimws(as.character(row$PlayResult[[1]] %||% ""))
+      if (!nzchar(result_val) || identical(result_val, "Undefined")) result_val <- "Foul Ball"
+      stats_line <- if (identical(scope, "pitch")) {
+        paste0(
+          "EV ", ifelse(is.finite(ev_val), sprintf("%.1f", ev_val), "—"),
+          " | LA ", ifelse(is.finite(la_val), sprintf("%.1f", la_val), "—"),
+          " | Result ", result_val
+        )
+      } else {
+        paste0(
+          "EV ", ifelse(is.finite(ev_val), sprintf("%.1f", ev_val), "—"),
+          " | LA ", ifelse(is.finite(la_val), sprintf("%.1f", la_val), "—")
+        )
+      }
+      tags$div(
+        style = "text-align:center; margin-bottom:8px;",
+        tags$div(style = "font-size:52px; font-weight:800; line-height:1;", paste0(ifelse(is.finite(angle_val), sprintf("%.1f", angle_val), "—"), "°")),
+        tags$div(style = "font-size:18px; margin-top:4px;", view_type),
+        tags$div(style = "font-size:15px; margin-top:3px;", stats_line)
+      )
+    })
+    
+    output$attackAnglePlot <- renderPlot({
+      if (!attack_hand_selected()) {
+        return(
+          ggplot() +
+            annotate("text", x = 0, y = 0, label = "Select Batter Hand = Left or Right to view Attack Angles", size = 5) +
+            theme_void()
+        )
+      }
+      row <- selected_attack_row()
+      if (is.null(row) || !nrow(row)) {
+        return(
+          ggplot() +
+            annotate("text", x = 0, y = 0, label = "No attack-angle contact data for current filters", size = 5) +
+            theme_void()
+        )
+      }
+      
+      dark_on <- is_dark_mode()
+      text_col <- if (dark_on) "#e5e7eb" else "#0f172a"
+      line_col <- if (dark_on) "#ffffff" else "black"
+      grid_col <- if (dark_on) "#334155" else "#dbe2ea"
+      plate_col <- if (dark_on) "#64748b" else "#94a3b8"
+      zero_col <- if (dark_on) "#cbd5e1" else "#64748b"
+      bat_col <- "#d2b48c"
+      angle_col <- "#ef4444"
+      side <- tolower(trimws(as.character(row$BatterSide[[1]] %||% "right")))
+      is_lefty <- startsWith(side, "l")
+      
+      view_type <- input$attackAngleType %||% "Horizontal Attack"
+      
+      if (identical(view_type, "Horizontal Attack")) {
+        # Overhead view: x = side, y = toward pitcher
+        cx <- as.numeric(row$ContactPositionZ[[1]])
+        cy <- as.numeric(row$ContactPositionX[[1]])
+        haa <- as.numeric(row$HorizontalAttackAngle[[1]])
+        if (is_lefty) haa <- -haa
+        rad <- haa * pi / 180
+        vec_len <- 1.2
+        dx <- sin(rad) * vec_len
+        dy <- cos(rad) * vec_len
+        contact_axis_pool <- attack_angle_base() %>%
+          dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionZ))
+        y_min <- floor(min(c(contact_axis_pool$ContactPositionX, -0.6), na.rm = TRUE))
+        y_max <- ceiling(max(c(contact_axis_pool$ContactPositionX, 1.0), na.rm = TRUE))
+        if (!is.finite(y_min) || !is.finite(y_max) || y_max <= y_min) {
+          y_min <- -1
+          y_max <- 6
+        }
+        y_breaks <- seq(y_min, y_max, by = 1)
+        
+        # 34" bat length => 2.833 ft total.
+        bat_half <- (34 / 12) / 2
+        # Plot-space tilt is opposite the attack-angle sign convention used in data.
+        bat_theta <- -rad
+        bat_x1 <- cx - cos(bat_theta) * bat_half
+        bat_y1 <- cy - sin(bat_theta) * bat_half
+        bat_x2 <- cx + cos(bat_theta) * bat_half
+        bat_y2 <- cy + sin(bat_theta) * bat_half
+        
+        home_plate <- data.frame(
+          x = c(-0.708, 0.708, 0.708, 0.000, -0.708, -0.708),
+          y = c(0.62, 0.62, 0.35, 0.00, 0.35, 0.62)
+        )
+        box_left <- data.frame(xmin = -1.90, xmax = -0.90, ymin = -0.45, ymax = 0.90)
+        box_right <- data.frame(xmin = 0.90, xmax = 1.90, ymin = -0.45, ymax = 0.90)
+        
+        pull_right <- if (is_lefty) "PULL" else "OPPO"
+        pull_left <- if (is_lefty) "OPPO" else "PULL"
+        
+        # Put barrel on handedness side (RHH right side, LHH left side).
+        if (is_lefty) {
+          if (bat_x1 <= bat_x2) {
+            barrel_x <- bat_x1; barrel_y <- bat_y1
+            handle_x <- bat_x2; handle_y <- bat_y2
+          } else {
+            barrel_x <- bat_x2; barrel_y <- bat_y2
+            handle_x <- bat_x1; handle_y <- bat_y1
+          }
+        } else {
+          if (bat_x1 >= bat_x2) {
+            barrel_x <- bat_x1; barrel_y <- bat_y1
+            handle_x <- bat_x2; handle_y <- bat_y2
+          } else {
+            barrel_x <- bat_x2; barrel_y <- bat_y2
+            handle_x <- bat_x1; handle_y <- bat_y1
+          }
+        }
+        
+        dir_norm <- sqrt(dx^2 + dy^2)
+        ux <- ifelse(dir_norm > 0, dx / dir_norm, 0)
+        uy <- ifelse(dir_norm > 0, dy / dir_norm, 1)
+        # Keep displayed contact tied to actual average/selected contact location.
+        bat_norm <- sqrt((barrel_x - handle_x)^2 + (barrel_y - handle_y)^2)
+        ubx <- ifelse(bat_norm > 0, (barrel_x - handle_x) / bat_norm, 1)
+        uby <- ifelse(bat_norm > 0, (barrel_y - handle_y) / bat_norm, 0)
+        # Align reported contact coordinate to the arrow origin (near barrel), not bat midpoint.
+        arrow_start_inset <- 0.17
+        current_arrow_x <- barrel_x - ubx * arrow_start_inset
+        current_arrow_y <- barrel_y - uby * arrow_start_inset
+        shift_x <- cx - current_arrow_x
+        shift_y <- cy - current_arrow_y
+        barrel_x <- barrel_x + shift_x
+        barrel_y <- barrel_y + shift_y
+        handle_x <- handle_x + shift_x
+        handle_y <- handle_y + shift_y
+        contact_x <- cx
+        contact_y <- cy
+        bat_t <- seq(0, 1, length.out = 41)
+        bat_seg <- data.frame(
+          x = handle_x + (barrel_x - handle_x) * bat_t[-length(bat_t)],
+          y = handle_y + (barrel_y - handle_y) * bat_t[-length(bat_t)],
+          xend = handle_x + (barrel_x - handle_x) * bat_t[-1],
+          yend = handle_y + (barrel_y - handle_y) * bat_t[-1]
+        )
+        t_mid <- (bat_t[-length(bat_t)] + bat_t[-1]) / 2
+        bat_seg$lw <- ifelse(
+          t_mid <= (2/3),
+          6.0 + (t_mid / (2/3)) * 2.0,
+          8.0 + ((t_mid - (2/3)) / (1/3)) * 6.8
+        )
+        bat_seg$lw_hi <- pmax(1.6, bat_seg$lw * 0.34)
+        arrow_x <- barrel_x - ubx * arrow_start_inset
+        arrow_y <- barrel_y - uby * arrow_start_inset
+        arrow_len <- 1.0
+        
+        ggplot() +
+          geom_rect(data = box_left, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                    fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+          geom_rect(data = box_right, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                    fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+          geom_polygon(data = home_plate, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 0.7) +
+          geom_segment(aes(x = arrow_x, y = arrow_y, xend = arrow_x, yend = arrow_y + arrow_len),
+                       linewidth = 1.2, color = zero_col, linetype = "dashed") +
+          geom_segment(
+            data = bat_seg,
+            aes(x = x, y = y, xend = xend, yend = yend, linewidth = lw),
+            color = bat_col, lineend = "round", show.legend = FALSE
+          ) +
+          geom_segment(
+            data = bat_seg,
+            aes(x = x, y = y, xend = xend, yend = yend, linewidth = lw_hi),
+            color = "#cfa170", alpha = 0.42, lineend = "round", show.legend = FALSE
+          ) +
+          geom_point(aes(x = handle_x, y = handle_y), size = 4.8, color = "#8b5a2b") +
+          geom_segment(
+            aes(x = arrow_x, y = arrow_y, xend = arrow_x + ux * arrow_len, yend = arrow_y + uy * arrow_len),
+            linewidth = 1.8, color = angle_col,
+            arrow = grid::arrow(length = grid::unit(0.18, "inches"), type = "closed")
+          ) +
+          annotate("text", x = -2.05, y = y_max - 0.35, label = pull_left, color = "#22c55e", hjust = 0, size = 4) +
+          annotate("text", x = 2.05, y = y_max - 0.35, label = pull_right, color = "#22c55e", hjust = 1, size = 4) +
+          scale_y_continuous(breaks = y_breaks, limits = c(y_min, y_max), minor_breaks = NULL) +
+          scale_linewidth_identity() +
+          coord_fixed(xlim = c(-2.5, 2.5), ylim = c(y_min, y_max)) +
+          labs(x = "Side (ft)", y = "Forward (ft)") +
+          theme_minimal(base_size = 12) +
+          theme(
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            axis.ticks = element_blank(),
+            axis.text = element_text(color = text_col),
+            axis.title = element_text(color = text_col, face = "bold"),
+            plot.background = element_rect(fill = "transparent", color = NA),
+            panel.background = element_rect(fill = "transparent", color = NA)
+          )
+      } else {
+        # Side view from batter-box perspective: x = forward (X), y = height (Y)
+        cx <- as.numeric(row$ContactPositionX[[1]])
+        cy <- as.numeric(row$ContactPositionY[[1]])
+        vaa <- as.numeric(row$VerticalAttackAngle[[1]])
+        x_plot <- if (is_lefty) -cx else cx
+        rad <- vaa * pi / 180
+        vec_len <- 1.15
+        face_dir <- ifelse(is_lefty, -1, 1)
+        # End-cap only in true side view.
+        cap_x <- x_plot
+        cap_y <- cy
+        zero_len <- vec_len
+        zero_xend <- cap_x + face_dir * zero_len
+        zero_yend <- cap_y
+        arrow_xend <- cap_x + face_dir * cos(rad) * vec_len
+        arrow_yend <- cap_y + sin(rad) * vec_len
+
+        # Side-view scaffold: plate tip points toward pitcher-side by handedness.
+        tip_dir <- ifelse(is_lefty, 1, -1)
+        plate_x_template <- c(-0.36, -0.08, 0.00, -0.08, -0.36, -0.36)
+        home_plate <- data.frame(
+          x = plate_x_template * tip_dir,
+          y = c(0.22, 0.22, 0.26, 0.30, 0.30, 0.22)
+        )
+        # Batter boxes stacked vertically to reinforce side perspective.
+        box_lower <- data.frame(
+          x = c(-1.45, 1.45, 1.18, -1.18, -1.45),
+          y = c(0.02, 0.02, 0.18, 0.18, 0.02)
+        )
+        box_upper <- data.frame(
+          x = c(-1.18, 1.18, 0.98, -0.98, -1.18),
+          y = c(0.36, 0.36, 0.50, 0.50, 0.36)
+        )
+        y_max_v <- 4.4
+
+        ggplot() +
+          geom_polygon(data = box_upper, aes(x, y), fill = NA, color = line_col, linewidth = 0.6, alpha = 0.40) +
+          geom_polygon(data = box_lower, aes(x, y), fill = NA, color = line_col, linewidth = 0.95, alpha = 0.80) +
+          geom_polygon(data = home_plate, aes(x, y), inherit.aes = FALSE,
+                       fill = plate_col, alpha = 0.22, color = line_col, linewidth = 0.7) +
+          geom_segment(aes(x = cap_x, y = cap_y, xend = zero_xend, yend = zero_yend),
+                       linewidth = 1.2, color = zero_col, linetype = "dashed") +
+          geom_point(aes(x = cap_x, y = cap_y), size = 8.2, color = "#a16207") +
+          geom_point(aes(x = cap_x, y = cap_y), size = 5.6, color = "#b7791f", alpha = 0.92) +
+          geom_segment(
+            aes(x = cap_x, y = cap_y, xend = arrow_xend, yend = arrow_yend),
+            linewidth = 1.9, color = angle_col,
+            arrow = grid::arrow(length = grid::unit(0.18, "inches"), type = "closed")
+          ) +
+          scale_x_continuous(
+            breaks = seq(if (is_lefty) -4.0 else -2.0, if (is_lefty) 2.0 else 4.0, by = 0.5),
+            labels = function(v) {
+              out <- if (is_lefty) -v else v
+              ifelse(abs(out) < 1e-9, "0", sprintf("%.1f", out))
+            }
+          ) +
+          scale_y_continuous(breaks = seq(0, 4, by = 0.5)) +
+          coord_fixed(xlim = if (is_lefty) c(-4.0, 2.1) else c(-2.1, 4.0), ylim = c(0, y_max_v)) +
+          labs(x = "Forward (ft)", y = "Height (ft)") +
+          theme_minimal(base_size = 12) +
+          theme(
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            axis.ticks = element_blank(),
+            axis.text = element_text(color = text_col),
+            axis.title = element_text(color = text_col, face = "bold"),
+            plot.background = element_rect(fill = "transparent", color = NA),
+            panel.background = element_rect(fill = "transparent", color = NA)
+          )
+      }
+    }, bg = "transparent")
+    
+    bat_speed_base <- reactive({
+      df <- filtered_hit()
+      req(is.data.frame(df))
+      result_label <- function(x) {
+        out <- trimws(as.character(x))
+        out[!is.na(out) & out == "Undefined"] <- "Foul Ball"
+        out[is.na(out) | !nzchar(out)] <- "Unknown"
+        out
+      }
+      df %>%
+        dplyr::mutate(
+          BatSpeed = suppressWarnings(as.numeric(BatSpeed)),
+          ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+          Angle = suppressWarnings(as.numeric(Angle)),
+          TaggedPitchType = as.character(TaggedPitchType),
+          ResultLabel = result_label(PlayResult)
+        ) %>%
+        dplyr::filter(is.finite(BatSpeed))
+    })
+    
+    bat_speed_colored <- reactive({
+      dark_on <- is_dark_mode()
+      cols <- colors_for_mode(dark_on)
+      ev_palette <- c(
+        "<70" = "#1f4e79", "70-75" = "#2f6fa3", "75-80" = "#3f8fc6", "80-85" = "#59b4d8",
+        "85-90" = "#7ccf9b", "90-95" = "#f4d35e", "95-100" = "#f59e0b", ">100" = "#ef4444",
+        "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      result_palette <- c(
+        "Single" = "#22c55e", "Double" = "#3b82f6", "Triple" = "#a855f7", "HomeRun" = "#ef4444",
+        "Out" = if (dark_on) "#e5e7eb" else "#111827", "Error" = "#f59e0b", "FieldersChoice" = "#06b6d4",
+        "Sacrifice" = "#14b8a6", "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      ev_bin <- function(x) {
+        dplyr::case_when(
+          !is.finite(x) ~ "Unknown",
+          x < 70 ~ "<70",
+          x < 75 ~ "70-75",
+          x < 80 ~ "75-80",
+          x < 85 ~ "80-85",
+          x < 90 ~ "85-90",
+          x < 95 ~ "90-95",
+          x < 100 ~ "95-100",
+          TRUE ~ ">100"
+        )
+      }
+      
+      df <- bat_speed_base()
+      if (!nrow(df)) return(list(df = df, palette = c()))
+      mode <- input$batSpeedDisplay %||% "average"
+      color_by <- input$batSpeedColorBy %||% "pitch_type"
+      if (identical(mode, "average")) {
+        mode_chr <- function(x) {
+          x <- x[x != "Unknown"]
+          if (!length(x)) return("Unknown")
+          names(sort(table(x), decreasing = TRUE))[1]
+        }
+        df <- dplyr::summarise(
+          df,
+          BatSpeed = mean(BatSpeed, na.rm = TRUE),
+          ExitSpeed = mean(ExitSpeed, na.rm = TRUE),
+          Angle = mean(Angle, na.rm = TRUE),
+          TaggedPitchType = mode_chr(TaggedPitchType),
+          ResultLabel = mode_chr(ResultLabel),
+          n = dplyr::n()
+        )
+      } else {
+        df <- df %>%
+          dplyr::mutate(
+            tooltip = paste0(
+              "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+              "Bat Speed: ", ifelse(is.finite(BatSpeed), sprintf("%.1f mph", BatSpeed), "—"), "<br>",
+              "EV: ", ifelse(is.finite(ExitSpeed), sprintf("%.1f mph", ExitSpeed), "—"), "<br>",
+              "LA: ", ifelse(is.finite(Angle), sprintf("%.1f°", Angle), "—"), "<br>",
+              "Result: ", ResultLabel
+            ),
+            rid = dplyr::row_number()
+          )
+      }
+      df <- df %>%
+        dplyr::mutate(
+          ColorGroup = dplyr::case_when(
+            color_by == "exit_velocity" ~ ev_bin(ExitSpeed),
+            color_by == "result" ~ ResultLabel,
+            TRUE ~ dplyr::coalesce(TaggedPitchType, "Unknown")
+          )
+        )
+      groups <- unique(as.character(df$ColorGroup))
+      if (color_by == "exit_velocity") {
+        groups <- names(ev_palette)[names(ev_palette) %in% groups]
+        palette <- ev_palette[groups]
+      } else if (color_by == "result") {
+        known <- names(result_palette)[names(result_palette) %in% groups]
+        unknown <- setdiff(groups, names(result_palette))
+        palette <- c(result_palette[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+      } else {
+        known <- names(cols)[names(cols) %in% groups]
+        unknown <- setdiff(groups, names(cols))
+        palette <- c(cols[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+      }
+      list(df = df, palette = palette)
+    })
+    
+    output$batSpeedSummary <- renderUI({
+      base <- bat_speed_base()
+      if (!nrow(base)) {
+        return(tags$div(style = "margin-top:8px; color:#9ca3af;", "No bat-speed data for current filters."))
+      }
+      mode <- input$batSpeedDisplay %||% "average"
+      avg_bs <- mean(base$BatSpeed, na.rm = TRUE)
+      avg_ev <- mean(base$ExitSpeed, na.rm = TRUE)
+      avg_la <- mean(base$Angle, na.rm = TRUE)
+      if (identical(mode, "average")) {
+        tags$div(
+          style = "margin-top:8px; padding:10px; border:1px solid rgba(148,163,184,.35); border-radius:8px;",
+          tags$div(style = "font-weight:700; margin-bottom:4px;", "Average"),
+          tags$div(paste0("Bat Speed: ", ifelse(is.finite(avg_bs), sprintf("%.1f mph", avg_bs), "—"))),
+          tags$div(paste0("EV: ", ifelse(is.finite(avg_ev), sprintf("%.1f mph", avg_ev), "—"))),
+          tags$div(paste0("LA: ", ifelse(is.finite(avg_la), sprintf("%.1f°", avg_la), "—")))
+        )
+      } else {
+        tags$div(
+          style = "margin-top:8px; padding:10px; border:1px solid rgba(148,163,184,.35); border-radius:8px;",
+          tags$div(style = "font-weight:700; margin-bottom:4px;", "Individual Pitches"),
+          tags$div(paste0("Pitches: ", nrow(base))),
+          tags$div(paste0("Avg Bat Speed: ", ifelse(is.finite(avg_bs), sprintf("%.1f mph", avg_bs), "—"))),
+          tags$div("Dashed line is fixed at 68 mph")
+        )
+      }
+    })
+    
+    output$batSpeedKey <- renderPlot({
+      dark_on <- is_dark_mode()
+      text_col <- if (dark_on) "#e5e7eb" else "#333333"
+      stroke_col <- text_col
+      out <- bat_speed_colored()
+      df <- out$df
+      pal <- out$palette
+      if (!nrow(df) || !length(pal)) return(NULL)
+      groups <- names(pal)
+      leg_df <- data.frame(KeyGroup = factor(groups, levels = rev(groups)), y = seq_along(groups), stringsAsFactors = FALSE)
+      ggplot(leg_df, aes(x = 0, y = y)) +
+        geom_point(aes(fill = KeyGroup), shape = 21, size = 5.5, color = stroke_col, stroke = 1.1) +
+        geom_text(aes(x = 0.30, label = KeyGroup), hjust = 0, size = 4, fontface = "bold", color = text_col) +
+        scale_fill_manual(values = pal, limits = names(pal), drop = FALSE, guide = "none") +
+        coord_cartesian(xlim = c(-0.2, 2.8), ylim = c(0.3, length(groups) + 0.7), clip = "off") +
+        theme_void() +
+        theme(
+          plot.background = element_rect(fill = "transparent", color = NA),
+          panel.background = element_rect(fill = "transparent", color = NA),
+          plot.margin = margin(5, 35, 5, 5)
+        )
+    }, bg = "transparent")
+    
+    output$batSpeedGauge <- ggiraph::renderGirafe({
+      out <- bat_speed_colored()
+      df <- out$df
+      pal <- out$palette
+      dark_on <- is_dark_mode()
+      text_col <- if (dark_on) "#e5e7eb" else "#0f172a"
+      ref_col <- if (dark_on) "#94a3b8" else "#64748b"
+      needle_col <- "#ef4444"
+      mode <- input$batSpeedDisplay %||% "average"
+      if (!nrow(df)) {
+        p_empty <- ggplot() +
+          annotate("text", x = 0, y = 0.5, label = "No bat-speed data for current filters", size = 5, color = text_col) +
+          theme_void()
+        return(girafe_transparent(ggobj = p_empty))
+      }
+      
+      speed_min <- 40
+      speed_max <- 80
+      to_theta <- function(s) {
+        s <- pmax(speed_min, pmin(speed_max, s))
+        pi * (1 - (s - speed_min) / (speed_max - speed_min))
+      }
+      arc <- data.frame(s = seq(speed_min, speed_max, length.out = 280))
+      arc$t <- to_theta(arc$s)
+      arc$x <- cos(arc$t)
+      arc$y <- sin(arc$t)
+      blend_cols <- grDevices::colorRampPalette(c("#1d4ed8", "#ffffff", "#dc2626"))(nrow(arc) - 1)
+      arc_seg <- data.frame(
+        x = arc$x[-nrow(arc)],
+        y = arc$y[-nrow(arc)],
+        xend = arc$x[-1],
+        yend = arc$y[-1],
+        col = blend_cols,
+        stringsAsFactors = FALSE
+      )
+      ticks <- seq(speed_min, speed_max, by = 5)
+      tick_df <- data.frame(
+        s = ticks,
+        t = to_theta(ticks)
+      )
+      tick_df$x1 <- 0.88 * cos(tick_df$t); tick_df$y1 <- 0.88 * sin(tick_df$t)
+      tick_df$x2 <- 1.00 * cos(tick_df$t); tick_df$y2 <- 1.00 * sin(tick_df$t)
+      tick_df$xl <- 1.10 * cos(tick_df$t); tick_df$yl <- 1.10 * sin(tick_df$t)
+      
+      ref_speed <- 68
+      ref_t <- to_theta(ref_speed)
+      ref_x <- 0.85 * cos(ref_t)
+      ref_y <- 0.85 * sin(ref_t)
+      
+      avg_bs <- mean(suppressWarnings(as.numeric(df$BatSpeed)), na.rm = TRUE)
+      avg_ev <- mean(suppressWarnings(as.numeric(df$ExitSpeed)), na.rm = TRUE)
+      avg_la <- mean(suppressWarnings(as.numeric(df$Angle)), na.rm = TRUE)
+      title_line <- if (identical(mode, "average")) {
+        paste0(
+          ifelse(is.finite(avg_bs), sprintf("%.1f", avg_bs), "—"), " mph",
+          "  |  EV ", ifelse(is.finite(avg_ev), sprintf("%.1f", avg_ev), "—"),
+          "  |  LA ", ifelse(is.finite(avg_la), sprintf("%.1f", avg_la), "—")
+        )
+      } else {
+        ""
+      }
+      
+      p <- ggplot() +
+        annotate("segment", x = arc_seg$x, y = arc_seg$y, xend = arc_seg$xend, yend = arc_seg$yend,
+                 color = arc_seg$col, linewidth = 15, lineend = "round") +
+        geom_path(data = arc, aes(x, y), linewidth = 2.2, color = if (dark_on) "#475569" else "#9ca3af") +
+        geom_segment(data = tick_df, aes(x = x1, y = y1, xend = x2, yend = y2), linewidth = 0.8, color = text_col, alpha = 0.6) +
+        geom_text(data = tick_df, aes(x = xl, y = yl, label = s), color = text_col, size = 3.8, fontface = "bold") +
+        geom_segment(aes(x = 0, y = 0, xend = ref_x, yend = ref_y),
+                     linewidth = 1.3, color = ref_col, linetype = "dashed") +
+        geom_point(aes(x = 0, y = 0), size = 4.5, color = if (dark_on) "#e5e7eb" else "#111827") +
+        annotate("text", x = 0, y = 1.44, label = title_line, color = text_col, size = 6, fontface = "bold")
+      
+      avg_t <- to_theta(avg_bs)
+      p <- p +
+        geom_segment(
+          aes(x = 0, y = 0, xend = 0.86 * cos(avg_t), yend = 0.86 * sin(avg_t)),
+          linewidth = 2.3, color = needle_col,
+          arrow = grid::arrow(length = grid::unit(0.16, "inches"), type = "closed")
+        )
+      
+      if (!identical(mode, "average")) {
+        df <- df %>%
+          dplyr::mutate(
+            t = to_theta(BatSpeed),
+            gx = 0.90 * cos(t),
+            gy = 0.90 * sin(t)
+          )
+        p <- p +
+          ggiraph::geom_point_interactive(
+            data = df,
+            aes(gx, gy, color = ColorGroup, fill = ColorGroup, tooltip = tooltip, data_id = rid),
+            shape = 21, size = 3.0, stroke = 0.45, alpha = 0.95
+          ) +
+          scale_color_manual(values = pal, limits = names(pal), drop = FALSE, guide = "none") +
+          scale_fill_manual(values = pal, limits = names(pal), drop = FALSE, guide = "none")
+      }
+      
+      p <- p +
+        coord_fixed(xlim = c(-1.25, 1.25), ylim = c(-0.05, 1.55)) +
+        theme_void() +
+        theme(
+          plot.background = element_rect(fill = "transparent", color = NA),
+          panel.background = element_rect(fill = "transparent", color = NA)
+        )
+      
+      girafe_transparent(
+        ggobj = p,
+        options = list(
+          ggiraph::opts_sizing(rescale = TRUE),
+          ggiraph::opts_tooltip(use_fill = TRUE, use_stroke = TRUE,
+                                css = "color:#fff !important;font-weight:600;padding:6px;border-radius:8px;text-shadow:0 1px 1px rgba(0,0,0,.35);"),
+          ggiraph::opts_hover(css = "stroke-width:1.4px;"),
+          ggiraph::opts_hover_inv(css = "opacity:0.18;")
+        )
+      )
+    })
+    
+    evla_base <- reactive({
+      df <- filtered_hit()
+      req(is.data.frame(df))
+      df %>%
+        dplyr::mutate(
+          ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+          Angle = suppressWarnings(as.numeric(Angle)),
+          TaggedPitchType = as.character(TaggedPitchType),
+          PlayResult = as.character(PlayResult)
+        ) %>%
+        dplyr::filter(
+          is.finite(ExitSpeed),
+          is.finite(Angle),
+          Angle >= -90, Angle <= 90,
+          !is.na(PlayResult),
+          nzchar(trimws(PlayResult)),
+          trimws(PlayResult) != "Undefined"
+        )
+    })
+    
+    evla_colored <- reactive({
+      dark_on <- is_dark_mode()
+      cols <- colors_for_mode(dark_on)
+      result_palette <- c(
+        "Single" = "#f97316", "Double" = "#6366f1", "Triple" = "#eab308", "HomeRun" = "#db2777",
+        "Out" = "#06b6d4", "Field Out" = "#8b5cf6", "Sacrifice" = "#d97706", "Foul Ball" = "#14b8a6",
+        "Error" = "#22d3ee", "FieldersChoice" = "#84cc16", "Unknown" = if (dark_on) "#fbbf24" else "#a16207"
+      )
+      color_by <- input$evlaColorBy %||% "result"
+      df <- evla_base()
+      if (!nrow(df)) return(list(df = df, palette = c()))
+      
+      df <- df %>%
+        dplyr::mutate(
+          ColorGroup = if (identical(color_by, "pitch_type")) dplyr::coalesce(TaggedPitchType, "Unknown")
+          else dplyr::coalesce(PlayResult, "Unknown"),
+          theta = Angle * pi / 180,
+          r = pmax(0, pmin(120, ExitSpeed)) / 120,
+          x = r * cos(theta),
+          y = r * sin(theta),
+          rid = dplyr::row_number(),
+          tooltip = paste0(
+            "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+            "Result: ", dplyr::coalesce(PlayResult, "—"), "<br>",
+            "EV: ", sprintf("%.1f mph", ExitSpeed), "<br>",
+            "LA: ", sprintf("%.1f°", Angle)
+          )
+        )
+      
+      groups <- unique(as.character(df$ColorGroup))
+      if (identical(color_by, "pitch_type")) {
+        known <- names(cols)[names(cols) %in% groups]
+        unknown <- setdiff(groups, names(cols))
+        pal <- c(cols[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+      } else {
+        known <- names(result_palette)[names(result_palette) %in% groups]
+        unknown <- setdiff(groups, names(result_palette))
+        pal <- c(result_palette[known], setNames(rep(if (dark_on) "#fbbf24" else "#a16207", length(unknown)), unknown))
+      }
+      list(df = df, palette = pal)
+    })
+    
+    output$evlaKey <- renderPlot({
+      dark_on <- is_dark_mode()
+      text_col <- if (dark_on) "#e5e7eb" else "#333333"
+      stroke_col <- text_col
+      out <- evla_colored()
+      df <- out$df
+      pal <- out$palette
+      if (!nrow(df) || !length(pal)) return(NULL)
+      groups <- names(pal)
+      leg_df <- data.frame(KeyGroup = factor(groups, levels = rev(groups)), y = seq_along(groups), stringsAsFactors = FALSE)
+      ggplot(leg_df, aes(x = 0, y = y)) +
+        geom_point(aes(fill = KeyGroup), shape = 21, size = 5.8, color = stroke_col, stroke = 1.1) +
+        geom_text(aes(x = 0.30, label = KeyGroup), hjust = 0, size = 4, fontface = "bold", color = text_col) +
+        scale_fill_manual(values = pal, limits = names(pal), drop = FALSE, guide = "none") +
+        coord_cartesian(xlim = c(-0.2, 2.8), ylim = c(0.3, length(groups) + 0.7), clip = "off") +
+        theme_void() +
+        theme(
+          plot.background = element_rect(fill = "transparent", color = NA),
+          panel.background = element_rect(fill = "transparent", color = NA),
+          plot.margin = margin(5, 35, 5, 5)
+        )
+    }, bg = "transparent")
+    
+    output$evlaPlot <- ggiraph::renderGirafe({
+      out <- evla_colored()
+      df <- out$df
+      pal <- out$palette
+      dark_on <- is_dark_mode()
+      text_col <- if (dark_on) "#e5e7eb" else "#0f172a"
+      guide_col <- if (dark_on) "#94a3b8" else "#9ca3af"
+      fill_col <- if (dark_on) "#1f2937" else "#d1ecf1"
+      if (!nrow(df)) {
+        p_empty <- ggplot() +
+          annotate("text", x = 0.5, y = 0.5, label = "No EV/LA data for current filters", size = 5, color = text_col) +
+          theme_void()
+        return(girafe_transparent(ggobj = p_empty))
+      }
+      
+      semi <- data.frame(t = seq(-pi/2, pi/2, length.out = 320))
+      semi$x <- cos(semi$t)
+      semi$y <- sin(semi$t)
+      guide_angles <- c(90, 45, 0, -45, -90)
+      guide_df <- data.frame(
+        ang = guide_angles,
+        t = guide_angles * pi / 180
+      )
+      guide_df$x <- cos(guide_df$t)
+      guide_df$y <- sin(guide_df$t)
+      guide_df$lx <- 0.88 * guide_df$x
+      guide_df$ly <- 0.88 * guide_df$y
+      guide_df$lab <- paste0(guide_df$ang, "°")
+      mph_df <- data.frame(
+        x = c(0.03, 1.08, 0.03),
+        y = c(1.13, 0, -1.13),
+        lab = rep("120 MPH", 3),
+        hjust = c(0, 0, 0),
+        stringsAsFactors = FALSE
+      )
+      
+      p <- ggplot() +
+        geom_polygon(data = rbind(data.frame(x = 0, y = -1), semi[, c("x", "y")], data.frame(x = 0, y = 1)),
+                     aes(x, y), fill = fill_col, alpha = 0.35, color = NA) +
+        geom_path(data = semi, aes(x, y), linewidth = 1.2, color = guide_col, alpha = 0.75) +
+        geom_segment(data = guide_df, aes(x = 0, y = 0, xend = x, yend = y),
+                     linewidth = 0.9, color = guide_col, alpha = 0.45) +
+        geom_text(data = guide_df, aes(x = lx, y = ly, label = lab),
+                  color = text_col, size = 4, alpha = 0.85) +
+        geom_text(data = mph_df, aes(x = x, y = y, label = lab, hjust = hjust), color = text_col, size = 4.2, fontface = "bold") +
+        ggiraph::geom_point_interactive(
+          data = df,
+          aes(x, y, color = ColorGroup, fill = ColorGroup, tooltip = tooltip, data_id = rid),
+          shape = 21, size = 4.2, stroke = 0.6, alpha = 0.92
+        ) +
+        scale_color_manual(values = pal, limits = names(pal), drop = FALSE, guide = "none") +
+        scale_fill_manual(values = pal, limits = names(pal), drop = FALSE, guide = "none") +
+        coord_fixed(xlim = c(-0.02, 1.42), ylim = c(-1.2, 1.2)) +
+        theme_void() +
+        theme(
+          plot.background = element_rect(fill = "transparent", color = NA),
+          panel.background = element_rect(fill = "transparent", color = NA)
+        )
+      
+      girafe_transparent(
+        ggobj = p,
+        options = list(
+          ggiraph::opts_sizing(rescale = TRUE),
+          ggiraph::opts_tooltip(use_fill = TRUE, use_stroke = TRUE,
+                                css = "color:#fff !important;font-weight:600;padding:6px;border-radius:8px;text-shadow:0 1px 1px rgba(0,0,0,.35);"),
+          ggiraph::opts_hover(css = "stroke-width:1.5px;"),
+          ggiraph::opts_hover_inv(css = "opacity:0.15;")
+        )
+      )
     })
     
     # ---- Result key (legend for pitch results) ----
@@ -9424,6 +10894,112 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
         theme(
           plot.background = element_rect(fill = "transparent", color = NA),
           panel.background = element_rect(fill = "transparent", color = NA)
+        )
+    }, bg = "transparent")
+    
+    output$contact_pitch_type_key <- renderPlot({
+      dark_on <- is_dark_mode()
+      text_col <- if (dark_on) "#e5e7eb" else "#333333"
+      stroke_col <- text_col
+      cols <- colors_for_mode(dark_on)
+      ev_palette <- c(
+        "<70" = "#1f4e79", "70-75" = "#2f6fa3", "75-80" = "#3f8fc6", "80-85" = "#59b4d8",
+        "85-90" = "#7ccf9b", "90-95" = "#f4d35e", "95-100" = "#f59e0b", ">100" = "#ef4444",
+        "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      result_palette <- c(
+        "Single" = "#22c55e", "Double" = "#3b82f6", "Triple" = "#a855f7", "HomeRun" = "#ef4444",
+        "Out" = if (dark_on) "#e5e7eb" else "#111827", "Error" = "#f59e0b", "FieldersChoice" = "#06b6d4",
+        "Sacrifice" = "#14b8a6", "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+      )
+      ev_bin <- function(x) {
+        dplyr::case_when(
+          !is.finite(x) ~ "Unknown",
+          x < 70 ~ "<70",
+          x < 75 ~ "70-75",
+          x < 80 ~ "75-80",
+          x < 85 ~ "80-85",
+          x < 90 ~ "85-90",
+          x < 95 ~ "90-95",
+          x < 100 ~ "95-100",
+          TRUE ~ ">100"
+        )
+      }
+      result_label <- function(x) {
+        out <- trimws(as.character(x))
+        out[!is.na(out) & out == "Undefined"] <- "Foul Ball"
+        out[is.na(out) | !nzchar(out)] <- "Unknown"
+        out
+      }
+      mode_2d <- input$contact2dMode %||% "individual"
+      color_by_2d <- input$contact2dColorBy %||% "pitch_type"
+      
+      df <- filtered_hit() %>%
+        dplyr::mutate(
+          ContactPositionX = suppressWarnings(as.numeric(ContactPositionX)),
+          ContactPositionZ = suppressWarnings(as.numeric(ContactPositionZ)),
+          ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+          TaggedPitchType = as.character(TaggedPitchType),
+          ResultLabel = result_label(PlayResult)
+        ) %>%
+        dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionZ))
+      if (is.null(df) || !nrow(df)) return(NULL)
+
+      if (identical(mode_2d, "average_pitch_type")) {
+        mode_chr <- function(x) {
+          x <- x[x != "Unknown"]
+          if (!length(x)) return("Unknown")
+          names(sort(table(x), decreasing = TRUE))[1]
+        }
+        df <- df %>%
+          dplyr::group_by(TaggedPitchType) %>%
+          dplyr::summarise(
+            ExitSpeed = mean(ExitSpeed, na.rm = TRUE),
+            ResultLabel = mode_chr(ResultLabel),
+            .groups = "drop"
+          )
+      }
+
+      groups <- if (color_by_2d == "exit_velocity") {
+        unique(ev_bin(df$ExitSpeed))
+      } else if (color_by_2d == "result") {
+        unique(df$ResultLabel)
+      } else {
+        unique(df$TaggedPitchType)
+      }
+      groups <- as.character(groups)
+      groups <- groups[!is.na(groups) & nzchar(groups)]
+      if (!length(groups)) return(NULL)
+
+      if (color_by_2d == "exit_velocity") {
+        groups <- names(ev_palette)[names(ev_palette) %in% groups]
+        key_colors <- ev_palette[groups]
+      } else if (color_by_2d == "result") {
+        known <- names(result_palette)[names(result_palette) %in% groups]
+        unknown <- setdiff(groups, names(result_palette))
+        key_colors <- c(result_palette[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+      } else {
+        known <- names(cols)[names(cols) %in% groups]
+        unknown <- setdiff(groups, names(cols))
+        key_colors <- c(cols[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+      }
+
+      leg_df <- data.frame(
+        KeyGroup = factor(names(key_colors), levels = rev(names(key_colors))),
+        y = seq_along(key_colors),
+        stringsAsFactors = FALSE
+      )
+      
+      ggplot(leg_df, aes(x = 0, y = y)) +
+        geom_point(aes(fill = KeyGroup), shape = 21, size = 5.5, color = stroke_col, stroke = 1.1) +
+        geom_text(aes(x = 0.30, label = KeyGroup), hjust = 0, size = 4, fontface = "bold", color = text_col) +
+        scale_fill_manual(values = key_colors, limits = names(key_colors), drop = FALSE, guide = "none") +
+        coord_cartesian(xlim = c(-0.2, 2.8), ylim = c(0.3, length(key_colors) + 0.7), clip = "off") +
+        theme_void() +
+        theme(
+          plot.background = element_rect(fill = "transparent", color = NA),
+          panel.background = element_rect(fill = "transparent", color = NA),
+          plot.margin = margin(5, 35, 5, 5)
         )
     }, bg = "transparent")
     
@@ -9628,7 +11204,9 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
             selectizeInput(
               ns("dpCustomCols"), label = "Columns (drag to order):",
               choices  = c("#","PA","AB","AVG","SLG","OBP","OPS","wOBA","xWOBA","ISO","xISO","BABIP",
-                           "Velo","IVB","HB","Distance","RV/100","1-1W%","QP%","QP+",
+                           "Velo","IVB","HB","Distance","RV/100",
+                           "Bat Speed","V. Attack Angle","H. Attack Angle","Hit Spin Rate",
+                           "1-1W%","QP%","QP+",
                            "Swing%","FPS%","Called-S%","Take%","Whiff%","CSW%","GB%","K%","BB%","Barrel%",
                            "Chase%","GoZoneSw%","IZswing%","EdgeSwing%","PosSD%","EV","LA",
                            "Swings","Takes","Called-S","Whiffs","Chases","IZswings","Barrels","FPS","EdgeSwings","PosSD","GoZoneSw"),
@@ -9849,7 +11427,8 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
           )
         
         # Guard optional columns so summary tables still render when source files omit them
-        for (nm in c("ExitSpeed", "Angle", "RelSpeed", "InducedVertBreak", "HorzBreak", "Distance", "RunsScored", "PlateLocSide", "PlateLocHeight")) {
+        for (nm in c("ExitSpeed", "Angle", "RelSpeed", "InducedVertBreak", "HorzBreak", "Distance", "RunsScored", "PlateLocSide", "PlateLocHeight",
+                     "BatSpeed", "VerticalAttackAngle", "HorizontalAttackAngle", "HitSpinRate")) {
           if (!nm %in% names(df)) df[[nm]] <- NA_real_
         }
         for (nm in c("SessionType", "PitchCall", "TaggedHitType", "Balls", "Strikes")) {
@@ -9897,7 +11476,7 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
           dplyr::select(SplitColumn, xWOBA, xISO, BABIP, `Barrel%`) %>%
           dplyr::rename(!!split_col_name := SplitColumn)
         
-        # Additional stats for custom tables: Velo, IVB, HB, Distance, RV/100, discipline stats
+        # Additional stats for custom tables: Velo/shape, batted-ball, and bat sensor metrics.
         pitch_metrics <- df %>%
           dplyr::group_by(SplitColumn) %>%
           dplyr::summarise(
@@ -9905,6 +11484,10 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
             IVB = mean(InducedVertBreak, na.rm = TRUE),
             HB = mean(HorzBreak, na.rm = TRUE),
             Distance = mean(Distance_num[SessionType == "Live" & PitchCall == "InPlay"], na.rm = TRUE),
+            `Bat Speed` = mean(suppressWarnings(as.numeric(BatSpeed))[SessionType == "Live"], na.rm = TRUE),
+            `V. Attack Angle` = mean(suppressWarnings(as.numeric(VerticalAttackAngle))[SessionType == "Live"], na.rm = TRUE),
+            `H. Attack Angle` = mean(suppressWarnings(as.numeric(HorizontalAttackAngle))[SessionType == "Live"], na.rm = TRUE),
+            `Hit Spin Rate` = mean(suppressWarnings(as.numeric(HitSpinRate))[SessionType == "Live"], na.rm = TRUE),
             `RV/100` = {
               rv <- sum(RunsScored_num, na.rm = TRUE)
               safe_div(rv * 100, dplyr::n())
@@ -10151,6 +11734,10 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
         all_row$IVB <- mean(df$InducedVertBreak, na.rm = TRUE)
         all_row$HB <- mean(df$HorzBreak, na.rm = TRUE)
         all_row$Distance <- mean(df$Distance_num[df$SessionType == "Live" & df$PitchCall == "InPlay"], na.rm = TRUE)
+        all_row$`Bat Speed` <- mean(suppressWarnings(as.numeric(df$BatSpeed))[df$SessionType == "Live"], na.rm = TRUE)
+        all_row$`V. Attack Angle` <- mean(suppressWarnings(as.numeric(df$VerticalAttackAngle))[df$SessionType == "Live"], na.rm = TRUE)
+        all_row$`H. Attack Angle` <- mean(suppressWarnings(as.numeric(df$HorizontalAttackAngle))[df$SessionType == "Live"], na.rm = TRUE)
+        all_row$`Hit Spin Rate` <- mean(suppressWarnings(as.numeric(df$HitSpinRate))[df$SessionType == "Live"], na.rm = TRUE)
         all_row$`RV/100` <- safe_div(sum(df$RunsScored_num, na.rm = TRUE) * 100, nrow(df))
         
         # Discipline stats for All row
@@ -10342,6 +11929,7 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
         num_cols <- c("PA","AB","AVG","SLG","OBP","OPS","wOBA","xWOBA","ISO","xISO","BABIP",
                       "Swing%","Whiff%","GB%","K%","BB%","Barrel%","EV","LA",
                       "Velo","IVB","HB","Distance","RV/100",
+                      "Bat Speed","V. Attack Angle","H. Attack Angle","Hit Spin Rate",
                       "FPS%","Called-S%","Take%","Chase%","GoZoneSw%","IZswing%",
                       "EdgeSwing%","1-1W%","QP%","QP+","PosSD%")
         
@@ -10402,6 +11990,12 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
                                 round(suppressWarnings(as.numeric(df_out$LA)), 1), "")
           }
           for (col in c("Velo", "IVB", "HB")) {
+            if (col %in% names(df_out)) {
+              df_out[[col]] <- ifelse(is.finite(suppressWarnings(as.numeric(df_out[[col]]))),
+                                      round(suppressWarnings(as.numeric(df_out[[col]])), 1), "")
+            }
+          }
+          for (col in c("Bat Speed", "V. Attack Angle", "H. Attack Angle", "Hit Spin Rate")) {
             if (col %in% names(df_out)) {
               df_out[[col]] <- ifelse(is.finite(suppressWarnings(as.numeric(df_out[[col]]))),
                                       round(suppressWarnings(as.numeric(df_out[[col]])), 1), "")
@@ -10995,18 +12589,14 @@ mod_catch_server <- function(id, is_active = shiny::reactive(TRUE), global_date_
     # Sync local date input with global date range
     if (!is.null(global_date_range)) {
       observe({
-        if (!is.null(global_date_range()) && length(global_date_range()) == 2) {
-          updateDateRangeInput(session, "dates", 
-                               start = global_date_range()[1], 
-                               end = global_date_range()[2])
-        }
+        gd <- safe_date_pair(global_date_range())
+        if (!is.null(gd)) safe_update_date_range_input(session, "dates", gd[[1]], gd[[2]])
       })
       
       # Update global date range when local input changes
       observeEvent(input$dates, {
-        if (!is.null(input$dates) && length(input$dates) == 2) {
-          global_date_range(input$dates)
-        }
+        d_in <- safe_date_pair(input$dates)
+        if (!is.null(d_in)) global_date_range(d_in)
       })
     }
     ns <- session$ns
@@ -11103,7 +12693,7 @@ mod_catch_server <- function(id, is_active = shiny::reactive(TRUE), global_date_
       }
       win <- recent_date_window(date_pool, n_days = 7L)
       if (!is.null(win)) {
-        updateDateRangeInput(session, "dates", start = win[[1]], end = win[[2]])
+        safe_update_date_range_input(session, "dates", win[[1]], win[[2]])
       }
     }, ignoreInit = TRUE)
     
@@ -11766,7 +13356,8 @@ mod_catch_server <- function(id, is_active = shiny::reactive(TRUE), global_date_
         scale_alpha(range = c(0.25, 1), guide = "none") +
         geom_polygon(data = home, aes(x, y), fill = NA, color = line_col, linewidth = 0.6) +
         geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                  fill = NA, color = line_col, linetype = "dashed", linewidth = 0.6) +
+                  fill = NA, color = line_col, linewidth = 0.6) +
+        comp_zone_connector_layers(color = line_col, linewidth = 0.6) +
         geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                   fill = NA, color = line_col, linewidth = 0.8) +
         zone_nine_square_layers(color = line_col, linewidth = 0.45) +
@@ -11805,8 +13396,9 @@ mod_catch_server <- function(id, is_active = shiny::reactive(TRUE), global_date_
       
       p <- ggplot() +
         geom_polygon(data = home, aes(x, y), fill = NA, color = line_col) +
-        geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), fill = NA, color = line_col, linetype = "dashed") +
-        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), fill = NA, color = line_col) +
+        geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), fill = NA, color = line_col) +
+        comp_zone_connector_layers(color = line_col) +
+        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), fill = NA, color = line_col, linewidth = 1.15) +
         zone_nine_square_layers(color = line_col) +
         ggiraph::geom_point_interactive(
           data = df_other,
@@ -12110,7 +13702,7 @@ mod_camps_server <- function(id, is_active = shiny::reactive(TRUE)) {
       first_date <- min(all_dates, na.rm = TRUE)
       last_date  <- max(all_dates, na.rm = TRUE)
       if (is.finite(first_date) && is.finite(last_date)) {
-        updateDateRangeInput(session, "dates", start = first_date, end = last_date)
+        safe_update_date_range_input(session, "dates", first_date, last_date)
       }
     })
     
@@ -12396,9 +13988,10 @@ mod_camps_server <- function(id, is_active = shiny::reactive(TRUE)) {
         scale_color_manual(values = all_colors[types], limits = types, name = NULL) +
         scale_shape_manual(values = shape_map, name = NULL) +
         geom_rect(aes(xmin = ZONE_LEFT, xmax = ZONE_RIGHT, ymin = ZONE_BOTTOM, ymax = ZONE_TOP),
-                  fill = NA, color = line_col, linewidth = 1) +
+                  fill = NA, color = line_col, linewidth = 1.15) +
         geom_rect(aes(xmin = -1.5, xmax = 1.5, ymin = 2.65-1.5, ymax = 2.65+1.5),
-                  fill = NA, color = line_col, linetype = "dashed", linewidth = 0.8) +
+                  fill = NA, color = line_col, linewidth = 0.8) +
+        comp_zone_connector_layers(color = line_col, linewidth = 0.8) +
         coord_fixed(ratio = 1) +
         labs(x = "Plate Side (ft)", y = "Plate Height (ft)") +
         theme_minimal() + axis_theme + grid_theme(dark_on) +
@@ -12706,9 +14299,10 @@ mod_camps_server <- function(id, is_active = shiny::reactive(TRUE)) {
       p <- ggplot() +
         geom_polygon(data = home, aes(x, y), fill = NA, color = line_col) +
         geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                  fill = NA, color = line_col, linetype = "dashed") +
-        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                   fill = NA, color = line_col) +
+        comp_zone_connector_layers(color = line_col) +
+        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                  fill = NA, color = line_col, linewidth = 1.15) +
         zone_nine_square_layers(color = line_col) +
         ggiraph::geom_point_interactive(
           data = df,
@@ -13337,29 +14931,17 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
     # Sync local date input with global date range
     if (!is.null(global_date_range)) {
       observe({
-        if (!is.null(global_date_range()) && length(global_date_range()) == 2) {
-          updateDateRangeInput(session, "dates", 
-                               start = global_date_range()[1], 
-                               end = global_date_range()[2])
-        }
+        gd <- safe_date_pair(global_date_range())
+        if (!is.null(gd)) safe_update_date_range_input(session, "dates", gd[[1]], gd[[2]])
       })
       
       # Update global date range when local input changes
       observeEvent(input$dates, {
-        if (!is.null(input$dates) && length(input$dates) == 2) {
-          global_date_range(input$dates)
-        }
+        d_in <- safe_date_pair(input$dates)
+        if (!is.null(d_in)) global_date_range(d_in)
       })
     }
     ns <- session$ns
-    
-    # ---------- constants ----------
-    TEAM_CODE <- "GRA_CAN"
-    
-    # Map team-code synonyms (extend this list as needed)
-    TEAM_SYNONYMS <- list(
-      GRA_CAN = c("GRA_CAN")
-    )
     
     # ---------- small helpers ----------
     nnz <- function(x) !is.null(x) && !is.na(x)
@@ -13423,22 +15005,53 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
         "Catching" = apply_session_type_filter(pitch_data, input$sessionType)
       )
       
-      # Filter by team selection
-      if (input$teamType == "Campers") {
-        if (identical(input$domain, "Hitting")) {
-          dplyr::filter(base, Batter %in% ALLOWED_CAMPERS)
+      team_type <- input$teamType %||% "All"
+      if (!nzchar(team_type) || identical(team_type, "All")) return(base)
+
+      campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
+      pitch_team_norm <- norm_name_ci(ALLOWED_PITCHERS_DL)
+      hit_team_norm <- norm_name_ci(ALLOWED_HITTERS_DL)
+      pitch_team_only_norm <- setdiff(pitch_team_norm, campers_norm)
+      hit_team_only_norm <- setdiff(hit_team_norm, campers_norm)
+      known_pitch_norm <- unique(c(pitch_team_only_norm, campers_norm))
+      known_hit_norm <- unique(c(hit_team_only_norm, campers_norm))
+
+      if (identical(input$domain, "Hitting")) {
+        batter_norm <- norm_name_ci(as.character(base$Batter %||% ""))
+        keep <- if (identical(team_type, "Campers")) {
+          batter_norm %in% campers_norm
+        } else if (identical(team_type, TEAM_CODE)) {
+          batter_norm %in% hit_team_only_norm
+        } else if (identical(team_type, "Opponents")) {
+          !(batter_norm %in% known_hit_norm)
         } else {
-          dplyr::filter(base, Pitcher %in% ALLOWED_CAMPERS)
+          rep(TRUE, length(batter_norm))
         }
-      } else if (input$teamType == TEAM_CODE) {
-        if (identical(input$domain, "Hitting")) {
-          dplyr::filter(base, Batter %in% ALLOWED_HITTERS)
+      } else if (identical(input$domain, "Catching")) {
+        catcher_norm <- norm_name_ci(as.character(base$Catcher %||% ""))
+        keep <- if (identical(team_type, "Campers")) {
+          catcher_norm %in% campers_norm
+        } else if (identical(team_type, TEAM_CODE)) {
+          catcher_norm %in% pitch_team_only_norm
+        } else if (identical(team_type, "Opponents")) {
+          !(catcher_norm %in% known_pitch_norm)
         } else {
-          dplyr::filter(base, Pitcher %in% ALLOWED_PITCHERS)
+          rep(TRUE, length(catcher_norm))
         }
       } else {
-        base
+        pitcher_norm <- norm_name_ci(as.character(base$Pitcher %||% ""))
+        keep <- if (identical(team_type, "Campers")) {
+          pitcher_norm %in% campers_norm
+        } else if (identical(team_type, TEAM_CODE)) {
+          pitcher_norm %in% pitch_team_only_norm
+        } else if (identical(team_type, "Opponents")) {
+          !(pitcher_norm %in% known_pitch_norm)
+        } else {
+          rep(TRUE, length(pitcher_norm))
+        }
       }
+      keep[is.na(keep)] <- FALSE
+      base[keep, , drop = FALSE]
     })
     
     
@@ -13448,7 +15061,7 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
       base <- team_base()
       win <- recent_date_window(base$Date, n_days = 7L)
       if (!is.null(win)) {
-        updateDateRangeInput(session, "dates", start = win[[1]], end = win[[2]])
+        safe_update_date_range_input(session, "dates", win[[1]], win[[2]])
       }
     })
     
@@ -14806,13 +16419,10 @@ mod_comp_server <- function(id, is_active = shiny::reactive(TRUE), global_date_r
     if (!is.null(global_date_range)) {
       # Comp module has different date input names (cmpA_dates, cmpB_dates)
       observe({
-        if (!is.null(global_date_range()) && length(global_date_range()) == 2) {
-          updateDateRangeInput(session, "cmpA_dates", 
-                               start = global_date_range()[1], 
-                               end = global_date_range()[2])
-          updateDateRangeInput(session, "cmpB_dates", 
-                               start = global_date_range()[1], 
-                               end = global_date_range()[2])
+        gd <- safe_date_pair(global_date_range())
+        if (!is.null(gd)) {
+          safe_update_date_range_input(session, "cmpA_dates", gd[[1]], gd[[2]])
+          safe_update_date_range_input(session, "cmpB_dates", gd[[1]], gd[[2]])
         }
       })
     }
@@ -14870,12 +16480,12 @@ mod_comp_server <- function(id, is_active = shiny::reactive(TRUE), global_date_r
     observeEvent(list(input$domain, input$cmpA_player, input$cmpA_sessionType), {
       req(is_active())
       last_date <- .last_date_for(input$domain, input$cmpA_player, input$cmpA_sessionType)
-      if (is.finite(last_date)) updateDateRangeInput(session, "cmpA_dates", start = last_date, end = last_date)
+      if (is.finite(last_date)) safe_update_date_range_input(session, "cmpA_dates", last_date, last_date)
     }, ignoreInit = TRUE)
     observeEvent(list(input$domain, input$cmpB_player, input$cmpB_sessionType), {
       req(is_active())
       last_date <- .last_date_for(input$domain, input$cmpB_player, input$cmpB_sessionType)
-      if (is.finite(last_date)) updateDateRangeInput(session, "cmpB_dates", start = last_date, end = last_date)
+      if (is.finite(last_date)) safe_update_date_range_input(session, "cmpB_dates", last_date, last_date)
     }, ignoreInit = TRUE)
     
     # ---------- Common filtering helper ----------
@@ -15251,7 +16861,7 @@ mod_comp_server <- function(id, is_active = shiny::reactive(TRUE), global_date_r
           p <- ggplot() +
             geom_polygon(data = home, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col) +
             geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                      inherit.aes = FALSE, fill = NA, color = line_col) +
+                      inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 1.15) +
             geom_rect(data = green_box,
                       aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                       inherit.aes = FALSE,
@@ -15313,9 +16923,10 @@ mod_comp_server <- function(id, is_active = shiny::reactive(TRUE), global_date_r
       p <- ggplot() +
         geom_polygon(data = home, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col) +
         geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                  inherit.aes = FALSE, fill = NA, color = line_col, linetype = "dashed") +
-        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                   inherit.aes = FALSE, fill = NA, color = line_col) +
+        comp_zone_connector_layers(color = line_col) +
+        geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                  inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 1.15) +
         zone_nine_square_layers(color = line_col) +
         ggiraph::geom_point_interactive(
           data = df_other,
@@ -17189,23 +18800,33 @@ custom_reports_server <- function(id) {
       team_type <- team_type %||% "All"
       switch(report_type,
         "Pitching" = {
-          pool <- unique(stats::na.omit(c(pitch_data_pitching$Pitcher, pitch_data$Pitcher)))
+          pool <- if (identical(team_type, "Opponents")) {
+            unique(stats::na.omit(as.character(pitch_data$Pitcher)))
+          } else {
+            unique(stats::na.omit(as.character(pitch_data_pitching$Pitcher)))
+          }
           pool <- pool[nzchar(pool)]
           if (team_type == "Campers") {
-            sort(intersect(ALLOWED_CAMPERS, pool))
+            sort(intersect(ALLOWED_CAMPERS_DL, pool))
           } else if (team_type == TEAM_CODE) {
-            sort(intersect(ALLOWED_PITCHERS, pool))
+            sort(intersect(ALLOWED_PITCHERS_DL, pool))
+          } else if (team_type == "Opponents") {
+            known_norm <- unique(c(norm_name_ci(ALLOWED_PITCHERS_DL), norm_name_ci(ALLOWED_CAMPERS_DL)))
+            sort(unique(pool[!(norm_name_ci(pool) %in% known_norm)]))
           } else {
             sort(pool)
           }
         },
         "Hitting" = {
-          pool <- unique(stats::na.omit(c(pitch_data$Batter, pitch_data_pitching$Batter)))
+          pool <- unique(stats::na.omit(as.character(pitch_data$Batter)))
           pool <- pool[nzchar(pool)]
           if (team_type == "Campers") {
-            sort(intersect(ALLOWED_CAMPERS, pool))
+            sort(intersect(ALLOWED_CAMPERS_DL, pool))
           } else if (team_type == TEAM_CODE) {
-            sort(intersect(ALLOWED_HITTERS, pool))
+            sort(intersect(ALLOWED_HITTERS_DL, pool))
+          } else if (team_type == "Opponents") {
+            known_norm <- unique(c(norm_name_ci(ALLOWED_HITTERS_DL), norm_name_ci(ALLOWED_CAMPERS_DL)))
+            sort(unique(pool[!(norm_name_ci(pool) %in% known_norm)]))
           } else {
             sort(pool)
           }
@@ -17385,6 +19006,33 @@ custom_reports_server <- function(id) {
             }
             if (!is.null(saved_cell$velocity_chart)) {
               updateSelectInput(session, paste0("cell_velocity_chart_", cell_id), selected = saved_cell$velocity_chart)
+            }
+            if (!is.null(saved_cell$swing_chart)) {
+              updateSelectInput(session, paste0("cell_swing_chart_", cell_id), selected = saved_cell$swing_chart)
+            }
+            if (!is.null(saved_cell$swing_contact_mode)) {
+              updateSelectInput(session, paste0("cell_swing_contact_mode_", cell_id), selected = saved_cell$swing_contact_mode)
+            }
+            if (!is.null(saved_cell$swing_contact_color_by)) {
+              updateSelectInput(session, paste0("cell_swing_contact_color_by_", cell_id), selected = saved_cell$swing_contact_color_by)
+            }
+            if (!is.null(saved_cell$swing_attack_view)) {
+              updateSelectInput(session, paste0("cell_swing_attack_view_", cell_id), selected = saved_cell$swing_attack_view)
+            }
+            if (!is.null(saved_cell$swing_attack_scope)) {
+              updateSelectInput(session, paste0("cell_swing_attack_scope_", cell_id), selected = saved_cell$swing_attack_scope)
+            }
+            if (!is.null(saved_cell$swing_attack_pitch)) {
+              updateSelectInput(session, paste0("cell_swing_attack_pitch_", cell_id), selected = saved_cell$swing_attack_pitch)
+            }
+            if (!is.null(saved_cell$swing_batspeed_mode)) {
+              updateSelectInput(session, paste0("cell_swing_batspeed_mode_", cell_id), selected = saved_cell$swing_batspeed_mode)
+            }
+            if (!is.null(saved_cell$swing_batspeed_color_by)) {
+              updateSelectInput(session, paste0("cell_swing_batspeed_color_by_", cell_id), selected = saved_cell$swing_batspeed_color_by)
+            }
+            if (!is.null(saved_cell$swing_evla_color_by)) {
+              updateSelectInput(session, paste0("cell_swing_evla_color_by_", cell_id), selected = saved_cell$swing_evla_color_by)
             }
             if (!is.null(saved_cell$filter_select)) {
               updateSelectizeInput(session, paste0("cell_filter_select_", cell_id), selected = saved_cell$filter_select)
@@ -18229,7 +19877,7 @@ custom_reports_server <- function(id) {
                                              choices = if (identical(input$report_type, "Pitching")) {
                                                c("", "Movement Plot", "Release Plot", "Location Plot", "Heatmap", "Velocity Chart", "Pitch Usage Pie Chart", "Pitch Usage Bar Chart", "Velocity Bar Chart", "Velocity Distribution", "Summary Table", "Spray Chart", "Note Section")
                                              } else {
-                                               c("", "Movement Plot", "Release Plot", "Location Plot", "Heatmap", "Summary Table", "Spray Chart", "Note Section")
+                                               c("", "Movement Plot", "Release Plot", "Location Plot", "Heatmap", "2D Contact", "3D Contact", "Horizontal Attack", "Vertical Attack", "Bat Speed", "EV and LA", "Summary Table", "Spray Chart", "Note Section")
                                              },
                                              selected = info$sel$type),
                                  {
@@ -18303,6 +19951,80 @@ custom_reports_server <- function(id) {
                                        "Average Velocity by Inning"
                                      ),
                                      selected = info$sel$velocity_chart %||% "Velocity Chart (Game/Inning)"
+                                   )
+                                 ),
+                                 conditionalPanel(
+                                   condition = sprintf("(input['%s'] == '2D Contact' || input['%s'] == '3D Contact') && input['%s'] == 'Hitting'",
+                                                       ns(paste0("cell_type_", info$cell_id)),
+                                                       ns(paste0("cell_type_", info$cell_id)),
+                                                       ns("report_type")),
+                                   tagList(
+                                     selectInput(
+                                       ns(paste0("cell_swing_contact_mode_", info$cell_id)),
+                                       "Display:",
+                                       choices = c("Individual Pitches" = "individual", "Average by Pitch Type" = "average_pitch_type"),
+                                       selected = info$sel$swing_contact_mode %||% "individual"
+                                     ),
+                                     selectInput(
+                                       ns(paste0("cell_swing_contact_color_by_", info$cell_id)),
+                                       "Color By:",
+                                       choices = c("Pitch Type" = "pitch_type", "Exit Velocity" = "exit_velocity", "Result" = "result"),
+                                       selected = info$sel$swing_contact_color_by %||% "pitch_type"
+                                     )
+                                   )
+                                 ),
+                                 conditionalPanel(
+                                   condition = sprintf("(input['%s'] == 'Horizontal Attack' || input['%s'] == 'Vertical Attack') && input['%s'] == 'Hitting'",
+                                                       ns(paste0("cell_type_", info$cell_id)),
+                                                       ns(paste0("cell_type_", info$cell_id)),
+                                                       ns("report_type")),
+                                   tagList(
+                                     selectInput(
+                                       ns(paste0("cell_swing_attack_scope_", info$cell_id)),
+                                       "Display:",
+                                       choices = c("Average" = "average", "Individual Pitch" = "pitch"),
+                                       selected = info$sel$swing_attack_scope %||% "average"
+                                     ),
+                                     conditionalPanel(
+                                       condition = sprintf("input['%s'] == 'pitch'",
+                                                           ns(paste0("cell_swing_attack_scope_", info$cell_id))),
+                                       selectInput(
+                                         ns(paste0("cell_swing_attack_pitch_", info$cell_id)),
+                                         "Pitch:",
+                                         choices = c("No pitches available" = ""),
+                                         selected = ""
+                                       )
+                                     )
+                                   )
+                                 ),
+                                 conditionalPanel(
+                                   condition = sprintf("input['%s'] == 'Bat Speed' && input['%s'] == 'Hitting'",
+                                                       ns(paste0("cell_type_", info$cell_id)),
+                                                       ns("report_type")),
+                                   tagList(
+                                     selectInput(
+                                       ns(paste0("cell_swing_batspeed_mode_", info$cell_id)),
+                                       "Display:",
+                                       choices = c("Average" = "average", "Individual Pitches" = "individual"),
+                                       selected = info$sel$swing_batspeed_mode %||% "average"
+                                     ),
+                                     selectInput(
+                                       ns(paste0("cell_swing_batspeed_color_by_", info$cell_id)),
+                                       "Color By:",
+                                       choices = c("Pitch Type" = "pitch_type", "Exit Velocity" = "exit_velocity", "Result" = "result"),
+                                       selected = info$sel$swing_batspeed_color_by %||% "pitch_type"
+                                     )
+                                   )
+                                 ),
+                                 conditionalPanel(
+                                   condition = sprintf("input['%s'] == 'EV and LA' && input['%s'] == 'Hitting'",
+                                                       ns(paste0("cell_type_", info$cell_id)),
+                                                       ns("report_type")),
+                                   selectInput(
+                                     ns(paste0("cell_swing_evla_color_by_", info$cell_id)),
+                                     "Color By:",
+                                     choices = c("Result" = "result", "Pitch Type" = "pitch_type"),
+                                     selected = info$sel$swing_evla_color_by %||% "result"
                                    )
                                  ),
                                  conditionalPanel(
@@ -18430,6 +20152,15 @@ custom_reports_server <- function(id) {
             color = update_if_exists(input[[paste0("cell_color_", id)]], existing_cell$color, TRUE),
             heat_stat = update_if_exists(input[[paste0("cell_heat_stat_", id)]], existing_cell$heat_stat, "Frequency"),
             velocity_chart = update_if_exists(input[[paste0("cell_velocity_chart_", id)]], existing_cell$velocity_chart, "Velocity Chart (Game/Inning)"),
+            swing_chart = update_if_exists(input[[paste0("cell_swing_chart_", id)]], existing_cell$swing_chart, "2D Contact"),
+            swing_contact_mode = update_if_exists(input[[paste0("cell_swing_contact_mode_", id)]], existing_cell$swing_contact_mode, "individual"),
+            swing_contact_color_by = update_if_exists(input[[paste0("cell_swing_contact_color_by_", id)]], existing_cell$swing_contact_color_by, "pitch_type"),
+            swing_attack_view = update_if_exists(input[[paste0("cell_swing_attack_view_", id)]], existing_cell$swing_attack_view, "Horizontal Attack"),
+            swing_attack_scope = update_if_exists(input[[paste0("cell_swing_attack_scope_", id)]], existing_cell$swing_attack_scope, "average"),
+            swing_attack_pitch = update_if_exists(input[[paste0("cell_swing_attack_pitch_", id)]], existing_cell$swing_attack_pitch, ""),
+            swing_batspeed_mode = update_if_exists(input[[paste0("cell_swing_batspeed_mode_", id)]], existing_cell$swing_batspeed_mode, "average"),
+            swing_batspeed_color_by = update_if_exists(input[[paste0("cell_swing_batspeed_color_by_", id)]], existing_cell$swing_batspeed_color_by, "pitch_type"),
+            swing_evla_color_by = update_if_exists(input[[paste0("cell_swing_evla_color_by_", id)]], existing_cell$swing_evla_color_by, "result"),
             filter_select = update_if_exists(input[[paste0("cell_filter_select_", id)]], existing_cell$filter_select, c("Dates","Session Type","Pitch Types")),
             # Save all filter values - preserve existing if input doesn't exist
             dates = update_if_exists(input[[paste0("cell_dates_", id)]], existing_cell$dates),
@@ -18839,7 +20570,744 @@ custom_reports_server <- function(id) {
         output[[out_id]] <- renderUI({ div("No data") })
         return(uiOutput(ns(out_id)))
       }
-      if (tsel == "Movement Plot") {
+      if (tsel %in% c("Swing Data", "2D Contact", "3D Contact", "Horizontal Attack", "Vertical Attack", "Bat Speed", "EV and LA") &&
+          identical(input$report_type, "Hitting")) {
+        chart_sel <- if (tsel == "Swing Data") {
+          # Backward compatibility for previously saved reports.
+          input[[paste0("cell_swing_chart_", settings_cell_id)]] %||% "2D Contact"
+        } else if (tsel %in% c("Horizontal Attack", "Vertical Attack")) {
+          "Attack Angles"
+        } else {
+          tsel
+        }
+        dark_on <- is_dark_mode_local()
+        cols <- colors_for_mode(dark_on)
+        text_col <- if (dark_on) "#e5e7eb" else "#111827"
+        line_col <- if (dark_on) "#e5e7eb" else "#111827"
+        tooltip_css_sd <- "color:#fff !important;font-weight:600;padding:6px;border-radius:8px;text-shadow:0 1px 1px rgba(0,0,0,.4);"
+        ev_palette <- c(
+          "<70" = "#1f4e79", "70-75" = "#2f6fa3", "75-80" = "#3f8fc6", "80-85" = "#59b4d8",
+          "85-90" = "#7ccf9b", "90-95" = "#f4d35e", "95-100" = "#f59e0b", ">100" = "#ef4444",
+          "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+        )
+        result_palette <- c(
+          "Single" = "#22c55e", "Double" = "#3b82f6", "Triple" = "#a855f7", "HomeRun" = "#ef4444",
+          "Out" = if (dark_on) "#e5e7eb" else "#111827", "Error" = "#f59e0b", "FieldersChoice" = "#06b6d4",
+          "Sacrifice" = "#14b8a6", "Foul Ball" = "#0ea5e9", "Unknown" = if (dark_on) "#94a3b8" else "gray60"
+        )
+        ev_bin <- function(x) {
+          dplyr::case_when(
+            !is.finite(x) ~ "Unknown",
+            x < 70 ~ "<70",
+            x < 75 ~ "70-75",
+            x < 80 ~ "75-80",
+            x < 85 ~ "80-85",
+            x < 90 ~ "85-90",
+            x < 95 ~ "90-95",
+            x < 100 ~ "95-100",
+            TRUE ~ ">100"
+          )
+        }
+        mode_chr <- function(x) {
+          x <- x[!is.na(x) & nzchar(x) & x != "Unknown"]
+          if (!length(x)) return("Unknown")
+          names(sort(table(x), decreasing = TRUE))[1]
+        }
+        result_label <- function(x) {
+          out <- trimws(as.character(x))
+          out[!is.na(out) & out == "Undefined"] <- "Foul Ball"
+          out[is.na(out) | !nzchar(out)] <- "Unknown"
+          out
+        }
+        add_color_group <- function(dfin, color_by) {
+          dfin <- dfin %>%
+            dplyr::mutate(
+              ColorGroup = dplyr::case_when(
+                identical(color_by, "exit_velocity") ~ ev_bin(ExitSpeed),
+                identical(color_by, "result") ~ ResultLabel,
+                TRUE ~ dplyr::coalesce(TaggedPitchType, "Unknown")
+              )
+            )
+          groups <- unique(as.character(dfin$ColorGroup))
+          if (identical(color_by, "exit_velocity")) {
+            groups <- names(ev_palette)[names(ev_palette) %in% groups]
+            pal <- ev_palette[groups]
+          } else if (identical(color_by, "result")) {
+            known <- names(result_palette)[names(result_palette) %in% groups]
+            unknown <- setdiff(groups, names(result_palette))
+            pal <- c(result_palette[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+          } else {
+            known <- names(cols)[names(cols) %in% groups]
+            unknown <- setdiff(groups, names(cols))
+            pal <- c(cols[known], setNames(rep(if (dark_on) "#94a3b8" else "gray60", length(unknown)), unknown))
+          }
+          pal[is.na(pal)] <- "gray70"
+          list(df = dfin, pal = pal)
+        }
+        df_sd <- df %>%
+          dplyr::mutate(
+            ContactPositionX = suppressWarnings(as.numeric(ContactPositionX)),
+            ContactPositionY = suppressWarnings(as.numeric(ContactPositionY)),
+            ContactPositionZ = suppressWarnings(as.numeric(ContactPositionZ)),
+            VerticalAttackAngle = suppressWarnings(as.numeric(VerticalAttackAngle)),
+            HorizontalAttackAngle = suppressWarnings(as.numeric(HorizontalAttackAngle)),
+            BatSpeed = suppressWarnings(as.numeric(BatSpeed)),
+            ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+            Angle = suppressWarnings(as.numeric(Angle)),
+            TaggedPitchType = as.character(TaggedPitchType),
+            ResultLabel = result_label(PlayResult),
+            BatterSide = as.character(BatterSide),
+            .attack_row_id = dplyr::row_number()
+          )
+        
+        if (identical(chart_sel, "2D Contact")) {
+          mode_2d <- input[[paste0("cell_swing_contact_mode_", settings_cell_id)]] %||% "individual"
+          color_by <- input[[paste0("cell_swing_contact_color_by_", settings_cell_id)]] %||% "pitch_type"
+          df2 <- df_sd %>% dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionZ))
+          if (!nrow(df2)) {
+            output[[out_id]] <- renderUI({ div("No contact-position data for current filters") })
+            return(uiOutput(ns(out_id)))
+          }
+          if (identical(mode_2d, "average_pitch_type")) {
+            df2 <- df2 %>%
+              dplyr::group_by(TaggedPitchType) %>%
+              dplyr::summarise(
+                ContactPositionX = mean(ContactPositionX, na.rm = TRUE),
+                ContactPositionY = mean(ContactPositionY, na.rm = TRUE),
+                ContactPositionZ = mean(ContactPositionZ, na.rm = TRUE),
+                ExitSpeed = mean(ExitSpeed, na.rm = TRUE),
+                Angle = mean(Angle, na.rm = TRUE),
+                ResultLabel = mode_chr(ResultLabel),
+                .groups = "drop"
+              )
+          }
+          df2 <- df2 %>%
+            dplyr::mutate(
+              tooltip = paste0(
+                "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+                "Result: ", dplyr::coalesce(ResultLabel, "—"), "<br>",
+                "Forward: ", ifelse(is.finite(ContactPositionX), sprintf("%.1f ft", ContactPositionX), "—"), "<br>",
+                "Side: ", ifelse(is.finite(ContactPositionZ), sprintf("%.1f ft", ContactPositionZ), "—"), "<br>",
+                "Height: ", ifelse(is.finite(ContactPositionY), sprintf("%.1f ft", ContactPositionY), "—"), "<br>",
+                "EV: ", ifelse(is.finite(ExitSpeed), sprintf("%.1f mph", ExitSpeed), "—"), "<br>",
+                "LA: ", ifelse(is.finite(Angle), sprintf("%.1f°", Angle), "—")
+              ),
+              rid = dplyr::row_number()
+            )
+          col_out <- add_color_group(df2, color_by)
+          df2 <- col_out$df
+          pal <- col_out$pal
+          y_min <- floor(min(c(df2$ContactPositionX, -0.6), na.rm = TRUE))
+          y_max <- ceiling(max(c(df2$ContactPositionX, 1.0), na.rm = TRUE))
+          if (!is.finite(y_min) || !is.finite(y_max) || y_max <= y_min) {
+            y_min <- -1
+            y_max <- 5
+          }
+          y_breaks <- seq(y_min, y_max, by = 1)
+          home_plate <- data.frame(
+            x = c(-0.708, 0.708, 0.708, 0.000, -0.708, -0.708),
+            y = c(0.62, 0.62, 0.35, 0.00, 0.35, 0.62)
+          )
+          box_left <- data.frame(xmin = -1.90, xmax = -0.90, ymin = -0.45, ymax = 0.90)
+          box_right <- data.frame(xmin = 0.90, xmax = 1.90, ymin = -0.45, ymax = 0.90)
+          show_leg <- color_by %in% c("exit_velocity", "result")
+          output[[out_id]] <- ggiraph::renderGirafe({
+            x_min <- max(-2.2, min(df2$ContactPositionZ, na.rm = TRUE) - 0.9)
+            x_max <- min(2.2, max(df2$ContactPositionZ, na.rm = TRUE) + 0.9)
+            y_min_zoom <- max(y_min, min(df2$ContactPositionX, na.rm = TRUE) - 0.9)
+            y_max_zoom <- min(y_max, max(df2$ContactPositionX, na.rm = TRUE) + 1.0)
+            if (!is.finite(x_min) || !is.finite(x_max) || x_max <= x_min) {
+              x_min <- -1.9; x_max <- 1.9
+            }
+            if (!is.finite(y_min_zoom) || !is.finite(y_max_zoom) || y_max_zoom <= y_min_zoom) {
+              y_min_zoom <- y_min; y_max_zoom <- y_max
+            }
+            p <- ggplot() +
+              geom_rect(data = box_left, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                        inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+              geom_rect(data = box_right, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                        inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+              geom_polygon(data = home_plate, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 0.7) +
+              ggiraph::geom_point_interactive(
+                data = df2,
+                aes(ContactPositionZ, ContactPositionX, color = ColorGroup, fill = ColorGroup, tooltip = tooltip, data_id = rid),
+                size = 2.2, alpha = 0.92, shape = 21, stroke = 0.4
+              ) +
+              scale_color_manual(values = pal, limits = names(pal), drop = FALSE, name = if (color_by == "result") "Result" else if (color_by == "exit_velocity") "Exit Velocity" else NULL, guide = if (show_leg) guide_legend(override.aes = list(size = 4)) else "none") +
+              scale_fill_manual(values = pal, limits = names(pal), drop = FALSE, name = if (color_by == "result") "Result" else if (color_by == "exit_velocity") "Exit Velocity" else NULL, guide = if (show_leg) guide_legend(override.aes = list(size = 4)) else "none") +
+              scale_y_continuous(breaks = y_breaks, limits = c(y_min, y_max), minor_breaks = NULL) +
+              coord_fixed(ratio = 1, xlim = c(x_min, x_max), ylim = c(y_min_zoom, y_max_zoom)) +
+              labs(x = NULL, y = NULL) +
+              theme_minimal(base_size = 12) +
+              theme(
+                legend.position = if (show_leg) "right" else "none",
+                legend.title = element_text(color = text_col, face = "bold"),
+                legend.text = element_text(color = text_col),
+                axis.title = element_blank(),
+                axis.text = element_blank(),
+                axis.ticks = element_blank(),
+                panel.grid.major = element_blank(),
+                panel.grid.minor = element_blank(),
+                panel.background = element_rect(fill = "transparent", color = NA),
+                plot.background = element_rect(fill = "transparent", color = NA)
+              )
+            girafe_transparent(
+              ggobj = p,
+              options = list(
+                ggiraph::opts_sizing(rescale = TRUE),
+                ggiraph::opts_tooltip(use_fill = TRUE, use_stroke = TRUE, css = tooltip_css_sd),
+                ggiraph::opts_hover(css = "stroke-width:1.5px;"),
+                ggiraph::opts_hover_inv(css = "opacity:0.15;")
+              )
+            )
+          })
+          return(ggiraph::girafeOutput(ns(out_id), height = "460px"))
+        } else if (identical(chart_sel, "3D Contact")) {
+          mode_3d <- input[[paste0("cell_swing_contact_mode_", settings_cell_id)]] %||% "individual"
+          color_by <- input[[paste0("cell_swing_contact_color_by_", settings_cell_id)]] %||% "pitch_type"
+          df3 <- df_sd %>% dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionY), is.finite(ContactPositionZ))
+          if (!nrow(df3)) {
+            output[[out_id]] <- renderUI({ div("No contact-position data for current filters") })
+            return(uiOutput(ns(out_id)))
+          }
+          if (identical(mode_3d, "average_pitch_type")) {
+            df3 <- df3 %>%
+              dplyr::group_by(TaggedPitchType) %>%
+              dplyr::summarise(
+                ContactPositionX = mean(ContactPositionX, na.rm = TRUE),
+                ContactPositionY = mean(ContactPositionY, na.rm = TRUE),
+                ContactPositionZ = mean(ContactPositionZ, na.rm = TRUE),
+                ExitSpeed = mean(ExitSpeed, na.rm = TRUE),
+                Angle = mean(Angle, na.rm = TRUE),
+                ResultLabel = mode_chr(ResultLabel),
+                .groups = "drop"
+              )
+          }
+          col_out <- add_color_group(df3, color_by)
+          df3 <- col_out$df
+          pal <- col_out$pal
+          df3$marker_col <- unname(pal[as.character(df3$ColorGroup)])
+          df3$hover_txt <- paste0(
+            "<b>", dplyr::coalesce(df3$TaggedPitchType, "—"), "</b><br>",
+            "Result: ", dplyr::coalesce(df3$ResultLabel, "—"), "<br>",
+            "Forward: ", sprintf("%.1f", df3$ContactPositionX), " ft<br>",
+            "Height: ", sprintf("%.1f", df3$ContactPositionY), " ft<br>",
+            "Side: ", sprintf("%.1f", df3$ContactPositionZ), " ft"
+          )
+          output[[out_id]] <- plotly::renderPlotly({
+            plate <- data.frame(
+              x = c(0.00, 0.58, 1.42, 1.42, 0.58, 0.00),
+              y = c(0.00, 0.71, 0.71, -0.71, -0.71, 0.00),
+              z = 0
+            )
+            zone_x <- 1.42
+            zone_left <- ZONE_LEFT
+            zone_right <- ZONE_RIGHT
+            zone_bottom <- ZONE_BOTTOM
+            zone_top <- ZONE_TOP
+            zone_dx <- (zone_right - zone_left) / 3
+            zone_dy <- (zone_top - zone_bottom) / 3
+            zone_outer <- data.frame(
+              x = c(zone_x, zone_x, zone_x, zone_x, zone_x),
+              y = c(zone_left, zone_right, zone_right, zone_left, zone_left),
+              z = c(zone_bottom, zone_bottom, zone_top, zone_top, zone_bottom)
+            )
+            zone_v1 <- data.frame(x = zone_x, y = zone_left + zone_dx, z = c(zone_bottom, zone_top))
+            zone_v2 <- data.frame(x = zone_x, y = zone_left + 2 * zone_dx, z = c(zone_bottom, zone_top))
+            zone_h1 <- data.frame(x = zone_x, y = c(zone_left, zone_right), z = zone_bottom + zone_dy)
+            zone_h2 <- data.frame(x = zone_x, y = c(zone_left, zone_right), z = zone_bottom + 2 * zone_dy)
+            
+            p3 <- plotly::plot_ly()
+            show_leg_3d <- color_by %in% c("exit_velocity", "result")
+            for (grp in names(pal)) {
+              dpt <- df3[df3$ColorGroup == grp, , drop = FALSE]
+              p3 <- p3 %>%
+                plotly::add_markers(
+                  data = dpt,
+                  x = ~ContactPositionX, y = ~ContactPositionZ, z = ~ContactPositionY,
+                  type = "scatter3d", mode = "markers",
+                  name = grp,
+                  marker = list(size = 4.5, color = unname(pal[[grp]]), opacity = 0.88),
+                  text = ~hover_txt,
+                  hoverinfo = "text",
+                  showlegend = show_leg_3d
+                )
+            }
+            p3 %>%
+              plotly::add_trace(
+                data = plate, x = ~x, y = ~y, z = ~z,
+                type = "scatter3d", mode = "lines",
+                line = list(color = line_col, width = 6),
+                hoverinfo = "skip", showlegend = FALSE
+              ) %>%
+              plotly::add_trace(
+                data = zone_outer, x = ~x, y = ~y, z = ~z,
+                type = "scatter3d", mode = "lines",
+                line = list(color = line_col, width = 5),
+                hoverinfo = "skip", showlegend = FALSE
+              ) %>%
+              plotly::add_trace(
+                data = zone_v1, x = ~x, y = ~y, z = ~z,
+                type = "scatter3d", mode = "lines",
+                line = list(color = line_col, width = 3),
+                hoverinfo = "skip", showlegend = FALSE
+              ) %>%
+              plotly::add_trace(
+                data = zone_v2, x = ~x, y = ~y, z = ~z,
+                type = "scatter3d", mode = "lines",
+                line = list(color = line_col, width = 3),
+                hoverinfo = "skip", showlegend = FALSE
+              ) %>%
+              plotly::add_trace(
+                data = zone_h1, x = ~x, y = ~y, z = ~z,
+                type = "scatter3d", mode = "lines",
+                line = list(color = line_col, width = 3),
+                hoverinfo = "skip", showlegend = FALSE
+              ) %>%
+              plotly::add_trace(
+                data = zone_h2, x = ~x, y = ~y, z = ~z,
+                type = "scatter3d", mode = "lines",
+                line = list(color = line_col, width = 3),
+                hoverinfo = "skip", showlegend = FALSE
+              ) %>%
+              plotly::layout(
+                paper_bgcolor = "rgba(0,0,0,0)",
+                plot_bgcolor = "rgba(0,0,0,0)",
+                scene = list(
+                  xaxis = list(title = "Forward (ft)", color = text_col, gridcolor = if (dark_on) "#374151" else "#e5e7eb"),
+                  yaxis = list(title = "Side (ft)", color = text_col, gridcolor = if (dark_on) "#374151" else "#e5e7eb"),
+                  zaxis = list(title = "Height (ft)", color = text_col, gridcolor = if (dark_on) "#374151" else "#e5e7eb"),
+                  dragmode = "orbit",
+                  aspectmode = "manual",
+                  aspectratio = list(x = 1.4, y = 1.2, z = 1.1),
+                  camera = list(eye = list(x = 1.6, y = -1.5, z = 0.9)),
+                  bgcolor = "rgba(0,0,0,0)"
+                ),
+                legend = list(orientation = "h", x = 0, y = 1.02),
+                margin = list(l = 0, r = 0, b = 0, t = 10)
+              )
+          })
+          return(plotly::plotlyOutput(ns(out_id), height = "420px"))
+        } else if (identical(chart_sel, "Attack Angles")) {
+          view_type <- if (tsel %in% c("Horizontal Attack", "Vertical Attack")) {
+            tsel
+          } else {
+            input[[paste0("cell_swing_attack_view_", settings_cell_id)]] %||% "Horizontal Attack"
+          }
+          scope <- input[[paste0("cell_swing_attack_scope_", settings_cell_id)]] %||% "average"
+          df_a <- df_sd %>%
+            dplyr::filter(
+              is.finite(HorizontalAttackAngle), is.finite(VerticalAttackAngle),
+              is.finite(ContactPositionX), is.finite(ContactPositionY), is.finite(ContactPositionZ)
+            )
+          if (!nrow(df_a)) {
+            output[[out_id]] <- renderUI({ div("No attack-angle contact data for current filters") })
+            return(uiOutput(ns(out_id)))
+          }
+          df_a <- df_a %>%
+            dplyr::mutate(
+              pitch_id = as.character(.attack_row_id),
+              pitch_label = paste0(
+                "#", .attack_row_id, " | ",
+                if ("Date" %in% names(.)) format(as.Date(Date), "%m/%d/%y") else "Date N/A", " | ",
+                dplyr::coalesce(TaggedPitchType, "—"),
+                " | VAA ", sprintf("%.1f", VerticalAttackAngle),
+                " | HAA ", sprintf("%.1f", HorizontalAttackAngle)
+              )
+            )
+          choices <- stats::setNames(df_a$pitch_id, df_a$pitch_label)
+          cur <- input[[paste0("cell_swing_attack_pitch_", settings_cell_id)]] %||% ""
+          sel_pitch <- if (!is.null(cur) && nzchar(cur) && cur %in% df_a$pitch_id) cur else df_a$pitch_id[[1]]
+          if (identical(scope, "pitch") && (is.null(cur) || !nzchar(cur) || !(cur %in% df_a$pitch_id))) {
+            updateSelectInput(session, paste0("cell_swing_attack_pitch_", settings_cell_id), choices = choices, selected = sel_pitch)
+          }
+          row <- if (identical(scope, "pitch")) {
+            one <- df_a[df_a$pitch_id == sel_pitch, , drop = FALSE]
+            if (!nrow(one)) df_a[1, , drop = FALSE] else one[1, , drop = FALSE]
+          } else {
+            data.frame(
+              HorizontalAttackAngle = mean(df_a$HorizontalAttackAngle, na.rm = TRUE),
+              VerticalAttackAngle = mean(df_a$VerticalAttackAngle, na.rm = TRUE),
+              ContactPositionX = mean(df_a$ContactPositionX, na.rm = TRUE),
+              ContactPositionY = mean(df_a$ContactPositionY, na.rm = TRUE),
+              ContactPositionZ = mean(df_a$ContactPositionZ, na.rm = TRUE),
+              ExitSpeed = mean(df_a$ExitSpeed, na.rm = TRUE),
+              Angle = mean(df_a$Angle, na.rm = TRUE),
+              ResultLabel = "Average",
+              BatterSide = mode_chr(df_a$BatterSide),
+              stringsAsFactors = FALSE
+            )
+          }
+          output[[out_id]] <- renderPlot({
+            if (identical(view_type, "Horizontal Attack")) {
+              cx <- suppressWarnings(as.numeric(row$ContactPositionZ[[1]]))
+              cy <- suppressWarnings(as.numeric(row$ContactPositionX[[1]]))
+              haa <- suppressWarnings(as.numeric(row$HorizontalAttackAngle[[1]]))
+              side <- tolower(trimws(as.character(row$BatterSide[[1]] %||% "right")))
+              is_lefty <- startsWith(side, "l")
+              if (!is.finite(cx) || !is.finite(cy) || !is.finite(haa)) return(ggplot() + theme_void())
+              if (is_lefty) haa <- -haa
+              rad <- haa * pi / 180
+              vec_len <- 1.2
+              dx <- sin(rad) * vec_len
+              dy <- cos(rad) * vec_len
+              
+              contact_axis_pool <- df_a %>% dplyr::filter(is.finite(ContactPositionX), is.finite(ContactPositionZ))
+              y_min <- floor(min(c(contact_axis_pool$ContactPositionX, -0.6), na.rm = TRUE))
+              y_max <- ceiling(max(c(contact_axis_pool$ContactPositionX, 1.0), na.rm = TRUE))
+              if (!is.finite(y_min) || !is.finite(y_max) || y_max <= y_min) {
+                y_min <- -1
+                y_max <- 6
+              }
+              y_breaks <- seq(y_min, y_max, by = 1)
+              
+              bat_half <- (34 / 12) / 2
+              bat_theta <- -rad
+              bat_x1 <- cx - cos(bat_theta) * bat_half
+              bat_y1 <- cy - sin(bat_theta) * bat_half
+              bat_x2 <- cx + cos(bat_theta) * bat_half
+              bat_y2 <- cy + sin(bat_theta) * bat_half
+              home_plate <- data.frame(
+                x = c(-0.708, 0.708, 0.708, 0.000, -0.708, -0.708),
+                y = c(0.62, 0.62, 0.35, 0.00, 0.35, 0.62)
+              )
+              box_left <- data.frame(xmin = -1.90, xmax = -0.90, ymin = -0.45, ymax = 0.90)
+              box_right <- data.frame(xmin = 0.90, xmax = 1.90, ymin = -0.45, ymax = 0.90)
+              pull_right <- if (is_lefty) "PULL" else "OPPO"
+              pull_left <- if (is_lefty) "OPPO" else "PULL"
+              
+              if (is_lefty) {
+                if (bat_x1 <= bat_x2) {
+                  barrel_x <- bat_x1; barrel_y <- bat_y1
+                  handle_x <- bat_x2; handle_y <- bat_y2
+                } else {
+                  barrel_x <- bat_x2; barrel_y <- bat_y2
+                  handle_x <- bat_x1; handle_y <- bat_y1
+                }
+              } else {
+                if (bat_x1 >= bat_x2) {
+                  barrel_x <- bat_x1; barrel_y <- bat_y1
+                  handle_x <- bat_x2; handle_y <- bat_y2
+                } else {
+                  barrel_x <- bat_x2; barrel_y <- bat_y2
+                  handle_x <- bat_x1; handle_y <- bat_y1
+                }
+              }
+              dir_norm <- sqrt(dx^2 + dy^2)
+              ux <- ifelse(dir_norm > 0, dx / dir_norm, 0)
+              uy <- ifelse(dir_norm > 0, dy / dir_norm, 1)
+              bat_norm <- sqrt((barrel_x - handle_x)^2 + (barrel_y - handle_y)^2)
+              ubx <- ifelse(bat_norm > 0, (barrel_x - handle_x) / bat_norm, 1)
+              uby <- ifelse(bat_norm > 0, (barrel_y - handle_y) / bat_norm, 0)
+              arrow_start_inset <- 0.17
+              current_arrow_x <- barrel_x - ubx * arrow_start_inset
+              current_arrow_y <- barrel_y - uby * arrow_start_inset
+              shift_x <- cx - current_arrow_x
+              shift_y <- cy - current_arrow_y
+              barrel_x <- barrel_x + shift_x
+              barrel_y <- barrel_y + shift_y
+              handle_x <- handle_x + shift_x
+              handle_y <- handle_y + shift_y
+              bat_t <- seq(0, 1, length.out = 41)
+              bat_seg <- data.frame(
+                x = handle_x + (barrel_x - handle_x) * bat_t[-length(bat_t)],
+                y = handle_y + (barrel_y - handle_y) * bat_t[-length(bat_t)],
+                xend = handle_x + (barrel_x - handle_x) * bat_t[-1],
+                yend = handle_y + (barrel_y - handle_y) * bat_t[-1]
+              )
+              t_mid <- (bat_t[-length(bat_t)] + bat_t[-1]) / 2
+              bat_seg$lw <- ifelse(t_mid <= (2/3), 6.0 + (t_mid / (2/3)) * 2.0, 8.0 + ((t_mid - (2/3)) / (1/3)) * 6.8)
+              bat_seg$lw_hi <- pmax(1.6, bat_seg$lw * 0.34)
+              arrow_x <- barrel_x - ubx * arrow_start_inset
+              arrow_y <- barrel_y - uby * arrow_start_inset
+              arrow_len <- 1.0
+              ggplot() +
+                geom_rect(data = box_left, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                          fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+                geom_rect(data = box_right, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                          fill = NA, color = line_col, linewidth = 0.7, alpha = 0.7) +
+                geom_polygon(data = home_plate, aes(x, y), fill = NA, color = line_col, linewidth = 0.7) +
+                geom_segment(aes(x = arrow_x, y = arrow_y, xend = arrow_x, yend = arrow_y + arrow_len),
+                             linewidth = 1.2, color = "#64748b", linetype = "dashed") +
+                geom_segment(data = bat_seg, aes(x = x, y = y, xend = xend, yend = yend, linewidth = lw),
+                             color = "#d2b48c", lineend = "round", show.legend = FALSE) +
+                geom_segment(data = bat_seg, aes(x = x, y = y, xend = xend, yend = yend, linewidth = lw_hi),
+                             color = "#cfa170", alpha = 0.42, lineend = "round", show.legend = FALSE) +
+                geom_point(aes(x = handle_x, y = handle_y), size = 4.8, color = "#8b5a2b") +
+                geom_segment(aes(x = arrow_x, y = arrow_y, xend = arrow_x + ux * arrow_len, yend = arrow_y + uy * arrow_len),
+                             linewidth = 1.8, color = "#ef4444",
+                             arrow = grid::arrow(length = grid::unit(0.13, "inches"), type = "closed")) +
+                annotate("text", x = -2.05, y = y_max - 0.35, label = pull_left, color = "#22c55e", hjust = 0, size = 4) +
+                annotate("text", x = 2.05, y = y_max - 0.35, label = pull_right, color = "#22c55e", hjust = 1, size = 4) +
+                scale_y_continuous(breaks = y_breaks, limits = c(y_min, y_max), minor_breaks = NULL) +
+                scale_linewidth_identity() +
+                coord_fixed(xlim = c(-2.5, 2.5), ylim = c(y_min, y_max)) +
+                labs(
+                  x = "Side (ft)", y = "Forward (ft)",
+                  title = paste0(sprintf("%.1f", haa), "° Horizontal Attack"),
+                  subtitle = paste0(
+                    "EV ", ifelse(is.finite(row$ExitSpeed[[1]]), sprintf("%.1f", row$ExitSpeed[[1]]), "—"),
+                    " | LA ", ifelse(is.finite(row$Angle[[1]]), sprintf("%.1f", row$Angle[[1]]), "—"),
+                    if (!identical(scope, "average")) paste0(" | Result ", row$ResultLabel[[1]]) else ""
+                  )
+                ) +
+                theme_minimal(base_size = 12) +
+                theme(
+                  axis.title = element_text(color = text_col, face = "bold"),
+                  axis.text = element_text(color = text_col),
+                  axis.ticks = element_blank(),
+                  plot.title = element_text(color = text_col, face = "bold", hjust = 0.5),
+                  plot.subtitle = element_text(color = text_col, hjust = 0.5),
+                  panel.grid.major = element_blank(),
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(fill = "transparent", color = NA),
+                  plot.background = element_rect(fill = "transparent", color = NA)
+                )
+            } else {
+              fx <- suppressWarnings(as.numeric(row$ContactPositionX[[1]]))
+              hy <- suppressWarnings(as.numeric(row$ContactPositionY[[1]]))
+              vaa <- suppressWarnings(as.numeric(row$VerticalAttackAngle[[1]]))
+              bs <- tolower(trimws(as.character(row$BatterSide[[1]]) %||% "right"))
+              is_lefty <- startsWith(bs, "l")
+              if (!is.finite(fx) || !is.finite(hy) || !is.finite(vaa)) return(ggplot() + theme_void())
+              x_plot <- if (is_lefty) -fx else fx
+              sgn <- ifelse(bs == "left", -1, 1)
+              t <- vaa * pi / 180
+              a_len <- 1.0
+              x0 <- x_plot
+              y0 <- hy
+              x_dash <- x0 + sgn * a_len
+              y_dash <- y0
+              x_arr <- x0 + sgn * a_len * cos(t)
+              y_arr <- y0 + a_len * sin(t)
+              lower_box <- data.frame(x = c(-1.2, 1.2, 0.95, -0.95, -1.2), y = c(0.0, 0.0, 0.20, 0.20, 0.0))
+              upper_box <- data.frame(x = c(-1.05, 1.05, 1.25, -1.25, -1.05), y = c(0.48, 0.48, 0.66, 0.66, 0.48))
+              tip_dir <- ifelse(bs == "left", 0.36, -0.36)
+              plate <- data.frame(
+                x = c(0.0, tip_dir, 0.0, -tip_dir, 0.0),
+                y = c(0.28, 0.35, 0.42, 0.35, 0.28)
+              )
+              ggplot() +
+                geom_polygon(data = lower_box, aes(x, y), fill = NA, color = line_col, linewidth = 0.8) +
+                geom_polygon(data = upper_box, aes(x, y), fill = NA, color = line_col, linewidth = 0.8) +
+                geom_polygon(data = plate, aes(x, y), fill = "#cbd5e1", color = line_col, linewidth = 0.8, alpha = 0.85) +
+                geom_point(aes(x = x0, y = y0), size = 8, color = "#a16207") +
+                geom_point(aes(x = x0, y = y0), size = 4, color = "#b45309") +
+                geom_segment(aes(x = x0, y = y0, xend = x_dash, yend = y_dash), linewidth = 1.2, color = "#64748b", linetype = "dashed") +
+                geom_segment(aes(x = x0, y = y0, xend = x_arr, yend = y_arr), linewidth = 1.8, color = "#ef4444",
+                             arrow = grid::arrow(length = grid::unit(0.13, "inches"), type = "closed")) +
+                scale_x_continuous(limits = c(-1.8, 3.2), breaks = seq(-1, 3, 1)) +
+                scale_y_continuous(limits = c(0, 4.0), breaks = seq(0, 4, 1)) +
+                coord_fixed() +
+                labs(
+                  x = "Forward (ft)", y = "Height (ft)",
+                  title = paste0(sprintf("%.1f", vaa), "° Vertical Attack"),
+                  subtitle = paste0(
+                    "EV ", ifelse(is.finite(row$ExitSpeed[[1]]), sprintf("%.1f", row$ExitSpeed[[1]]), "—"),
+                    " | LA ", ifelse(is.finite(row$Angle[[1]]), sprintf("%.1f", row$Angle[[1]]), "—"),
+                    if (!identical(scope, "average")) paste0(" | Result ", row$ResultLabel[[1]]) else ""
+                  )
+                ) +
+                theme_minimal(base_size = 12) +
+                theme(
+                  axis.title = element_text(color = text_col, face = "bold"),
+                  axis.text = element_text(color = text_col),
+                  axis.ticks = element_blank(),
+                  plot.title = element_text(color = text_col, face = "bold", hjust = 0.5),
+                  plot.subtitle = element_text(color = text_col, hjust = 0.5),
+                  panel.grid.major = element_blank(),
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(fill = "transparent", color = NA),
+                  plot.background = element_rect(fill = "transparent", color = NA)
+                )
+            }
+          })
+          return(plotOutput(ns(out_id), height = "420px"))
+        } else if (identical(chart_sel, "Bat Speed")) {
+          mode_bs <- "individual"
+          color_by <- "exit_velocity"
+          dfb <- df_sd %>% dplyr::filter(is.finite(BatSpeed))
+          if (!nrow(dfb)) {
+            output[[out_id]] <- renderUI({ div("No bat-speed data for current filters") })
+            return(uiOutput(ns(out_id)))
+          }
+          col_out <- add_color_group(dfb, color_by)
+          dfb <- col_out$df
+          pal <- col_out$pal
+          output[[out_id]] <- ggiraph::renderGirafe({
+            speed_min <- 40
+            speed_max <- 80
+            to_theta <- function(s) {
+              s <- pmax(speed_min, pmin(speed_max, s))
+              pi * (1 - (s - speed_min) / (speed_max - speed_min))
+            }
+            arc <- data.frame(s = seq(speed_min, speed_max, length.out = 260))
+            arc$t <- to_theta(arc$s)
+            arc$x <- cos(arc$t)
+            arc$y <- sin(arc$t)
+            blend_cols <- grDevices::colorRampPalette(c("#1d4ed8", "#ffffff", "#dc2626"))(nrow(arc) - 1)
+            arc_seg <- data.frame(
+              x = arc$x[-nrow(arc)], y = arc$y[-nrow(arc)],
+              xend = arc$x[-1], yend = arc$y[-1], col = blend_cols
+            )
+            ticks <- seq(speed_min, speed_max, by = 5)
+            tick_df <- data.frame(
+              s = ticks,
+              t = to_theta(ticks)
+            )
+            tick_df$x1 <- 0.88 * cos(tick_df$t); tick_df$y1 <- 0.88 * sin(tick_df$t)
+            tick_df$x2 <- 1.00 * cos(tick_df$t); tick_df$y2 <- 1.00 * sin(tick_df$t)
+            tick_df$xl <- 1.10 * cos(tick_df$t); tick_df$yl <- 1.10 * sin(tick_df$t)
+            avg_bs <- mean(dfb$BatSpeed, na.rm = TRUE)
+            avg_ev <- mean(dfb$ExitSpeed, na.rm = TRUE)
+            avg_la <- mean(dfb$Angle, na.rm = TRUE)
+            ref_speed <- 68
+            ref_t <- to_theta(ref_speed)
+            avg_t <- to_theta(avg_bs)
+            p <- ggplot() +
+              annotate("segment", x = arc_seg$x, y = arc_seg$y, xend = arc_seg$xend, yend = arc_seg$yend,
+                       color = arc_seg$col, linewidth = 15, lineend = "round") +
+              geom_path(data = arc, aes(x, y), linewidth = 2.0, color = if (dark_on) "#475569" else "#9ca3af") +
+              geom_segment(data = tick_df, aes(x = x1, y = y1, xend = x2, yend = y2), linewidth = 0.8, color = text_col, alpha = 0.6) +
+              geom_text(data = tick_df, aes(x = xl, y = yl, label = s), color = text_col, size = 3.5, fontface = "bold") +
+              geom_segment(aes(x = 0, y = 0, xend = 0.86 * cos(ref_t), yend = 0.86 * sin(ref_t)),
+                           linewidth = 1.2, color = "#64748b", linetype = "dashed") +
+              geom_segment(aes(x = 0, y = 0, xend = 0.86 * cos(avg_t), yend = 0.86 * sin(avg_t)),
+                           linewidth = 2.2, color = "#ef4444",
+                           arrow = grid::arrow(length = grid::unit(0.14, "inches"), type = "closed")) +
+              annotate("text", x = 0, y = 1.46,
+                       label = paste0(
+                         ifelse(is.finite(avg_bs), sprintf("%.1f", avg_bs), "—"), " mph",
+                         "  |  EV ", ifelse(is.finite(avg_ev), sprintf("%.1f", avg_ev), "—"),
+                         "  |  LA ", ifelse(is.finite(avg_la), sprintf("%.1f", avg_la), "—")
+                       ),
+                       color = text_col, fontface = "bold", size = 5.5) +
+              theme_void()
+            dfb2 <- dfb %>%
+              dplyr::mutate(
+                t = to_theta(BatSpeed),
+                gx = 0.90 * cos(t),
+                gy = 0.90 * sin(t),
+                rid = dplyr::row_number(),
+                tooltip = paste0(
+                  "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+                  "Bat Speed: ", ifelse(is.finite(BatSpeed), sprintf("%.1f mph", BatSpeed), "—"), "<br>",
+                  "EV: ", ifelse(is.finite(ExitSpeed), sprintf("%.1f mph", ExitSpeed), "—"), "<br>",
+                  "LA: ", ifelse(is.finite(Angle), sprintf("%.1f°", Angle), "—"), "<br>",
+                  "Result: ", dplyr::coalesce(ResultLabel, "—")
+                )
+              )
+            p <- p +
+              ggiraph::geom_point_interactive(
+                data = dfb2,
+                aes(gx, gy, color = ColorGroup, fill = ColorGroup, tooltip = tooltip, data_id = rid),
+                shape = 21, size = 3.0, stroke = 0.4, alpha = 0.95
+              ) +
+              scale_color_manual(values = pal, limits = names(pal), drop = FALSE, name = "Exit Velocity") +
+              scale_fill_manual(values = pal, limits = names(pal), drop = FALSE, name = "Exit Velocity")
+            p <- p +
+              coord_fixed(xlim = c(-1.25, 1.25), ylim = c(-0.05, 1.55)) +
+              theme(
+                plot.background = element_rect(fill = "transparent", color = NA),
+                panel.background = element_rect(fill = "transparent", color = NA),
+                legend.position = "right",
+                legend.title = element_text(color = text_col, face = "bold"),
+                legend.text = element_text(color = text_col)
+              )
+            girafe_transparent(
+              ggobj = p,
+              options = list(
+                ggiraph::opts_sizing(rescale = TRUE),
+                ggiraph::opts_tooltip(use_fill = TRUE, use_stroke = TRUE, css = tooltip_css_sd),
+                ggiraph::opts_hover(css = "stroke-width:1.4px;"),
+                ggiraph::opts_hover_inv(css = "opacity:0.18;")
+              )
+            )
+          })
+          return(ggiraph::girafeOutput(ns(out_id), height = "380px"))
+        } else if (identical(chart_sel, "EV and LA")) {
+          color_by <- input[[paste0("cell_swing_evla_color_by_", settings_cell_id)]] %||% "result"
+          dfe <- df_sd %>%
+            dplyr::filter(
+              is.finite(ExitSpeed), is.finite(Angle),
+              Angle >= -90, Angle <= 90,
+              !is.na(ResultLabel), nzchar(ResultLabel), ResultLabel != "Undefined"
+            ) %>%
+            dplyr::mutate(
+              theta = Angle * pi / 180,
+              r = pmax(0, pmin(120, ExitSpeed)) / 120,
+              x = r * cos(theta),
+              y = r * sin(theta),
+              rid = dplyr::row_number()
+            )
+          if (!nrow(dfe)) {
+            output[[out_id]] <- renderUI({ div("No EV/LA data for current filters") })
+            return(uiOutput(ns(out_id)))
+          }
+          dfe <- add_color_group(dfe, if (identical(color_by, "result")) "result" else "pitch_type")$df
+          pal <- add_color_group(dfe, if (identical(color_by, "result")) "result" else "pitch_type")$pal
+          dfe <- dfe %>%
+            dplyr::mutate(
+              tooltip = paste0(
+                "<b>", dplyr::coalesce(TaggedPitchType, "—"), "</b><br>",
+                "Result: ", dplyr::coalesce(ResultLabel, "—"), "<br>",
+                "EV: ", sprintf("%.1f mph", ExitSpeed), "<br>",
+                "LA: ", sprintf("%.1f°", Angle)
+              )
+            )
+          output[[out_id]] <- ggiraph::renderGirafe({
+            semi <- data.frame(t = seq(-pi/2, pi/2, length.out = 320))
+            semi$x <- cos(semi$t)
+            semi$y <- sin(semi$t)
+            guide_angles <- c(90, 45, 0, -45, -90)
+            guide_df <- data.frame(ang = guide_angles, t = guide_angles * pi / 180)
+            guide_df$x <- cos(guide_df$t); guide_df$y <- sin(guide_df$t)
+            guide_df$lx <- 0.88 * guide_df$x; guide_df$ly <- 0.88 * guide_df$y
+            guide_df$lab <- paste0(guide_df$ang, "°")
+            mph_df <- data.frame(
+              x = c(0.03, 1.08, 0.03),
+              y = c(1.13, 0, -1.13),
+              lab = rep("120 MPH", 3),
+              hjust = c(0, 0, 0),
+              stringsAsFactors = FALSE
+            )
+            p <- ggplot() +
+              geom_polygon(data = rbind(data.frame(x = 0, y = -1), semi[, c("x", "y")], data.frame(x = 0, y = 1)),
+                           aes(x, y), fill = if (dark_on) "#1f2937" else "#d1ecf1", alpha = 0.35, color = NA) +
+              geom_path(data = semi, aes(x, y), linewidth = 1.2, color = if (dark_on) "#94a3b8" else "#9ca3af", alpha = 0.75) +
+              geom_segment(data = guide_df, aes(x = 0, y = 0, xend = x, yend = y),
+                           linewidth = 0.9, color = if (dark_on) "#94a3b8" else "#9ca3af", alpha = 0.45) +
+              geom_text(data = guide_df, aes(x = lx, y = ly, label = lab), color = text_col, size = 4, alpha = 0.9) +
+              geom_text(data = mph_df, aes(x = x, y = y, label = lab, hjust = hjust), color = text_col, size = 4.2, fontface = "bold") +
+              ggiraph::geom_point_interactive(
+                data = dfe,
+                aes(x, y, color = ColorGroup, fill = ColorGroup, tooltip = tooltip, data_id = rid),
+                shape = 21, size = 4.0, stroke = 0.55, alpha = 0.92
+              ) +
+              scale_color_manual(values = pal, limits = names(pal), drop = FALSE, name = if (identical(color_by, "result")) "Result" else "Pitch Type") +
+              scale_fill_manual(values = pal, limits = names(pal), drop = FALSE, name = if (identical(color_by, "result")) "Result" else "Pitch Type") +
+              coord_fixed(xlim = c(-0.02, 1.42), ylim = c(-1.2, 1.2)) +
+              theme_void() +
+              theme(
+                legend.position = "right",
+                legend.title = element_text(color = text_col, face = "bold"),
+                legend.text = element_text(color = text_col),
+                plot.background = element_rect(fill = "transparent", color = NA),
+                panel.background = element_rect(fill = "transparent", color = NA)
+              )
+            girafe_transparent(
+              ggobj = p,
+              options = list(
+                ggiraph::opts_sizing(rescale = TRUE),
+                ggiraph::opts_tooltip(use_fill = TRUE, use_stroke = TRUE, css = tooltip_css_sd),
+                ggiraph::opts_hover(css = "stroke-width:1.5px;"),
+                ggiraph::opts_hover_inv(css = "opacity:0.15;")
+              )
+            )
+          })
+          return(ggiraph::girafeOutput(ns(out_id), height = "400px"))
+        }
+      } else if (tsel == "Movement Plot") {
         df_mv <- df %>% dplyr::filter(is.finite(HorzBreak), is.finite(InducedVertBreak))
         if (!"Stuff+" %in% names(df_mv) && "StuffPlus" %in% names(df_mv)) df_mv$`Stuff+` <- df_mv$StuffPlus
         output[[out_id]] <- ggiraph::renderGirafe({
@@ -19078,7 +21546,7 @@ custom_reports_server <- function(id) {
             p <- ggplot() +
               geom_polygon(data = home, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col) +
               geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                        inherit.aes = FALSE, fill = NA, color = line_col) +
+                        inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 1.15) +
               geom_rect(data = green_box,
                         aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                         inherit.aes = FALSE,
@@ -19137,9 +21605,10 @@ custom_reports_server <- function(id) {
             p <- ggplot() +
               geom_polygon(data = home, aes(x, y), fill = NA, color = line_col, inherit.aes = FALSE) +
               geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                        fill = NA, color = line_col, linetype = "dashed", inherit.aes = FALSE) +
-              geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                         fill = NA, color = line_col, inherit.aes = FALSE) +
+              comp_zone_connector_layers(color = line_col) +
+              geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                        fill = NA, color = line_col, linewidth = 1.15, inherit.aes = FALSE) +
               zone_nine_square_layers(color = line_col) +
               ggiraph::geom_point_interactive(
                 data = df_other,
@@ -24008,12 +26477,6 @@ log_startup_timing("Completed UI object construction")
 
 # Server logic
 server <- function(input, output, session) {
-  if (isTRUE(defer_video_map_load) && isTRUE(video_map_warmup_enabled)) {
-    session$onFlushed(function() {
-      start_video_map_warmup(video_map_warmup_delay_ms)
-    }, once = TRUE)
-  }
-  
   # Get user email from shinyapps.io authentication
   # In shinyapps.io, session$user contains the authenticated user's email
   user_email <- reactive({
@@ -24048,6 +26511,31 @@ server <- function(input, output, session) {
   
   # Helper to normalize email for comparison
   norm_email <- function(x) tolower(trimws(as.character(x)))
+  
+  trigger_video_intent_warmup <- function(reason = "intent") {
+    if (!isTRUE(defer_video_map_load) || !isTRUE(video_map_warmup_enabled)) return(invisible(FALSE))
+    if (isTRUE(video_map_warmup_started) || isTRUE(video_map_warmup_completed)) return(invisible(FALSE))
+    message("🎬 Video intent detected: ", reason)
+    start_video_map_warmup(0L)
+  }
+  
+  observeEvent(input$withVideo, {
+    if (identical(input$withVideo, "Yes")) {
+      trigger_video_intent_warmup("withVideo=Yes")
+    }
+  }, ignoreInit = TRUE)
+  
+  observeEvent(input$pitch_click_action, {
+    if (identical(input$pitch_click_action, "video")) {
+      trigger_video_intent_warmup("pitch_click_action=video")
+    }
+  }, ignoreInit = TRUE)
+  
+  observeEvent(input$top, {
+    if (identical(input$top, "Video Upload")) {
+      trigger_video_intent_warmup("entered Video Upload tab")
+    }
+  }, ignoreInit = TRUE)
   
   # Initialize database on startup
   init_modifications_db()
@@ -25241,9 +27729,10 @@ deg_to_clock <- function(x) {
     p <- ggplot() +
       geom_polygon(data = home, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col) +
       geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                inherit.aes = FALSE, fill = NA, linetype = "dashed", color = line_col) +
-      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                 inherit.aes = FALSE, fill = NA, color = line_col) +
+      comp_zone_connector_layers(color = line_col) +
+      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 1.15) +
       zone_nine_square_layers(color = line_col) +
       coord_fixed(ratio = 1, xlim = c(-2.5, 2.5), ylim = c(0, 4.5)) +
       theme_void() +
@@ -25474,6 +27963,7 @@ deg_to_clock <- function(x) {
   
   show_pitch_video_sequence <- function(rows, label = NULL, start_index = 1,
                                         compare_pool = NULL, primary_pool_idx = NA_integer_) {
+    trigger_video_intent_warmup("open video modal")
     rows_df <- tryCatch(as.data.frame(rows), error = function(e) NULL)
     if (is.null(rows_df) || !nrow(rows_df)) {
       showModal(modalDialog("No video available for this selection.", easyClose = TRUE, footer = NULL))
@@ -27975,6 +30465,9 @@ deg_to_clock <- function(x) {
   
   # Global persistent date range - initializes to most recent date on startup
   global_date_range <- reactiveVal()
+  coerce_date_pair <- function(x) {
+    safe_date_pair(x)
+  }
   
   # Initialize global date range on startup
   observe({
@@ -27995,25 +30488,24 @@ deg_to_clock <- function(x) {
   
   # Update global date range when main input changes
   observeEvent(input$dates, {
-    if (!is.null(input$dates) && length(input$dates) == 2) {
+    d_in <- coerce_date_pair(input$dates)
+    if (!is.null(d_in)) {
       # Only update if the dates are actually different to prevent loops
-      current_global <- global_date_range()
-      if (is.null(current_global) || 
-          !identical(as.Date(input$dates), as.Date(current_global))) {
-        global_date_range(input$dates)
+      current_global <- coerce_date_pair(global_date_range())
+      if (is.null(current_global) || !identical(d_in, current_global)) {
+        global_date_range(d_in)
       }
     }
   })
   
   # Sync date range input with global value - only when global changes
   observe({
-    global_dates <- global_date_range()
-    if (!is.null(global_dates) && !is.null(input$dates)) {
+    global_dates <- coerce_date_pair(global_date_range())
+    input_dates <- coerce_date_pair(input$dates)
+    if (!is.null(global_dates)) {
       # Only update UI if the values are actually different to prevent loops
-      if (!identical(as.Date(input$dates), as.Date(global_dates))) {
-        updateDateRangeInput(session, "dates", 
-                             start = global_dates[1], 
-                             end = global_dates[2])
+      if (is.null(input_dates) || !identical(input_dates, global_dates)) {
+        safe_update_date_range_input(session, "dates", global_dates[1], global_dates[2])
       }
     }
   })
@@ -28443,7 +30935,7 @@ deg_to_clock <- function(x) {
       if (nzchar(x$sess))    updateSelectInput(session, "sessionType", selected = x$sess)
       if (nzchar(x$pitcher)) updateSelectInput(session, "pitcher",      selected = x$pitcher)
       if (nzchar(x$ds) && nzchar(x$de))
-        updateDateRangeInput(session, "dates", start = as.Date(x$ds), end = as.Date(x$de))
+        safe_update_date_range_input(session, "dates", x$ds, x$de)
       # sub-tabs by suite
       if (identical(x$suite, "Pitching")) {
         if (nzchar(x$page)) updateTabsetPanel(session, "tabs", selected = x$page)
@@ -28466,7 +30958,7 @@ deg_to_clock <- function(x) {
     
     if (!is.null(global_date_range())) {
       gd <- global_date_range()
-      updateDateRangeInput(session, "dates", start = gd[[1]], end = gd[[2]])
+      safe_update_date_range_input(session, "dates", gd[[1]], gd[[2]])
       return()
     }
     
@@ -28478,7 +30970,7 @@ deg_to_clock <- function(x) {
     }
     win <- recent_date_window(date_pool, n_days = 7L)
     if (!is.null(win)) {
-      updateDateRangeInput(session, "dates", start = win[[1]], end = win[[2]])
+      safe_update_date_range_input(session, "dates", win[[1]], win[[2]])
       global_date_range(win)
     }
   }, once = TRUE)
@@ -28496,9 +30988,7 @@ deg_to_clock <- function(x) {
       global_dates <- global_date_range()
       if (is.null(current_input) || 
           !identical(as.Date(current_input), as.Date(global_dates))) {
-        updateDateRangeInput(session, "dates", 
-                             start = global_dates[1], 
-                             end = global_dates[2])
+        safe_update_date_range_input(session, "dates", global_dates[1], global_dates[2])
       }
     } else {
       # Only fall back if no global date range is set
@@ -28509,7 +30999,7 @@ deg_to_clock <- function(x) {
       }
       win <- recent_date_window(date_pool, n_days = 7L)
       if (!is.null(win)) {
-        updateDateRangeInput(session, "dates", start = win[[1]], end = win[[2]])
+        safe_update_date_range_input(session, "dates", win[[1]], win[[2]])
         # Update global date range with this new value.
         global_date_range(win)
       }
@@ -28778,23 +31268,60 @@ deg_to_clock <- function(x) {
     )
   })
   
+  apply_pitching_team_filter <- function(df, team_type = "All") {
+    if (is.null(df) || !nrow(df) || !"Pitcher" %in% names(df)) return(df)
+    team_type <- team_type %||% "All"
+    if (!nzchar(team_type) || identical(team_type, "All")) return(df)
+    pitcher_chr <- as.character(df$Pitcher %||% "")
+    pitcher_norm <- norm_name_ci(pitcher_chr)
+    campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
+    team_norm <- norm_name_ci(ALLOWED_PITCHERS_DL)
+    team_only_norm <- setdiff(team_norm, campers_norm)
+    known_norm <- unique(c(campers_norm, team_norm))
+    mask <- switch(
+      team_type,
+      "Campers" = pitcher_norm %in% campers_norm,
+      TEAM_CODE = pitcher_norm %in% team_only_norm,
+      "Opponents" = !(pitcher_norm %in% known_norm),
+      rep(TRUE, length(pitcher_chr))
+    )
+    mask[is.na(mask)] <- FALSE
+    df[mask, , drop = FALSE]
+  }
+  
+  pitching_base_for_team <- function(team_type = "All", include_modifications = TRUE) {
+    team_type <- team_type %||% "All"
+    if (identical(team_type, "Opponents")) return(pitch_data)
+    if (isTRUE(include_modifications)) {
+      df_mod <- tryCatch(modified_pitch_data(), error = function(e) NULL)
+      if (!is.null(df_mod) && nrow(df_mod)) return(df_mod)
+    }
+    pitch_data_pitching
+  }
+  
   # 1) Pitcher selector
   output$pitcher_ui <- renderUI({
     req(input$sessionType, input$teamType)
     
-    df_base <- apply_session_type_filter(pitch_data_pitching, input$sessionType)
+    df_base <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = FALSE), input$sessionType)
+    df_base <- apply_pitching_team_filter(df_base, input$teamType)
     
-    # Apply team filtering to get the available pitchers
-    if (input$teamType == "Campers") {
-      df_base <- dplyr::filter(df_base, Pitcher %in% ALLOWED_CAMPERS)
-    } else if (input$teamType == TEAM_CODE) {
-      # Filter to only GCU allowed pitchers (exclude campers)
-      df_base <- dplyr::filter(df_base, Pitcher %in% ALLOWED_PITCHERS)
+    # Build pitcher options with strict team-type scoping.
+    raw_names_team <- sort(unique(as.character(df_base$Pitcher)))
+    raw_names_team <- raw_names_team[!is.na(raw_names_team) & nzchar(raw_names_team)]
+    pitchers_norm <- norm_name_ci(ALLOWED_PITCHERS_DL)
+    campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
+    team_only_norm <- setdiff(pitchers_norm, campers_norm)
+    if (identical(input$teamType, TEAM_CODE)) {
+      raw_names_team <- raw_names_team[norm_name_ci(raw_names_team) %in% team_only_norm]
+    } else if (identical(input$teamType, "Campers")) {
+      raw_names_team <- raw_names_team[norm_name_ci(raw_names_team) %in% campers_norm]
+    } else if (identical(input$teamType, "Opponents")) {
+      known_norm <- unique(c(team_only_norm, campers_norm))
+      raw_names_team <- raw_names_team[!(norm_name_ci(raw_names_team) %in% known_norm)]
     }
-    # If "All" is selected, df_base already contains all pitchers
-    
-    # Create name map for the filtered dataset
-    raw_names_team <- sort(unique(df_base$Pitcher))
+
+    # Create name map for the team-scoped dataset
     display_names_team <- format_name_first_last(raw_names_team)
     name_map_team <- setNames(raw_names_team, display_names_team)
     
@@ -28843,24 +31370,42 @@ deg_to_clock <- function(x) {
   observeEvent(list(input$sessionType, input$teamType), {
     req(input$sessionType, input$teamType)
     
-    df_base <- apply_session_type_filter(pitch_data_pitching, input$sessionType)
+    df_base <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = FALSE), input$sessionType)
+    df_base <- apply_pitching_team_filter(df_base, input$teamType)
     
-    # Apply team filtering
-    if (input$teamType == "Campers") {
-      df_base <- dplyr::filter(df_base, Pitcher %in% ALLOWED_CAMPERS)
-    } else if (input$teamType == TEAM_CODE) {
-      df_base <- dplyr::filter(df_base, Pitcher %in% ALLOWED_PITCHERS)
-    }
-    # If "All" is selected, don't filter - show all data
-    
+    if (!("Date" %in% names(df_base))) return()
+    all_dates <- suppressWarnings(as.Date(df_base$Date))
+    all_dates <- all_dates[is.finite(all_dates)]
+    if (!length(all_dates)) return()
     last_date <- if (is.null(input$pitcher) || input$pitcher == "All") {
-      max(df_base$Date, na.rm = TRUE)
+      max(all_dates, na.rm = TRUE)
     } else {
-      ld <- max(df_base$Date[df_base$Pitcher == input$pitcher], na.rm = TRUE)
-      if (is.finite(ld)) ld else max(df_base$Date, na.rm = TRUE)
+      pit_dates <- suppressWarnings(as.Date(df_base$Date[df_base$Pitcher == input$pitcher]))
+      pit_dates <- pit_dates[is.finite(pit_dates)]
+      if (length(pit_dates)) max(pit_dates, na.rm = TRUE) else max(all_dates, na.rm = TRUE)
     }
-    updateDateRangeInput(session, "dates", start = last_date, end = last_date)
+    if (length(last_date) == 1 && is.finite(last_date)) {
+      safe_update_date_range_input(session, "dates", last_date, last_date)
+    }
   }, ignoreInit = TRUE)
+  
+  observe({
+    req(input$sessionType, input$teamType)
+    df_base <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = FALSE), input$sessionType)
+    df_base <- apply_pitching_team_filter(df_base, input$teamType)
+    pit <- input$pitcher %||% "All"
+    if (!identical(pit, "All") && "Pitcher" %in% names(df_base)) {
+      df_base <- dplyr::filter(df_base, Pitcher == pit)
+    }
+    if (!is.null(input$dates) && length(input$dates) == 2 && all(is.finite(input$dates)) && "Date" %in% names(df_base)) {
+      df_base <- dplyr::filter(df_base, Date >= input$dates[1], Date <= input$dates[2])
+    }
+    hitters <- sort(unique(stats::na.omit(as.character(df_base$Batter))))
+    hitter_choices <- c("All" = "All", setNames(hitters, format_name_first_last(hitters)))
+    current <- isolate(input$oppHitter)
+    if (is.null(current) || !(current %in% unname(hitter_choices))) current <- "All"
+    updateSelectInput(session, "oppHitter", choices = hitter_choices, selected = current)
+  })
 
   # ---- Manual Velocity Entry (Pitching Suite) ----
   manual_velocity_entries <- reactiveVal(load_manual_velocity_entries(current_school()))
@@ -29181,17 +31726,10 @@ deg_to_clock <- function(x) {
     
     pitch_types <- if (is.null(input$pitchType) || !length(input$pitchType)) "All" else input$pitchType
     
-    # Session type - use modified data instead of original
-    df <- apply_session_type_filter(modified_pitch_data(), input$sessionType)
-    
-    # ⛔️ Team filtering - Filter by team selection ⛔️
-    if (!is.null(input$teamType)) {
-      if (input$teamType == "Campers") {
-        # Filter to only allowed campers
-        df <- dplyr::filter(df, Pitcher %in% ALLOWED_CAMPERS)
-      }
-      # If "GCU" is selected, use the existing data (already filtered to ALLOWED_PITCHERS)
-    }
+    # Session type/team source:
+    # Opponents must come from full pitch_data; team/campers use modified pitching data.
+    df <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = TRUE), input$sessionType)
+    df <- apply_pitching_team_filter(df, input$teamType)
     
     # ⛔️ Drop warmups & blank pitch types
     if ("TaggedPitchType" %in% names(df)) {
@@ -29298,8 +31836,10 @@ deg_to_clock <- function(x) {
     # protect against NULL during app init
     pitch_types <- if (is.null(input$pitchType)) "All" else input$pitchType
     
-    # first, honor Session Type
-    df <- apply_session_type_filter(pitch_data_pitching, input$sessionType)
+    # Session type/team source:
+    # Opponents must come from full pitch_data; team/campers use pitching dataset.
+    df <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = FALSE), input$sessionType)
+    df <- apply_pitching_team_filter(df, input$teamType)
     
     # Live-only BatterSide filter
     if (!is.null(input$batterSide) && input$batterSide != "All") {
@@ -30037,9 +32577,10 @@ deg_to_clock <- function(x) {
     p <- ggplot() +
       geom_polygon(data = home, aes(x, y), inherit.aes = FALSE, fill = NA, color = line_col) +
       geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                inherit.aes = FALSE, fill = NA, linetype = "dashed", color = line_col) +
-      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                 inherit.aes = FALSE, fill = NA, color = line_col) +
+      comp_zone_connector_layers(color = line_col) +
+      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                inherit.aes = FALSE, fill = NA, color = line_col, linewidth = 1.15) +
       zone_nine_square_layers(color = line_col) +
       
       # filled circles for "no result" rows
@@ -30915,7 +33456,7 @@ deg_to_clock <- function(x) {
       # ---------- BATTED BALL DATA TABLE ----------
       if (identical(mode, "Batted Ball Data")) {
         # Helper function
-        fmt_avg <- function(x) sprintf("%.3f", x)
+        fmt_avg <- function(x) gsub("^(-?)0\\.", "\\1.", sprintf("%.3f", x))
         
         # Filter for completed PAs only (like Results table does)
         is_term <- (
@@ -32393,7 +34934,7 @@ deg_to_clock <- function(x) {
     # ---------- BATTED BALL DATA TABLE ----------
     if (identical(mode, "Batted Ball Data")) {
       # Helper function
-      fmt_avg <- function(x) sprintf("%.3f", x)
+      fmt_avg <- function(x) gsub("^(-?)0\\.", "\\1.", sprintf("%.3f", x))
       
       # Filter for completed PAs only (like Results table does)
       is_term <- (
@@ -32896,21 +35437,25 @@ deg_to_clock <- function(x) {
   
   # Build the PA-level result label (same logic as hitting)
   .abp_pa_result_label <- function(last_row) {
-    pr <- as.character(last_row$PlayResult)
-    kc <- as.character(last_row$KorBB)
-    pc <- as.character(last_row$PitchCall)
-    th <- as.character(last_row$TaggedHitType)
+    clean_val <- function(x) {
+      x <- trimws(as.character(x))
+      ifelse(is.na(x) | x == "" | x == "Undefined", NA_character_, x)
+    }
+    pr <- clean_val(last_row$PlayResult)
+    kc <- clean_val(last_row$KorBB)
+    pc <- clean_val(last_row$PitchCall)
+    th <- clean_val(last_row$TaggedHitType)
     
     if (!is.na(pc) && pc == "HitByPitch") return("HitByPitch")
     if (!is.na(kc) && kc %in% c("Strikeout","Walk")) return(kc)
     
-    if (!is.na(pr) && pr != "" && pr != "Undefined") {
+    if (!is.na(pr)) {
       if (pr == "HomeRun") return("HomeRun")
-      th_clean <- ifelse(is.na(th) | th == "", "", paste0(th, " "))
+      th_clean <- ifelse(is.na(th), "", paste0(th, " "))
       return(paste0(th_clean, pr))
     }
-    if (!is.na(pr) && pr != "") return(pr)
-    if (!is.na(pc) && pc != "") return(pc)
+    if (!is.na(pr)) return(pr)
+    if (!is.na(pc)) return(pc)
     "Result"
   }
   
@@ -32920,6 +35465,167 @@ deg_to_clock <- function(x) {
     (!is.na(df$PlayResult) & df$PlayResult != "Undefined") |
       (!is.na(df$KorBB)     & df$KorBB %in% c("Strikeout","Walk")) |
       (!is.na(df$PitchCall) & df$PitchCall == "HitByPitch")
+  }
+  
+  .abp_game_key <- function(df) {
+    key_cols <- c("GameID", "GameUID", "GameForeignID")
+    key_cols <- key_cols[key_cols %in% names(df)]
+    if (length(key_cols)) {
+      for (nm in key_cols) {
+        vals <- trimws(as.character(df[[nm]]))
+        vals[is.na(vals)] <- ""
+        if (any(nzchar(vals))) return(ifelse(nzchar(vals), vals, NA_character_))
+      }
+    }
+    dt <- suppressWarnings(as.Date(df$Date))
+    dt_chr <- as.character(dt)
+    dt_chr[is.na(dt)] <- NA_character_
+    dt_chr
+  }
+  
+  .abp_order_cols <- function(df) {
+    cols <- c(
+      "Date", "UTCDateTime", "LocalDateTime",
+      "GameID", "GameUID", "GameForeignID",
+      "Inning", "Top/Bottom", "PAofInning", "PitchofPA", "PitchNo"
+    )
+    cols[cols %in% names(df)]
+  }
+  
+  .abp_arrange_rows <- function(df) {
+    if (!nrow(df)) return(df)
+    gk <- .abp_game_key(df)
+    gk[is.na(gk) | !nzchar(gk)] <- "unknown_game"
+    src_idx <- seq_len(nrow(df))
+
+    # Preferred fallback for backend-loaded data: preserve insertion order.
+    # Neon loader returns DESC by date/id, so AB needs BackendRowID ascending.
+    if ("BackendRowID" %in% names(df)) {
+      rid <- suppressWarnings(as.numeric(df$BackendRowID))
+      if (any(is.finite(rid))) {
+        ord <- order(gk, rid, src_idx, na.last = TRUE)
+        return(df[ord, , drop = FALSE])
+      }
+    }
+
+    # Next fallback for CSVs or feeds that carry PitchNo.
+    if ("PitchNo" %in% names(df)) {
+      pno <- suppressWarnings(as.numeric(df$PitchNo))
+      if (any(is.finite(pno))) {
+        ord <- order(gk, pno, src_idx, na.last = TRUE)
+        return(df[ord, , drop = FALSE])
+      }
+    }
+
+    # Otherwise keep current order.
+    df
+  }
+  
+  .abp_struct_pa_key <- function(df) {
+    needed <- c("Inning", "PAofInning")
+    if (!all(needed %in% names(df))) return(rep(NA_character_, nrow(df)))
+    inning <- trimws(as.character(df$Inning))
+    pa_inning <- trimws(as.character(df$PAofInning))
+    tb <- if ("Top/Bottom" %in% names(df)) trimws(as.character(df[["Top/Bottom"]])) else rep("", nrow(df))
+    gk <- .abp_game_key(df)
+    valid <- nzchar(inning) & nzchar(pa_inning)
+    out <- rep(NA_character_, nrow(df))
+    out[valid] <- paste(gk[valid], inning[valid], tb[valid], pa_inning[valid], sep = "::")
+    out
+  }
+  
+  .abp_struct_pa_key_from_pitchofpa <- function(df) {
+    needed <- c("Inning", "PitchofPA")
+    if (!all(needed %in% names(df))) return(rep(NA_character_, nrow(df)))
+    inning <- trimws(as.character(df$Inning))
+    tb <- if ("Top/Bottom" %in% names(df)) trimws(as.character(df[["Top/Bottom"]])) else rep("", nrow(df))
+    pitchofpa <- suppressWarnings(as.numeric(df$PitchofPA))
+    gk <- .abp_game_key(df)
+    valid_base <- nzchar(inning) & is.finite(pitchofpa)
+    out <- rep(NA_character_, nrow(df))
+    if (!any(valid_base)) return(out)
+    frame <- data.frame(
+      row_id = seq_len(nrow(df)),
+      game_key = ifelse(is.na(gk) | !nzchar(gk), "unknown_game", gk),
+      inning = inning,
+      tb = tb,
+      pitchofpa = pitchofpa,
+      valid = valid_base,
+      stringsAsFactors = FALSE
+    )
+    frame <- frame %>% dplyr::filter(valid)
+    if (!nrow(frame)) return(out)
+    frame <- frame %>%
+      dplyr::group_by(game_key, inning, tb) %>%
+      dplyr::mutate(pa_seq = cumsum(dplyr::if_else(dplyr::row_number() == 1L | pitchofpa == 1, 1L, 0L))) %>%
+      dplyr::ungroup()
+    out[frame$row_id] <- paste(frame$game_key, frame$inning, frame$tb, frame$pa_seq, sep = "::")
+    out
+  }
+  
+  .abp_score_pa_key <- function(keys, term_mask) {
+    valid <- !is.na(keys) & nzchar(keys)
+    if (!any(valid)) return(list(score = -Inf))
+    
+    idx_by_key <- split(which(valid), keys[valid])
+    done <- vapply(idx_by_key, function(idx) any(term_mask[idx], na.rm = TRUE), logical(1))
+    if (!any(done)) return(list(score = -Inf))
+    
+    done_groups <- idx_by_key[done]
+    group_sizes <- vapply(done_groups, length, integer(1))
+    term_counts <- vapply(done_groups, function(idx) sum(term_mask[idx], na.rm = TRUE), integer(1))
+    
+    # Prefer keys that retain multi-pitch PAs; penalize keys that merge multiple terminal events.
+    score <- sum(group_sizes - 1L) - (3L * sum(pmax(term_counts - 1L, 0L)))
+    list(score = score)
+  }
+  
+  .abp_best_struct_pa_key <- function(df, term_mask) {
+    key_by_paofinning <- .abp_struct_pa_key(df)
+    key_by_pitchofpa <- .abp_struct_pa_key_from_pitchofpa(df)
+    
+    s_pa <- .abp_score_pa_key(key_by_paofinning, term_mask)
+    s_po <- .abp_score_pa_key(key_by_pitchofpa, term_mask)
+    
+    if (is.finite(s_po$score) && (!is.finite(s_pa$score) || s_po$score > s_pa$score)) {
+      return(key_by_pitchofpa)
+    }
+    if (is.finite(s_pa$score)) return(key_by_paofinning)
+    if (is.finite(s_po$score)) return(key_by_pitchofpa)
+    rep(NA_character_, nrow(df))
+  }
+  
+  .abp_count_pa_key <- function(df) {
+    needed <- c("Balls", "Strikes")
+    if (!all(needed %in% names(df))) return(rep(NA_character_, nrow(df)))
+    gk <- .abp_game_key(df)
+    game_key <- ifelse(is.na(gk) | !nzchar(gk), "unknown_game", gk)
+    balls <- suppressWarnings(as.numeric(df$Balls))
+    strikes <- suppressWarnings(as.numeric(df$Strikes))
+    valid <- is.finite(balls) & is.finite(strikes)
+    
+    out <- rep(NA_character_, nrow(df))
+    for (g in unique(game_key)) {
+      idx <- which(game_key == g)
+      if (!length(idx)) next
+      b <- balls[idx]
+      s <- strikes[idx]
+      v <- valid[idx]
+      start <- rep(FALSE, length(idx))
+      start[1] <- TRUE
+      if (length(idx) > 1) {
+        for (k in 2:length(idx)) {
+          reset_to_00 <- v[k] && (b[k] == 0) && (s[k] == 0)
+          prev_is_00 <- v[k - 1] && (b[k - 1] == 0) && (s[k - 1] == 0)
+          count_drop <- v[k] && v[k - 1] && ((b[k] < b[k - 1]) || (s[k] < s[k - 1]))
+          valid_edge <- (!v[k - 1] && v[k])
+          start[k] <- (reset_to_00 && !prev_is_00) || count_drop || valid_edge
+        }
+      }
+      pa_seq <- cumsum(start)
+      out[idx] <- paste(game_key[idx], pa_seq, sep = "::")
+    }
+    out
   }
   
   .abp_fmt_mdy <- function(d) format(as.Date(d), "%m/%d/%Y")
@@ -32941,10 +35647,10 @@ deg_to_clock <- function(x) {
     c(list(
       geom_polygon(data = home, aes(x, y), fill = NA, color = color),
       geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                fill = NA, color = color, linetype = "dashed"),
+                fill = NA, color = color),
       geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                fill = NA, color = color)
-    ), zone_nine_square_layers(color = color))
+                fill = NA, color = color, linewidth = 1.15)
+    ), comp_zone_connector_layers(color = color), zone_nine_square_layers(color = color))
   }
   
   # All game dates where the selected pitcher has ≥1 completed PA (across any batters)
@@ -32952,7 +35658,9 @@ deg_to_clock <- function(x) {
     pit <- input$pitcher
     if (is.null(pit) || identical(pit, "All")) return(as.Date(character(0)))
     
-    d <- pitch_data_pitching %>% dplyr::filter(Pitcher == pit)
+    d <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = TRUE), input$sessionType)
+    d <- apply_pitching_team_filter(d, input$teamType)
+    d <- d %>% dplyr::filter(Pitcher == pit)
     term <- .abp_is_terminal(d)
     sort(unique(as.Date(d$Date[term])))
   })
@@ -32976,7 +35684,9 @@ deg_to_clock <- function(x) {
     
     # Pitch-type legend: only types this pitcher actually threw
     types_for_legend <- {
-      d <- pitch_data_pitching %>% dplyr::filter(Pitcher == pit)
+      d <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = TRUE), input$sessionType)
+      d <- apply_pitching_team_filter(d, input$teamType)
+      d <- d %>% dplyr::filter(Pitcher == pit)
       intersect(names(all_colors), as.character(unique(d$TaggedPitchType)))
     }
     dark_on <- isTRUE(input$dark_mode)
@@ -33037,59 +35747,163 @@ deg_to_clock <- function(x) {
     dt_chr <- input$abpGameDate; req(!is.null(dt_chr))
     the_date <- as.Date(dt_chr)
     
-    # Filter: selected pitcher on selected date (ignore the global date range for this page)
-    df_all <- pitch_data_pitching %>% dplyr::filter(Pitcher == pit, as.Date(Date) == the_date)    
+    # Filter: selected pitcher on selected date (ignore the global date range for this page),
+    # but keep same suite context (session/team/hand/batter-side) as Summary filters.
+    df_all <- apply_session_type_filter(pitching_base_for_team(input$teamType, include_modifications = TRUE), input$sessionType)
+    df_all <- apply_pitching_team_filter(df_all, input$teamType)
+    df_all <- df_all %>% dplyr::filter(Pitcher == pit)
+    if (!is.null(input$hand) && input$hand != "All") {
+      df_all <- dplyr::filter(df_all, PitcherThrows == input$hand)
+    }
+    if (!is.null(input$batterSide) && input$batterSide != "All") {
+      df_all <- df_all %>% dplyr::filter(SessionType != "Live" | (SessionType == "Live" & BatterSide == input$batterSide))
+    }
+    if (!is.null(input$oppHitter) && input$oppHitter != "All") {
+      df_all <- dplyr::filter(df_all, Batter == input$oppHitter)
+    }
+    # Select the game(s) that have completed PAs for this pitcher on the selected date,
+    # then include all pitches from those game(s) even if some rows have a different Date value.
+    gk_all <- .abp_game_key(df_all)
+    term_all_pre <- .abp_is_terminal(df_all)
+    term_all_pre[is.na(term_all_pre)] <- FALSE
+    selected_game_keys <- unique(gk_all[term_all_pre & as.Date(df_all$Date) == the_date])
+    selected_game_keys <- selected_game_keys[!is.na(selected_game_keys) & nzchar(selected_game_keys)]
+    if (length(selected_game_keys)) {
+      df_all <- df_all[!is.na(gk_all) & gk_all %in% selected_game_keys, , drop = FALSE]
+    } else {
+      df_all <- df_all %>% dplyr::filter(as.Date(Date) == the_date)
+    }
+    
+    df_all <- .abp_arrange_rows(df_all)
     
     if (!nrow(df_all)) return(div(tags$em("No pitches for this pitcher on the selected date.")))
     
-    # Order batters by first appearance that day
-    first_idx <- df_all %>%
-      dplyr::mutate(.row_id = dplyr::row_number()) %>%
-      dplyr::group_by(Batter) %>%
-      dplyr::summarise(first_row = min(.row_id), .groups = "drop") %>%
-      dplyr::arrange(first_row)
+    # Group plate appearances directly from game structure, preserving CSV order.
+    gk_all <- .abp_game_key(df_all)
+    df_all$._game_key <- ifelse(is.na(gk_all) | !nzchar(gk_all), "unknown_game", gk_all)
+    inning_chr <- if ("Inning" %in% names(df_all)) trimws(as.character(df_all$Inning)) else rep("", nrow(df_all))
+    tb_chr <- if ("Top/Bottom" %in% names(df_all)) trimws(as.character(df_all[["Top/Bottom"]])) else rep("", nrow(df_all))
+    paofinning_chr <- if ("PAofInning" %in% names(df_all)) trimws(as.character(df_all$PAofInning)) else rep("", nrow(df_all))
+    pitchofpa_num <- if ("PitchofPA" %in% names(df_all)) suppressWarnings(as.numeric(df_all$PitchofPA)) else rep(NA_real_, nrow(df_all))
     
-    # Build one row per batter
-    rows <- lapply(seq_len(nrow(first_idx)), function(bi) {
-      bat <- first_idx$Batter[bi]
-      dB  <- df_all %>% dplyr::filter(Batter == bat)
+    valid_struct <- nzchar(inning_chr) & nzchar(paofinning_chr)
+    pa_key_all <- rep(NA_character_, nrow(df_all))
+    pa_key_all[valid_struct] <- paste(df_all$._game_key[valid_struct], inning_chr[valid_struct], tb_chr[valid_struct], paofinning_chr[valid_struct], sep = "::")
+    
+    # Fallback when PAofInning is missing: split by robust pitch-order transitions.
+    if (any(!valid_struct)) {
+      fallback_id <- integer(nrow(df_all))
+      batter_chr <- if ("Batter" %in% names(df_all)) trimws(as.character(df_all$Batter)) else rep("", nrow(df_all))
+      balls_num <- if ("Balls" %in% names(df_all)) suppressWarnings(as.numeric(df_all$Balls)) else rep(NA_real_, nrow(df_all))
+      strikes_num <- if ("Strikes" %in% names(df_all)) suppressWarnings(as.numeric(df_all$Strikes)) else rep(NA_real_, nrow(df_all))
+      for (gk in unique(df_all$._game_key)) {
+        idx <- which(df_all$._game_key == gk)
+        if (!length(idx)) next
+        start <- rep(FALSE, length(idx))
+        start[1] <- TRUE
+        if (length(idx) > 1) {
+          p <- pitchofpa_num[idx]
+          inn <- inning_chr[idx]
+          tb <- tb_chr[idx]
+          bat <- batter_chr[idx]
+          bb <- balls_num[idx]
+          ss <- strikes_num[idx]
+          for (k in 2:length(idx)) {
+            prev <- p[k - 1]
+            cur <- p[k]
+            by_pitch_reset <- is.finite(cur) && is.finite(prev) && (cur == 1 || cur < prev)
+            by_inning <- nzchar(inn[k]) && nzchar(inn[k - 1]) && (inn[k] != inn[k - 1])
+            by_tb <- nzchar(tb[k]) && nzchar(tb[k - 1]) && (tb[k] != tb[k - 1])
+            by_batter <- nzchar(bat[k]) && nzchar(bat[k - 1]) && (bat[k] != bat[k - 1])
+            by_count_reset <- is.finite(bb[k]) && is.finite(ss[k]) && is.finite(bb[k - 1]) && is.finite(ss[k - 1]) &&
+              (bb[k] == 0 && ss[k] == 0) && (bb[k - 1] > 0 || ss[k - 1] > 0)
+            start[k] <- by_pitch_reset || by_inning || by_tb || by_batter || by_count_reset
+          }
+        }
+        fallback_id[idx] <- cumsum(start)
+      }
+      fallback_key <- paste(df_all$._game_key, fallback_id, sep = "::")
+      pa_key_all[!valid_struct] <- fallback_key[!valid_struct]
+    }
+    
+    # Last fallback: each row as its own PA key (only if keys are still missing).
+    missing_key <- is.na(pa_key_all) | !nzchar(pa_key_all)
+    if (any(missing_key)) pa_key_all[missing_key] <- paste(df_all$._game_key[missing_key], seq_len(sum(missing_key)), sep = "::row::")
+    
+    pa_levels <- unique(pa_key_all)
+    pa_list_all <- split(df_all, factor(pa_key_all, levels = pa_levels))
+    
+    pa_meta <- list()
+    pa_keys <- names(pa_list_all)
+    for (pi in seq_along(pa_list_all)) {
+      pa_df <- pa_list_all[[pi]]
+      pa_name <- pa_keys[[pi]]
+      raw_n <- nrow(pa_df)
+      
+      term_pa <- .abp_is_terminal(pa_df)
+      term_pa[is.na(term_pa)] <- FALSE
+      term_idx <- if (any(term_pa)) tail(which(term_pa), 1) else NA_integer_
+      term_row <- if (is.finite(term_idx)) pa_df[term_idx, , drop = FALSE] else pa_df[nrow(pa_df), , drop = FALSE]
+      
+      bvals <- trimws(as.character(pa_df$Batter %||% ""))
+      bvals <- bvals[nzchar(bvals)]
+      batter_label <- if (length(bvals)) bvals[[1]] else "Unknown Batter"
+      svals <- trimws(as.character(pa_df$BatterSide %||% ""))
+      svals <- svals[nzchar(svals)]
+      side_val <- if (length(svals)) svals[[1]] else ""
+      
+      pa_meta[[length(pa_meta) + 1L]] <- list(
+        pa_key = pa_name,
+        batter = batter_label,
+        side = side_val,
+        data = pa_df,
+        result_row = term_row,
+        debug = list(
+          raw_n = raw_n,
+          shown_n = raw_n,
+          has_terminal = any(term_pa),
+          first_term_idx = term_idx,
+          terminal_pitchcall = as.character(term_row$PitchCall %||% ""),
+          terminal_playresult = as.character(term_row$PlayResult %||% ""),
+          terminal_korbb = as.character(term_row$KorBB %||% "")
+        )
+      )
+    }
+    
+    batter_order <- unique(vapply(pa_meta, function(x) x$batter, character(1)))
+    
+    # Build one row per batter, with all completed PAs in chronological order.
+    rows <- lapply(seq_along(batter_order), function(bi) {
+      bat <- batter_order[[bi]]
+      idx_for_batter <- which(vapply(pa_meta, function(x) identical(x$batter, bat), logical(1)))
+      if (!length(idx_for_batter)) return(NULL)
+      pa_for_batter <- pa_meta[idx_for_batter]
       
       # Batter side & name label with color (Left = red, Right = black)
-      side <- as.character(dplyr::coalesce(dB$BatterSide[which.max(seq_len(nrow(dB)))], NA))
-      lr   <- ifelse(is.na(side), "", ifelse(grepl("^L", side, ignore.case = TRUE), "L", "R"))
+      side <- pa_for_batter[[length(pa_for_batter)]]$side %||% ""
+      lr   <- ifelse(!nzchar(side), "", ifelse(grepl("^L", side, ignore.case = TRUE), "L", "R"))
       is_left <- identical(lr, "L")
       dark_on <- isTRUE(input$dark_mode)
       name_col <- if (is_left) "#d32f2f" else if (dark_on) "#e5e7eb" else "#000000"
+      name_suffix <- if (nzchar(lr)) paste0(" (", lr, ")") else ""
       name_html <- tags$div(
         style = paste0("font-weight:700; color:", name_col, ";"),
-        paste0(.abp_pretty_name(bat), " (", lr, ")")
+        paste0(.abp_pretty_name(bat), name_suffix)
       )
       
-      # Segment PAs within this batter
-      term <- .abp_is_terminal(dB)
-      # cumsum starts a new PA *after* a terminal pitch:
-      pa_id <- cumsum(c(1L, as.integer(utils::head(term, -1))))
-      dB$._pa_id <- pa_id
-      done_ids <- unique(dB$._pa_id[term])
-      dB <- dplyr::filter(dB, ._pa_id %in% done_ids)
-      if (!nrow(dB)) {
-        return(fluidRow(
-          column(3, div(style="padding:10px 6px;", name_html)),
-          column(9, div(style="padding:10px 6px;", tags$em("No completed PAs")))
-        ))
-      }
+      n_pa <- length(pa_for_batter)
       
-      pa_list <- split(dB, dB$._pa_id)
-      n_pa <- length(pa_list)
-      
-      # Build one mini zone chart per PA (left→right, 1st→last)
+      # Build one mini zone chart per PA (left→right, 1st→last for this batter)
       chart_cells <- lapply(seq_len(n_pa), function(i) {
         # build the per-PA data first
-        dat <- pa_list[[i]] %>%
+        dat <- pa_for_batter[[i]]$data %>%
           dplyr::mutate(
             pitch_idx = dplyr::row_number(),
             Result    = factor(compute_result(PitchCall, PlayResult), levels = result_levels),
             tt_fill   = dplyr::coalesce(all_colors[as.character(TaggedPitchType)], "gray80"),
+            ExitSpeed = suppressWarnings(as.numeric(ExitSpeed)),
+            Angle     = suppressWarnings(as.numeric(Angle)),
+            Distance  = suppressWarnings(as.numeric(Distance)),
             tt        = paste0(
               "Pitch: ", as.character(TaggedPitchType), "\n",
               "Result: ", dplyr::case_when(
@@ -33098,15 +35912,82 @@ deg_to_clock <- function(x) {
               ), "\n",
               "Velo: ", ifelse(is.finite(RelSpeed), sprintf("%.1f", RelSpeed), "—"), "\n",
               "IVB: ",  ifelse(is.finite(InducedVertBreak), sprintf("%.1f", InducedVertBreak), "—"), "\n",
-              "HB: ",   ifelse(is.finite(HorzBreak), sprintf("%.1f", HorzBreak), "—")
+              "HB: ",   ifelse(is.finite(HorzBreak), sprintf("%.1f", HorzBreak), "—"), "\n",
+              "EV: ", ifelse(is.finite(ExitSpeed), sprintf("%.1f", ExitSpeed), "—"), "\n",
+              "LA: ", ifelse(is.finite(Angle), sprintf("%.1f", Angle), "—"), "\n",
+              "Distance: ", ifelse(is.finite(Distance), sprintf("%.0f", Distance), "—")
             )
           )
         
-        # now compute the PA result label from the last pitch of this PA
-        title_result <- .abp_pa_result_label(dat[nrow(dat), , drop = FALSE])
+        # Compute the PA result label from the terminal pitch when available.
+        result_row <- pa_for_batter[[i]]$result_row
+        if (is.null(result_row) || !nrow(result_row)) {
+          result_row <- dat[nrow(dat), , drop = FALSE]
+        }
+        title_result <- .abp_pa_result_label(result_row)
+        dbg <- pa_for_batter[[i]]$debug
+        debug_line <- if (isTRUE(input$abpDebug)) {
+          tags$div(
+            style = "font-size:11px; color:#6b7280; margin-bottom:4px;",
+            paste0(
+              "raw=", dbg$raw_n,
+              ", shown=", dbg$shown_n,
+              ", term=", ifelse(isTRUE(dbg$has_terminal), "Y", "N"),
+              ", term_idx=", ifelse(is.finite(dbg$first_term_idx), dbg$first_term_idx, "NA"),
+              ", PC=", ifelse(is.na(dbg$terminal_pitchcall) || dbg$terminal_pitchcall == "", "NA", dbg$terminal_pitchcall),
+              ", PR=", ifelse(is.na(dbg$terminal_playresult) || dbg$terminal_playresult == "", "NA", dbg$terminal_playresult),
+              ", KBB=", ifelse(is.na(dbg$terminal_korbb) || dbg$terminal_korbb == "", "NA", dbg$terminal_korbb)
+            )
+          )
+        } else NULL
+
+        tbl_df <- dat %>%
+          dplyr::transmute(
+            `#` = pitch_idx,
+            Pitch = dplyr::coalesce(as.character(TaggedPitchType), "—"),
+            Velo = ifelse(is.finite(RelSpeed), sprintf("%.1f", RelSpeed), "—"),
+            IVB = ifelse(is.finite(InducedVertBreak), sprintf("%.1f", InducedVertBreak), "—"),
+            HB = ifelse(is.finite(HorzBreak), sprintf("%.1f", HorzBreak), "—"),
+            EV = ifelse(is.finite(ExitSpeed), sprintf("%.1f", ExitSpeed), "—"),
+            LA = ifelse(is.finite(Angle), sprintf("%.1f", Angle), "—"),
+            Result = dplyr::case_when(
+              PitchCall == "InPlay" & !is.na(PlayResult) & PlayResult != "" & PlayResult != "Undefined" ~ as.character(PlayResult),
+              !is.na(KorBB) & KorBB %in% c("Strikeout", "Walk") ~ as.character(KorBB),
+              TRUE ~ dplyr::coalesce(as.character(PitchCall), "—")
+            )
+          )
+
+        table_ui <- tags$table(
+          style = "width:100%; border-collapse:collapse; font-size:10px; line-height:1.2;",
+          tags$thead(
+            tags$tr(
+              lapply(names(tbl_df), function(nm) {
+                tags$th(
+                  style = "padding:2px 4px; border-bottom:1px solid rgba(128,128,128,.35); text-align:center; white-space:nowrap;",
+                  nm
+                )
+              })
+            )
+          ),
+          tags$tbody(
+            lapply(seq_len(nrow(tbl_df)), function(r) {
+              tags$tr(
+                lapply(seq_len(ncol(tbl_df)), function(c) {
+                  tags$td(
+                    style = "padding:1px 4px; text-align:center; white-space:nowrap;",
+                    as.character(tbl_df[r, c, drop = TRUE])
+                  )
+                })
+              )
+            })
+          )
+        )
         
-        pid    <- paste0(bi, "_", names(pa_list)[i])
+        pa_name <- pa_for_batter[[i]]$pa_key
+        pid    <- paste0(bi, "_", gsub("[^A-Za-z0-9_]+", "_", pa_name))
         out_id <- ns(paste0("abpPlot_", pid))
+        sep_col <- if (isTRUE(input$dark_mode)) "rgba(229,231,235,0.28)" else "rgba(15,23,42,0.16)"
+        cell_sep <- if (i < n_pa) paste0("border-right:1px solid ", sep_col, "; padding-right:12px; margin-right:12px;") else ""
         
         local({
           dat_local    <- dat
@@ -33139,7 +36020,7 @@ deg_to_clock <- function(x) {
               scale_color_manual(values = cols[types], limits = types, name = NULL) +
               scale_fill_manual(values  = cols[types], limits = types, name = NULL) +
               scale_shape_manual(values = shape_map, drop = TRUE, name = NULL) +
-              coord_fixed(ratio = 1, xlim = c(-3, 3), ylim = c(0.5, 5)) +
+              coord_fixed(ratio = 1, xlim = c(-3.4, 3.4), ylim = c(0.2, 5.3)) +
               theme_void() + theme(legend.position = "none",
                                    plot.title = element_text(color = axis_col))
             
@@ -33156,10 +36037,18 @@ deg_to_clock <- function(x) {
         })
         
         div(
-          style = "display:inline-block; margin:0 8px 12px 0; vertical-align:top; text-align:center;",
-          tags$div(tags$strong(paste0("PA #", i))),
+          style = paste0("display:inline-block; margin:0 8px 12px 0; vertical-align:top; text-align:center;", cell_sep),
+          tags$div(tags$strong(paste0("PA #", i, " (", nrow(dat), " pitches)"))),
           tags$div(title_result, style = "margin-bottom:6px;"),
-          ggiraph::girafeOutput(out_id, height = "300px", width = "300px")
+          debug_line,
+          div(
+            style = "display:flex; align-items:center; gap:6px; justify-content:center;",
+            div(
+              style = "width:185px; max-width:185px; overflow-x:auto; text-align:left; height:300px; display:flex; align-items:center;",
+              table_ui
+            ),
+            ggiraph::girafeOutput(out_id, height = "300px", width = "300px")
+          )
         )
       })
       
@@ -34775,9 +37664,10 @@ deg_to_clock <- function(x) {
     p <- ggplot() +
       geom_polygon(data = home, aes(x, y), fill = NA, color = line_col, inherit.aes = FALSE) +
       geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                fill = NA, color = line_col, linetype = "dashed", inherit.aes = FALSE) +
-      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                 fill = NA, color = line_col, inherit.aes = FALSE) +
+      comp_zone_connector_layers(color = line_col) +
+      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                fill = NA, color = line_col, linewidth = 1.15, inherit.aes = FALSE) +
       zone_nine_square_layers(color = line_col) +
       
       ggiraph::geom_point_interactive(
@@ -34960,9 +37850,10 @@ deg_to_clock <- function(x) {
     p <- ggplot() +
       geom_polygon(data = home, aes(x, y), fill = NA, color = line_col) +
       geom_rect(data = cz, aes(xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax),
-                fill = NA, color = line_col, linetype = "dashed") +
-      geom_rect(data = sz, aes(xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax),
                 fill = NA, color = line_col) +
+      comp_zone_connector_layers(color = line_col) +
+      geom_rect(data = sz, aes(xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax),
+                fill = NA, color = line_col, linewidth = 1.15) +
       zone_nine_square_layers(color = line_col) +
       
       # visible points (unknown result as solid circle)
@@ -37610,9 +40501,10 @@ deg_to_clock <- function(x) {
     p <- ggplot() +
       geom_polygon(data = home, aes(x, y), fill = NA, color = line_col, inherit.aes = FALSE) +
       geom_rect(data = cz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-                fill = NA, color = line_col, linetype = "dashed", inherit.aes = FALSE) +
-      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                 fill = NA, color = line_col, inherit.aes = FALSE) +
+      comp_zone_connector_layers(color = line_col) +
+      geom_rect(data = sz, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                fill = NA, color = line_col, linewidth = 1.15, inherit.aes = FALSE) +
       zone_nine_square_layers(color = line_col) +
       
       ggiraph::geom_point_interactive(
