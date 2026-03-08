@@ -19,12 +19,15 @@ pitch_data_normalize_school_code <- function(x) {
 
 pitch_data_default_columns <- function() {
   c(
+    "BackendRowID",
     "Date", "Pitcher", "Email", "PitcherThrows", "TaggedPitchType",
     "InducedVertBreak", "HorzBreak", "RelSpeed", "ReleaseTilt", "BreakTilt",
     "SpinEfficiency", "SpinRate", "RelHeight", "RelSide", "Extension",
     "VertApprAngle", "HorzApprAngle", "PlateLocSide", "PlateLocHeight",
     "PitchCall", "KorBB", "Balls", "Strikes", "SessionType", "PlayID",
     "ExitSpeed", "Angle", "Distance", "Direction", "BatterSide", "PlayResult", "TaggedHitType", "OutsOnPlay",
+    "ContactPositionX", "ContactPositionY", "ContactPositionZ",
+    "BatSpeed", "VerticalAttackAngle", "HorizontalAttackAngle", "HitSpinRate",
     "ThrowSpeed", "ExchangeTime", "PopTime", "TimeToBase",
     "BasePositionX", "BasePositionY", "BasePositionZ", "TargetBase",
     "Batter", "Catcher", "VideoClip", "VideoClip2", "VideoClip3",
@@ -79,6 +82,7 @@ pitch_data_make_key <- function(df) {
 
 pitch_data_storage_name_map <- function() {
   c(
+    BackendRowID = "id",
     Date = "date",
     Pitcher = "pitcher",
     Email = "email",
@@ -108,6 +112,13 @@ pitch_data_storage_name_map <- function() {
     Angle = "angle",
     Distance = "distance",
     Direction = "direction",
+    ContactPositionX = "contactpositionx",
+    ContactPositionY = "contactpositiony",
+    ContactPositionZ = "contactpositionz",
+    BatSpeed = "batspeed",
+    VerticalAttackAngle = "verticalattackangle",
+    HorizontalAttackAngle = "horizontalattackangle",
+    HitSpinRate = "hitspinrate",
     ThrowSpeed = "throwspeed",
     ExchangeTime = "exchangetime",
     PopTime = "poptime",
@@ -672,7 +683,11 @@ load_pitch_data_from_postgres <- function(school_code = "", startup_logger = NUL
   ttl <- pitch_data_cache_ttl()
   cached <- pitch_data_load_cached(cache_file, ttl)
   if (!is.null(cached) && is.list(cached) && !is.null(cached$data)) {
-    required_cols <- c("Distance", "Direction", "ThrowSpeed", "ExchangeTime", "PopTime")
+    required_cols <- c(
+      "BackendRowID", "Distance", "Direction", "ThrowSpeed", "ExchangeTime", "PopTime",
+      "ContactPositionX", "ContactPositionY", "ContactPositionZ",
+      "BatSpeed", "VerticalAttackAngle", "HorizontalAttackAngle", "HitSpinRate"
+    )
     min_cache_rows <- suppressWarnings(as.integer(Sys.getenv("PITCH_DATA_CACHE_MIN_ROWS", "100")))
     if (is.na(min_cache_rows) || min_cache_rows < 0L) min_cache_rows <- 0L
     cache_rows <- nrow(cached$data)
@@ -821,7 +836,7 @@ ensure_pitch_key_unique_guard <- function(con, school_code = "") {
 
 sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
   school_code <- toupper(trimws(as.character(school_code)))
-  if (!nzchar(school_code)) school_code <- toupper(trimws(Sys.getenv("TEAM_CODE", "OSU")))
+  if (!nzchar(school_code)) school_code <- toupper(trimws(Sys.getenv("TEAM_CODE", "LSU")))
   force_resync <- pitch_data_parse_bool(Sys.getenv("PITCH_DATA_FORCE_RESYNC", "0"), default = FALSE)
 
   schema <- gsub("[^A-Za-z0-9_]", "_", Sys.getenv("PITCH_DATA_DB_SCHEMA", "public"))
@@ -1033,12 +1048,16 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
     stringsAsFactors = FALSE
   )
 
-  app_cols <- setdiff(pitch_data_default_columns(), c("SourceFile", "PitchKey"))
+  # BackendRowID is read-only metadata and maps to serial PK `id`;
+  # never send it during inserts.
+  app_cols <- setdiff(pitch_data_default_columns(), c("SourceFile", "PitchKey", "BackendRowID"))
   for (nm in app_cols) {
     db_nm <- unname(name_map[[nm]])
     if (is.na(db_nm) || !nzchar(db_nm)) next
     db_df[[db_nm]] <- if (nm %in% names(df)) as.character(df[[nm]]) else NA_character_
   }
+  # Defensive guard in case aliases/config ever reintroduce `id` into payload.
+  if ("id" %in% names(db_df)) db_df$id <- NULL
 
   # Pooler-safe path: avoid temp tables; pre-filter duplicate pitch_key rows, then append.
   if (nrow(db_df) && "pitch_key" %in% names(db_df)) {
@@ -1138,7 +1157,7 @@ sync_csv_tree_to_neon <- function(data_dir = file.path("data"), school_code = ""
   # Fast pre-skip: one manifest query + local mtime comparison to avoid re-checking
   # unchanged files one-by-one every run.
   school_code_norm <- toupper(trimws(as.character(school_code)))
-  if (!nzchar(school_code_norm)) school_code_norm <- toupper(trimws(Sys.getenv("TEAM_CODE", "OSU")))
+  if (!nzchar(school_code_norm)) school_code_norm <- toupper(trimws(Sys.getenv("TEAM_CODE", "LSU")))
   schema <- gsub("[^A-Za-z0-9_]", "_", Sys.getenv("PITCH_DATA_DB_SCHEMA", "public"))
   mtbl <- DBI::Id(schema = schema, table = "pitch_data_files")
   etbl <- DBI::Id(schema = schema, table = Sys.getenv("PITCH_DATA_DB_TABLE", "pitch_events"))
