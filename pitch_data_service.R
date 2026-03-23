@@ -31,6 +31,7 @@ pitch_data_default_columns <- function() {
     "ThrowSpeed", "ExchangeTime", "PopTime", "TimeToBase",
     "BasePositionX", "BasePositionY", "BasePositionZ", "TargetBase",
     "Batter", "Catcher", "VideoClip", "VideoClip2", "VideoClip3",
+    "PitcherTeam", "BatterTeam", "HomeTeam", "AwayTeam",
     "PitchUID", "PitchID", "PitchGuid", "SourceFile", "PitchKey"
   )
 }
@@ -133,6 +134,10 @@ pitch_data_storage_name_map <- function() {
     OutsOnPlay = "outsonplay",
     Batter = "batter",
     Catcher = "catcher",
+    PitcherTeam = "pitcherteam",
+    BatterTeam = "batterteam",
+    HomeTeam = "hometeam",
+    AwayTeam = "awayteam",
     VideoClip = "videoclip",
     VideoClip2 = "videoclip2",
     VideoClip3 = "videoclip3",
@@ -907,6 +912,47 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
     progress = FALSE,
     show_col_types = FALSE
   ))
+
+  # Strict school-row filter:
+  # Only keep rows where PitcherTeam or BatterTeam explicitly matches this school's markers.
+  get_team_markers <- function(default_school_code) {
+    markers <- c(default_school_code)
+    cfg_path <- file.path("config", "school_config.R")
+    if (file.exists(cfg_path)) {
+      cfg_env <- new.env(parent = baseenv())
+      try(sys.source(cfg_path, envir = cfg_env), silent = TRUE)
+      if (exists("school_config", envir = cfg_env, inherits = FALSE)) {
+        cfg <- get("school_config", envir = cfg_env, inherits = FALSE)
+        if (is.list(cfg)) {
+          team_code_cfg <- tryCatch(as.character(cfg$team_code), error = function(...) "")
+          team_markers_cfg <- tryCatch(as.character(cfg$team_code_markers), error = function(...) character(0))
+          markers <- c(markers, team_code_cfg, team_markers_cfg)
+        }
+      }
+    }
+    markers <- toupper(trimws(markers))
+    markers <- markers[nzchar(markers)]
+    unique(markers)
+  }
+
+  normalize_team_code <- function(x) {
+    x <- ifelse(is.na(x), "", as.character(x))
+    x <- toupper(trimws(x))
+    gsub("[^A-Z0-9_]", "", x)
+  }
+
+  team_markers <- get_team_markers(school_code)
+  if (length(team_markers)) {
+    team_markers_norm <- normalize_team_code(team_markers)
+    pitcher_team_vals <- if ("PitcherTeam" %in% names(df)) df$PitcherTeam else rep("", nrow(df))
+    batter_team_vals <- if ("BatterTeam" %in% names(df)) df$BatterTeam else rep("", nrow(df))
+    pitcher_team_norm <- normalize_team_code(pitcher_team_vals)
+    batter_team_norm <- normalize_team_code(batter_team_vals)
+    keep_rows <- (pitcher_team_norm %in% team_markers_norm) | (batter_team_norm %in% team_markers_norm)
+    if (any(!keep_rows)) {
+      df <- df[keep_rows, , drop = FALSE]
+    }
+  }
 
   # Alias normalization for compatibility with app expectations.
   canon_aliases <- list(

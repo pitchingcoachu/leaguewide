@@ -375,6 +375,7 @@ normalize_name_list <- function(names) {
 load_team_filters <- function() {
   filters <- list(
     team_code = toupper(trimws(Sys.getenv("TEAM_CODE", ""))),
+    team_code_markers = character(0),
     allowed_players = character(0)
   )
   config_path <- file.path("config", "school_config.R")
@@ -391,12 +392,55 @@ load_team_filters <- function() {
     if (!is.null(cfg$team_code) && nzchar(trimws(cfg$team_code))) {
       filters$team_code <- toupper(trimws(cfg$team_code))
     }
+    markers <- c(cfg$team_code_markers, cfg$team_code)
+    filters$team_code_markers <- normalize_name_list(markers)
     players <- c(cfg$allowed_pitchers, cfg$allowed_hitters)
     filters$allowed_players <- normalize_name_list(players)
   }, error = function(e) {
     cat("Unable to load school_config.R for filtering:", e$message, "\n")
   })
   filters
+}
+
+cleanup_non_team_rows_in_neon <- function(filters = list()) {
+  if (!exists("pitch_data_db_connect", mode = "function")) return(0L)
+  school_code <- ""
+  if (!is.null(filters$team_code) && nzchar(trimws(as.character(filters$team_code)))) {
+    school_code <- as.character(filters$team_code)
+  } else {
+    school_code <- Sys.getenv("TEAM_CODE", "")
+  }
+  school_code <- toupper(trimws(school_code))
+  if (!nzchar(school_code)) return(0L)
+
+  markers <- c(filters$team_code_markers, school_code)
+  markers <- unique(toupper(trimws(markers)))
+  markers <- markers[nzchar(markers)]
+  if (!length(markers)) return(0L)
+
+  quote_lit <- function(x) paste0("'", gsub("'", "''", x, fixed = TRUE), "'")
+  marker_sql <- paste(vapply(markers, quote_lit, character(1)), collapse = ", ")
+
+  delete_sql <- paste0(
+    "DELETE FROM public.pitch_events ",
+    "WHERE school_code = ", quote_lit(school_code), " ",
+    "  AND (COALESCE(NULLIF(TRIM(pitcherteam), ''), '') <> '' OR COALESCE(NULLIF(TRIM(batterteam), ''), '') <> '') ",
+    "  AND regexp_replace(UPPER(COALESCE(NULLIF(TRIM(pitcherteam), ''), '')), '[^A-Z0-9_]', '', 'g') NOT IN (", marker_sql, ") ",
+    "  AND regexp_replace(UPPER(COALESCE(NULLIF(TRIM(batterteam), ''), '')), '[^A-Z0-9_]', '', 'g') NOT IN (", marker_sql, ")"
+  )
+
+  con <- NULL
+  removed <- 0L
+  tryCatch({
+    con <- pitch_data_db_connect()
+    removed <- as.integer(DBI::dbExecute(con, delete_sql))
+    if (is.na(removed)) removed <- 0L
+  }, error = function(e) {
+    cat("Skipping Neon non-team row cleanup:", e$message, "\n")
+  }, finally = {
+    if (!is.null(con)) try(DBI::dbDisconnect(con), silent = TRUE)
+  })
+  removed
 }
 
 file_contains_patterns <- function(path, patterns) {
@@ -611,6 +655,10 @@ main_sync <- function() {
         )
         pitch_neon_updated <- TRUE
         cat("Synced local pitch CSVs into Neon pitch_events\n")
+        removed_non_team_rows <- cleanup_non_team_rows_in_neon(team_filters)
+        if (removed_non_team_rows > 0) {
+          cat("Removed", removed_non_team_rows, "explicit non-team rows from Neon pitch_events\n")
+        }
       }, error = function(e) {
         cat("Skipping Neon pitch sync:", e$message, "\n")
       })
