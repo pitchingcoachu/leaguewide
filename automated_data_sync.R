@@ -16,6 +16,32 @@ source("video_map_helpers.R")
 if (file.exists("pitch_data_service.R")) {
   source("pitch_data_service.R")
 }
+
+load_sync_school_config <- function() {
+  cfg <- list()
+  cfg_path <- file.path("config", "school_config.R")
+  if (!file.exists(cfg_path)) return(cfg)
+  env <- new.env(parent = baseenv())
+  tryCatch({
+    sys.source(cfg_path, envir = env)
+    if (exists("school_config", envir = env, inherits = FALSE)) {
+      cfg <- get("school_config", envir = env, inherits = FALSE)
+    }
+  }, error = function(...) {})
+  cfg
+}
+
+SYNC_SCHOOL_CFG <- load_sync_school_config()
+LEAGUE_MODE <- is.list(SYNC_SCHOOL_CFG) && isTRUE(SYNC_SCHOOL_CFG$league_mode)
+SYNC_V3_ONLY <- is.list(SYNC_SCHOOL_CFG) && isTRUE(SYNC_SCHOOL_CFG$sync_v3_only)
+SYNC_FILE_EXCLUDES <- if (is.list(SYNC_SCHOOL_CFG) && length(SYNC_SCHOOL_CFG$exclude_filename_tokens)) {
+  tolower(trimws(as.character(SYNC_SCHOOL_CFG$exclude_filename_tokens)))
+} else character(0)
+SYNC_FILE_EXCLUDES <- SYNC_FILE_EXCLUDES[nzchar(SYNC_FILE_EXCLUDES)]
+SYNC_START_DATE_OVERRIDE <- as.Date(NA)
+if (is.list(SYNC_SCHOOL_CFG) && !is.null(SYNC_SCHOOL_CFG$sync_start_date) && nzchar(as.character(SYNC_SCHOOL_CFG$sync_start_date))) {
+  SYNC_START_DATE_OVERRIDE <- suppressWarnings(as.Date(as.character(SYNC_SCHOOL_CFG$sync_start_date)))
+}
 # FTP credentials
 FTP_HOST <- "ftp.trackmanbaseball.com"
 FTP_USER <- "LStateU"
@@ -33,6 +59,7 @@ LAST_SYNC_FILE <- file.path(LOCAL_DATA_DIR, "last_sync.txt")
 TM_SYNC_LOOKBACK_DAYS <- suppressWarnings(as.integer(Sys.getenv("TM_SYNC_LOOKBACK_DAYS", "1")))
 if (is.na(TM_SYNC_LOOKBACK_DAYS) || TM_SYNC_LOOKBACK_DAYS < 1L) TM_SYNC_LOOKBACK_DAYS <- 1L
 TM_SYNC_INITIAL_FULL <- tolower(trimws(Sys.getenv("TM_SYNC_INITIAL_FULL", "0"))) %in% c("1", "true", "yes", "y")
+TM_SYNC_LEAGUE_FULL_SCAN <- tolower(trimws(Sys.getenv("TM_SYNC_LEAGUE_FULL_SCAN", "0"))) %in% c("1", "true", "yes", "y")
 FTP_THROTTLE_SEC <- suppressWarnings(as.numeric(Sys.getenv("TM_FTP_THROTTLE_SEC", "0")))
 if (is.na(FTP_THROTTLE_SEC) || FTP_THROTTLE_SEC < 0) FTP_THROTTLE_SEC <- 0
 
@@ -59,11 +86,17 @@ list_ftp_files <- function(ftp_path) {
   })
 }
 
+encode_ftp_path <- function(path) {
+  parts <- strsplit(as.character(path), "/", fixed = TRUE)[[1]]
+  enc <- vapply(parts, function(p) URLencode(p, reserved = TRUE), character(1))
+  paste(enc, collapse = "/")
+}
+
 # Function to download CSV file (no filtering - app will handle filtering)
 download_csv <- function(remote_file, local_file) {
   # Check if this file should be excluded
   filename <- basename(remote_file)
-  if (should_exclude_csv(filename)) {
+  if (!isTRUE(LEAGUE_MODE) && should_exclude_csv(filename)) {
     return(FALSE)
   }
   # Skip if file already exists (incremental sync)
@@ -72,7 +105,7 @@ download_csv <- function(remote_file, local_file) {
     return(FALSE)  # Return FALSE so we don't count it as newly downloaded
   }
   
-  url <- paste0("ftp://", FTP_HOST, remote_file)
+  url <- paste0("ftp://", FTP_HOST, encode_ftp_path(remote_file))
   
   tryCatch({
     temp_file <- tempfile(fileext = ".csv")
@@ -102,6 +135,14 @@ download_csv <- function(remote_file, local_file) {
 }
 
 recent_sync_years <- function() {
+  if (isTRUE(LEAGUE_MODE) && !is.na(SYNC_START_DATE_OVERRIDE)) {
+    if (!isTRUE(TM_SYNC_LEAGUE_FULL_SCAN)) {
+      lookback_start <- Sys.Date() - TM_SYNC_LOOKBACK_DAYS
+      league_start <- max(SYNC_START_DATE_OVERRIDE, lookback_start)
+      return(as.character(seq(lubridate::year(league_start), lubridate::year(Sys.Date()))))
+    }
+    return(as.character(seq(lubridate::year(SYNC_START_DATE_OVERRIDE), lubridate::year(Sys.Date()))))
+  }
   if (!file.exists(LAST_SYNC_FILE) && isTRUE(TM_SYNC_INITIAL_FULL)) {
     return(as.character(SYNC_START_YEAR:year(Sys.Date())))
   }
@@ -112,6 +153,16 @@ recent_sync_years <- function() {
 
 sync_window_start_date <- function() {
   hard_floor <- as.Date(sprintf("%04d-01-01", SYNC_START_YEAR))
+  if (!is.na(SYNC_START_DATE_OVERRIDE)) {
+    hard_floor <- max(hard_floor, SYNC_START_DATE_OVERRIDE)
+  }
+  if (isTRUE(LEAGUE_MODE)) {
+    if (!isTRUE(TM_SYNC_LEAGUE_FULL_SCAN)) {
+      lookback_start <- Sys.Date() - TM_SYNC_LOOKBACK_DAYS
+      return(max(hard_floor, lookback_start))
+    }
+    return(hard_floor)
+  }
   lookback_start <- Sys.Date() - TM_SYNC_LOOKBACK_DAYS
   max(hard_floor, lookback_start)
 }
@@ -146,8 +197,12 @@ sync_practice_data <- function() {
         files_in_day <- list_ftp_files(day_path)
         csv_files <- files_in_day[grepl("\\.csv$", files_in_day, ignore.case = TRUE)]
         
-        # Filter out files with "playerpositioning" in the name (allow unverified)
-        csv_files <- csv_files[!grepl("playerpositioning", csv_files, ignore.case = TRUE)]
+        if (length(SYNC_FILE_EXCLUDES)) {
+          pat <- paste(SYNC_FILE_EXCLUDES, collapse = "|")
+          csv_files <- csv_files[!grepl(pat, csv_files, ignore.case = TRUE)]
+        } else {
+          csv_files <- csv_files[!grepl("playerpositioning", csv_files, ignore.case = TRUE)]
+        }
         
         for (file in csv_files) {
           remote_path <- paste0(day_path, file)
@@ -223,8 +278,12 @@ sync_v3_data <- function() {
           csv_files <- list_ftp_files(csv_path)
           csv_files <- csv_files[grepl("\\.csv$", csv_files, ignore.case = TRUE)]
           
-          # Filter out files with "playerpositioning" or "unverified" in v3 folder
-          csv_files <- csv_files[!grepl("playerpositioning", csv_files, ignore.case = TRUE)]
+          if (length(SYNC_FILE_EXCLUDES)) {
+            pat <- paste(SYNC_FILE_EXCLUDES, collapse = "|")
+            csv_files <- csv_files[!grepl(pat, csv_files, ignore.case = TRUE)]
+          } else {
+            csv_files <- csv_files[!grepl("playerpositioning|unverified", csv_files, ignore.case = TRUE)]
+          }
           
           for (file in csv_files) {
             if (!nzchar(file)) next
@@ -249,7 +308,12 @@ sync_v3_data <- function() {
         } else {
           csv_files <- files_in_day[grepl("\\.csv$", files_in_day, ignore.case = TRUE)]
           
-          csv_files <- csv_files[!grepl("playerpositioning|unverified", csv_files, ignore.case = TRUE)]
+          if (length(SYNC_FILE_EXCLUDES)) {
+            pat <- paste(SYNC_FILE_EXCLUDES, collapse = "|")
+            csv_files <- csv_files[!grepl(pat, csv_files, ignore.case = TRUE)]
+          } else {
+            csv_files <- csv_files[!grepl("playerpositioning|unverified", csv_files, ignore.case = TRUE)]
+          }
           
           for (file in csv_files) {
             if (!nzchar(file)) next
@@ -403,6 +467,7 @@ load_team_filters <- function() {
 }
 
 cleanup_non_team_rows_in_neon <- function(filters = list()) {
+  if (isTRUE(LEAGUE_MODE)) return(0L)
   if (!exists("pitch_data_db_connect", mode = "function")) return(0L)
   school_code <- ""
   if (!is.null(filters$team_code) && nzchar(trimws(as.character(filters$team_code)))) {
@@ -493,6 +558,9 @@ extract_remote_basename <- function(path) {
 }
 
 cleanup_irrelevant_team_csvs <- function(filters = list()) {
+  if (isTRUE(LEAGUE_MODE)) {
+    return(0L)
+  }
   if (length(filters$allowed_players) == 0 && !nzchar(filters$team_code)) {
     return(0L)
   }
@@ -551,7 +619,7 @@ main_sync <- function() {
   }
   
   # Sync both data sources
-  practice_downloaded <- sync_practice_data()
+  practice_downloaded <- if (isTRUE(LEAGUE_MODE) || isTRUE(SYNC_V3_ONLY)) character(0) else sync_practice_data()
   v3_downloaded <- sync_v3_data()
   practice_updated <- length(practice_downloaded) > 0
   v3_updated <- length(v3_downloaded) > 0
@@ -649,7 +717,7 @@ main_sync <- function() {
         changed_csvs <- unique(c(practice_downloaded, v3_downloaded))
         sync_csv_tree_to_neon(
           data_dir = LOCAL_DATA_DIR,
-          school_code = Sys.getenv("TEAM_CODE", "OSU"),
+          school_code = Sys.getenv("TEAM_CODE", "LEAGUE"),
           workers = workers,
           csv_paths = if (incremental_only) changed_csvs else NULL
         )
