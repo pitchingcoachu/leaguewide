@@ -1,32 +1,17 @@
 # School-specific overrides for the shared app.
 # Copy this file to another repo and keep the same structure when you need to customize colors, logos, APIs, etc.
 school_config <- list(
-  team_code = "LSU",
+  team_code = "LEAGUE",
   # Additional school-code markers used in TrackMan team columns (optional).
   # These are checked alongside team_code during allowed-player verification.
-  team_code_markers = c("LSU_TIG", "LSU", "LSU_FAL"),
-  allowed_pitchers = c(
-    "Guidry, Gavin","Schmidt, William","Rizy, Mavrick","Evans, Casan",
-    "Moore, Cooper","Cowan, Zac","Lachenmayer, Danny","Noot, Jaden",
-    "Williams, Cooper","Dathe, Dax","Garcia, Santiago","Ricken, Reagan",
-    "Plog, Ethan","Aase, Jonah","Fontenot, Grant","Primeaux, DJ",
-    "Benge, Connor","Sheerin, Deven","Smart, Ryler","Theophilus, Zion","Paz, Marcos", "Shahrdar, John"
-  ),
-  allowed_hitters = c(
-    "Guidry, Gavin","Schmidt, William","Rizy, Mavrick","Evans, Casan",
-    "Moore, Cooper","Cowan, Zac","Lachenmayer, Danny","Noot, Jaden",
-    "Williams, Cooper","Dathe, Dax","Garcia, Santiago","Ricken, Reagan",
-    "Plog, Ethan","Aase, Jonah","Fontenot, Grant","Primeaux, DJ",
-    "Benge, Connor","Sheerin, Deven","Smart, Ryler","Theophilus, Zion","Paz, Marcos", "Anderson, Kade", "Shahrdar, John"
-
-  ),
-  allowed_campers = c(
-    "Guidry, Gavin","Schmidt, William","Rizy, Mavrick","Evans, Casan",
-    "Moore, Cooper","Cowan, Zac","Lachenmayer, Danny","Noot, Jaden",
-    "Williams, Cooper","Dathe, Dax","Garcia, Santiago","Ricken, Reagan",
-    "Plog, Ethan","Aase, Jonah","Fontenot, Grant","Primeaux, DJ",
-    "Benge, Connor","Sheerin, Deven","Smart, Ryler","Theophilus, Zion","Paz, Marcos", "Anderson, Kade", "Shahrdar, John"
-  ),
+  team_code_markers = character(0),
+  allowed_pitchers = character(0),
+  allowed_hitters = character(0),
+  allowed_campers = character(0),
+  league_mode = TRUE,
+  sync_v3_only = TRUE,
+  sync_start_date = "2026-02-13",
+  exclude_filename_tokens = c("unverified", "fhc", "playerpositioning", "json", "private"),
   colors = list(
     primary             = "#461d7c",   # purple from the LSU logo
     accent              = "#461d7c",   # deep purple gradient start
@@ -35,18 +20,14 @@ school_config <- list(
     background_secondary= "#f6f3ff"    # very light purple tint
     
   ),
-  logo = "LSUlogo.png",
-  coaches_emails = c(
-    "jtutko@lsu.edu",
-    "Corralf34@gmail.com",
-    "tgriffin@cn.edu"
-  ),
+  logo = "PCUlogo.png",
+  coaches_emails = c(),
   notes_api = list(
     base_url = "https://script.google.com/macros/s/AKfycbxkjUyCb1MI8xc7kuLOi3qutPaoKVMzx85hGBzJRTuCOfMWnYwTS-5LWopZDTpwnaa_/exec",
     token = "pcu_notes_TZ3qj9mY0Nf4WvK1aB7rC6xD2uH8sP5L"
   ),
   extra = list(
-    school_name = "LSU",
+    school_name = "League",
     ftp_folder = "trackman",
     cloudinary_folder = "trackman"
   )

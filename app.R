@@ -43,7 +43,7 @@ GLOBAL_SCOPE <- "GLOBAL"
 current_school <- function() {
   sc <- Sys.getenv("TEAM_CODE", unset = TEAM_CODE)
   if (is.null(sc) || !nzchar(sc)) sc <- TEAM_CODE
-  if (is.null(sc) || !nzchar(sc)) sc <- "OSU"
+  if (is.null(sc) || !nzchar(sc)) sc <- "LEAGUE"
   toupper(sc)
 }
 allowed_school_codes <- function() unique(c(current_school(), GLOBAL_SCOPE))
@@ -62,7 +62,8 @@ school_setting <- function(name, default = NULL) {
 
 # School-scoped overrides
 TEAM_CODE <- school_setting("team_code", TEAM_CODE)
-if (!nzchar(TEAM_CODE)) TEAM_CODE <- "OSU"
+if (!nzchar(TEAM_CODE)) TEAM_CODE <- "LEAGUE"
+LEAGUE_MODE <- isTRUE(school_setting("league_mode", FALSE))
 school_logo <- school_setting("logo", "PCUlogo.png")
 custom_reports_light_logo_cfg <- school_setting("custom_reports_light_logo", NULL)
 custom_reports_light_logo <- if (
@@ -80,10 +81,14 @@ if (is.null(school_display_name) || !nzchar(school_display_name)) {
   school_display_name <- TEAM_CODE
 }
 
-TEAM_CHOICES <- c("All" = "All",
-                  setNames(TEAM_CODE, school_display_name),
-                  "Opponents" = "Opponents",
-                  "Campers" = "Campers")
+TEAM_CHOICES <- if (isTRUE(LEAGUE_MODE)) {
+  c("All" = "All")
+} else {
+  c("All" = "All",
+    setNames(TEAM_CODE, school_display_name),
+    "Opponents" = "Opponents",
+    "Campers" = "Campers")
+}
 
 default_colors <- list(
   primary = "#0a2240",
@@ -6238,6 +6243,14 @@ raw_catchers <- sort(unique(na.omit(as.character(pitch_data$Catcher))))
 catch_display <- format_name_first_last(raw_catchers)
 catcher_map <- setNames(raw_catchers, catch_display)
 
+if (isTRUE(LEAGUE_MODE)) {
+  pitch_team_codes <- sort(unique(normalize_team_code(pitch_data$PitcherTeam)))
+  batter_team_codes <- sort(unique(normalize_team_code(pitch_data$BatterTeam)))
+  all_team_codes <- unique(c(pitch_team_codes, batter_team_codes))
+  all_team_codes <- all_team_codes[nzchar(all_team_codes)]
+  TEAM_CHOICES <- c("All" = "All", setNames(all_team_codes, all_team_codes))
+}
+
 
 # ==== PITCHERS-ONLY WHITELIST ====
 ALLOWED_PITCHERS <- school_setting("allowed_pitchers", c(
@@ -6366,6 +6379,12 @@ ALLOWED_CAMPERS <- school_setting("allowed_campers", c(
   "Moseman, Cody"
 ))
 
+if (isTRUE(LEAGUE_MODE)) {
+  ALLOWED_PITCHERS <- sort(unique(stats::na.omit(as.character(pitch_data$Pitcher))))
+  ALLOWED_HITTERS <- sort(unique(stats::na.omit(as.character(pitch_data$Batter))))
+  ALLOWED_CAMPERS <- character(0)
+}
+
 
 `%in_ci%` <- function(x, y) tolower(x) %in% tolower(y)
 
@@ -6409,7 +6428,35 @@ apply_session_type_filter <- function(df, session_value) {
 }
 
 session_type_choices <- function() {
+  if (isTRUE(LEAGUE_MODE)) {
+    return(c("Season", "All"))
+  }
   c("Season", "Bullpen", "Live BP" = "Live", "All")
+}
+
+normalize_team_code <- function(x) {
+  x <- ifelse(is.na(x), "", as.character(x))
+  x <- toupper(trimws(x))
+  gsub("[^A-Z0-9_]", "", x)
+}
+
+filter_by_team_code <- function(df, team_type, domain = c("Pitching", "Hitting", "Catching")) {
+  if (is.null(df) || !nrow(df)) return(df)
+  team_type <- team_type %||% "All"
+  if (!nzchar(team_type) || identical(team_type, "All")) return(df)
+  domain <- match.arg(domain)
+  team_col <- switch(
+    domain,
+    "Pitching" = "PitcherTeam",
+    "Hitting" = "BatterTeam",
+    "Catching" = "PitcherTeam"
+  )
+  if (!(team_col %in% names(df))) return(df[0, , drop = FALSE])
+  team_norm <- normalize_team_code(team_type)
+  vals_norm <- normalize_team_code(df[[team_col]])
+  keep <- vals_norm == team_norm
+  keep[is.na(keep)] <- FALSE
+  df[keep, , drop = FALSE]
 }
 
 # Marker-based school verification removed: keep configured allowed player lists as-is.
@@ -6448,12 +6495,18 @@ ALL_ALLOWED_HITTERS  <- unique(c(ALLOWED_HITTERS_DL,  ALLOWED_CAMPERS_DL))
 # Robust, case/spacing/punctuation-insensitive filter.
 allowed_norm <- norm_name_ci(ALL_ALLOWED_PITCHERS)
 
-workload_filter_players_by_team <- function(names, team_type = "All") {
+workload_filter_players_by_team <- function(names, team_type = "All", team_codes = NULL) {
   names <- stats::na.omit(as.character(names))
   if (!length(names)) return(character(0))
   team_type <- team_type %||% "All"
   if (!nzchar(team_type) || identical(team_type, "All")) {
     return(sort(unique(names)))
+  }
+  if (isTRUE(LEAGUE_MODE) && !is.null(team_codes)) {
+    tc <- normalize_team_code(team_codes)
+    keep <- tc == normalize_team_code(team_type)
+    keep[is.na(keep)] <- FALSE
+    return(sort(unique(names[keep])))
   }
   norm_names <- norm_name_ci(names)
   campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
@@ -6474,26 +6527,28 @@ workload_filter_players_by_team <- function(names, team_type = "All") {
   sort(unique(res))
 }
 
-# Build an allowed lookup at unique-name level; this avoids repeated regex work
-# over every row and removes the startup hotspot.
-pitcher_raw <- as.character(pitch_data_pitching$Pitcher)
-uniq_pitchers <- unique(pitcher_raw)
-uniq_pitchers <- uniq_pitchers[!is.na(uniq_pitchers)]
-if (length(uniq_pitchers)) {
-  uniq_disp <- ifelse(
-    grepl(",", uniq_pitchers),
-    paste0(trimws(sub(".*,", "", uniq_pitchers)), " ", trimws(sub(",.*", "", uniq_pitchers))),
-    uniq_pitchers
-  )
-  uniq_allowed <- norm_name_ci(uniq_pitchers) %in% allowed_norm |
-    norm_name_ci(uniq_disp) %in% allowed_norm
-  allowed_lookup <- setNames(uniq_allowed, uniq_pitchers)
-  mask_pitching <- unname(allowed_lookup[pitcher_raw])
-  mask_pitching[is.na(mask_pitching)] <- FALSE
-} else {
-  mask_pitching <- rep(FALSE, nrow(pitch_data_pitching))
+if (!isTRUE(LEAGUE_MODE)) {
+  # Build an allowed lookup at unique-name level; this avoids repeated regex work
+  # over every row and removes the startup hotspot.
+  pitcher_raw <- as.character(pitch_data_pitching$Pitcher)
+  uniq_pitchers <- unique(pitcher_raw)
+  uniq_pitchers <- uniq_pitchers[!is.na(uniq_pitchers)]
+  if (length(uniq_pitchers)) {
+    uniq_disp <- ifelse(
+      grepl(",", uniq_pitchers),
+      paste0(trimws(sub(".*,", "", uniq_pitchers)), " ", trimws(sub(",.*", "", uniq_pitchers))),
+      uniq_pitchers
+    )
+    uniq_allowed <- norm_name_ci(uniq_pitchers) %in% allowed_norm |
+      norm_name_ci(uniq_disp) %in% allowed_norm
+    allowed_lookup <- setNames(uniq_allowed, uniq_pitchers)
+    mask_pitching <- unname(allowed_lookup[pitcher_raw])
+    mask_pitching[is.na(mask_pitching)] <- FALSE
+  } else {
+    mask_pitching <- rep(FALSE, nrow(pitch_data_pitching))
+  }
+  pitch_data_pitching <- pitch_data_pitching[mask_pitching, , drop = FALSE]
 }
-pitch_data_pitching <- pitch_data_pitching[mask_pitching, , drop = FALSE]
 
 # Only compute PitchKey when missing/blank to avoid expensive recomputation.
 if (!"PitchKey" %in% names(pitch_data_pitching) ||
@@ -8771,8 +8826,10 @@ mod_hit_server <- function(id, is_active = shiny::reactive(TRUE), global_date_ra
       d <- pitch_data
 
       # Apply team filtering based on Team selector
-      # For HITTING suite: filter by Batter (our hitters)
-      if (!is.null(input$teamType)) {
+      if (isTRUE(LEAGUE_MODE)) {
+        d <- filter_by_team_code(d, input$teamType, domain = "Hitting")
+      } else if (!is.null(input$teamType)) {
+        # For HITTING suite: filter by Batter (our hitters)
         if (input$teamType == "Campers") {
           # Filter to only allowed campers (as batters)
           d <- dplyr::filter(d, Batter %in% ALLOWED_CAMPERS)
@@ -12876,7 +12933,9 @@ mod_catch_server <- function(id, is_active = shiny::reactive(TRUE), global_date_
       df <- apply_session_type_filter(pitch_data, input$sessionType)
       
       # ⛔️ Team filtering - Filter by team selection ⛔️
-      if (!is.null(input$teamType)) {
+      if (isTRUE(LEAGUE_MODE)) {
+        df <- filter_by_team_code(df, input$teamType, domain = "Catching")
+      } else if (!is.null(input$teamType)) {
         all_osu_and_campers <- unique(c(ALLOWED_PITCHERS, ALLOWED_CAMPERS))
         
         if (input$teamType == "Campers") {
@@ -15015,6 +15074,7 @@ mod_leader_ui <- function(id, show_header = FALSE) {
     sidebarLayout(
       sidebarPanel(
         selectInput(ns("domain"), "Leaderboard Domain:", choices = c("Pitching","Hitting","Catching"), selected = "Pitching"),
+        selectInput(ns("lbViewBy"), "View:", choices = c("Player", "Team"), selected = "Player"),
         selectInput(ns("teamType"), "Team:", choices = TEAM_CHOICES, selected = "All"),
         
         # --- Common filters (apply to all domains) ---
@@ -15172,6 +15232,9 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
       
       team_type <- input$teamType %||% "All"
       if (!nzchar(team_type) || identical(team_type, "All")) return(base)
+      if (isTRUE(LEAGUE_MODE)) {
+        return(filter_by_team_code(base, team_type, domain = input$domain))
+      }
 
       campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
       pitch_team_norm <- norm_name_ci(ALLOWED_PITCHERS_DL)
@@ -15350,12 +15413,17 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
                            "Pitching" = "Pitcher",
                            "Hitting"  = "Batter",
                            "Catching" = "Catcher")
-      if (!player_col %in% names(df)) {
+      team_col <- switch(input$domain,
+                         "Pitching" = "PitcherTeam",
+                         "Hitting"  = "BatterTeam",
+                         "Catching" = "PitcherTeam")
+      group_col <- if (identical(input$lbViewBy %||% "Player", "Team")) team_col else player_col
+      if (!group_col %in% names(df)) {
         return(DT::datatable(data.frame(Message = "Player column not found"), options = list(dom = 't')))
       }
       
-      df <- df %>% dplyr::filter(!is.na(.data[[player_col]]) & nzchar(.data[[player_col]]))
-      by_player <- split(df, df[[player_col]])
+      df <- df %>% dplyr::filter(!is.na(.data[[group_col]]) & nzchar(.data[[group_col]]))
+      by_player <- split(df, df[[group_col]])
       by_player <- c(list(All = df), by_player)
       
       res_mode <- resolve_table_mode_global(input$lbMode, input$lbCustomCols)
@@ -15730,14 +15798,15 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
         return(DT::datatable(data.frame(message = "No rows after filters"), rownames = FALSE))
       }
       
-      # keep only rows with a Batter name
-      df <- df %>% dplyr::filter(!is.na(Batter) & nzchar(Batter))
+      group_col <- if (identical(input$lbViewBy %||% "Player", "Team")) "BatterTeam" else "Batter"
+      # keep only rows with a grouping value
+      df <- df %>% dplyr::filter(!is.na(.data[[group_col]]) & nzchar(.data[[group_col]]))
       if (!nrow(df)) {
         return(DT::datatable(data.frame(message = "No batters for current filters"), rownames = FALSE))
       }
       
       swing_levels <- c("StrikeSwinging","FoulBallNotFieldable","FoulBallFieldable","InPlay")
-      by_batter <- split(df, df$Batter)
+      by_batter <- split(df, df[[group_col]])
       by_batter <- c(list(All = df), by_batter)
       
       results_rows <- lapply(names(by_batter), function(player_name) {
@@ -15970,9 +16039,9 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
       }
       
       extra_stats <- df %>%
-        dplyr::group_by(Batter) %>%
-        summarise_extra_stats_hitter() %>%
-        dplyr::rename(Player = Batter)
+        dplyr::group_by(.data[[group_col]]) %>%
+        summarise_extra_stats_hitter()
+      if (ncol(extra_stats) >= 1) names(extra_stats)[1] <- "Player"
       out <- dplyr::left_join(out, extra_stats, by = "Player")
       
       # EV / LA -> 1 decimal
@@ -16066,7 +16135,8 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
       req(is_active(), input$domain == "Catching")
       
       df_all <- filtered_lb()
-      df_all <- df_all %>% dplyr::filter(!is.na(Catcher) & nzchar(Catcher))
+      group_col <- if (identical(input$lbViewBy %||% "Player", "Team")) "PitcherTeam" else "Catcher"
+      df_all <- df_all %>% dplyr::filter(!is.na(.data[[group_col]]) & nzchar(.data[[group_col]]))
       if (!nrow(df_all)) {
         return(DT::datatable(data.frame(Note = "No rows for current filters."), options = list(dom = 't'), rownames = FALSE))
       }
@@ -16083,7 +16153,7 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
       }, error = function(e) rep(FALSE, nrow(df_all)))
       buckets_all <- inzone_label(df_all$PlateLocSide, df_all$PlateLocHeight)
       
-      by_catcher <- split(seq_len(nrow(df_all)), df_all$Catcher)  # split by index for reuse
+      by_catcher <- split(seq_len(nrow(df_all)), df_all[[group_col]])  # split by index for reuse
       by_catcher <- c(list(All = seq_len(nrow(df_all))), by_catcher)
       
       rows <- lapply(names(by_catcher), function(name) {
@@ -18967,6 +19037,25 @@ custom_reports_server <- function(id) {
     
     get_team_filtered_players <- function(report_type, team_type) {
       team_type <- team_type %||% "All"
+      if (isTRUE(LEAGUE_MODE)) {
+        return(
+          switch(report_type,
+            "Pitching" = {
+              df <- filter_by_team_code(pitch_data_pitching, team_type, domain = "Pitching")
+              sort(unique(stats::na.omit(as.character(df$Pitcher))))
+            },
+            "Hitting" = {
+              df <- filter_by_team_code(pitch_data, team_type, domain = "Hitting")
+              sort(unique(stats::na.omit(as.character(df$Batter))))
+            },
+            "Catching" = {
+              df <- filter_by_team_code(pitch_data, team_type, domain = "Catching")
+              sort(unique(stats::na.omit(as.character(df$Catcher))))
+            },
+            character(0)
+          )
+        )
+      }
       switch(report_type,
         "Pitching" = {
           pool <- if (identical(team_type, "Opponents")) {
@@ -31908,6 +31997,9 @@ deg_to_clock <- function(x) {
     if (is.null(df) || !nrow(df) || !"Pitcher" %in% names(df)) return(df)
     team_type <- team_type %||% "All"
     if (!nzchar(team_type) || identical(team_type, "All")) return(df)
+    if (isTRUE(LEAGUE_MODE)) {
+      return(filter_by_team_code(df, team_type, domain = "Pitching"))
+    }
     pitcher_chr <- as.character(df$Pitcher %||% "")
     pitcher_norm <- norm_name_ci(pitcher_chr)
     campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
@@ -31945,16 +32037,18 @@ deg_to_clock <- function(x) {
     # Build pitcher options with strict team-type scoping.
     raw_names_team <- sort(unique(as.character(df_base$Pitcher)))
     raw_names_team <- raw_names_team[!is.na(raw_names_team) & nzchar(raw_names_team)]
-    pitchers_norm <- norm_name_ci(ALLOWED_PITCHERS_DL)
-    campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
-    team_only_norm <- setdiff(pitchers_norm, campers_norm)
-    if (identical(input$teamType, TEAM_CODE)) {
-      raw_names_team <- raw_names_team[norm_name_ci(raw_names_team) %in% team_only_norm]
-    } else if (identical(input$teamType, "Campers")) {
-      raw_names_team <- raw_names_team[norm_name_ci(raw_names_team) %in% campers_norm]
-    } else if (identical(input$teamType, "Opponents")) {
-      known_norm <- unique(c(team_only_norm, campers_norm))
-      raw_names_team <- raw_names_team[!(norm_name_ci(raw_names_team) %in% known_norm)]
+    if (!isTRUE(LEAGUE_MODE)) {
+      pitchers_norm <- norm_name_ci(ALLOWED_PITCHERS_DL)
+      campers_norm <- norm_name_ci(ALLOWED_CAMPERS_DL)
+      team_only_norm <- setdiff(pitchers_norm, campers_norm)
+      if (identical(input$teamType, TEAM_CODE)) {
+        raw_names_team <- raw_names_team[norm_name_ci(raw_names_team) %in% team_only_norm]
+      } else if (identical(input$teamType, "Campers")) {
+        raw_names_team <- raw_names_team[norm_name_ci(raw_names_team) %in% campers_norm]
+      } else if (identical(input$teamType, "Opponents")) {
+        known_norm <- unique(c(team_only_norm, campers_norm))
+        raw_names_team <- raw_names_team[!(norm_name_ci(raw_names_team) %in% known_norm)]
+      }
     }
 
     # Create name map for the team-scoped dataset

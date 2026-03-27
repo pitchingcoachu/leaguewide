@@ -841,8 +841,18 @@ ensure_pitch_key_unique_guard <- function(con, school_code = "") {
 
 sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
   school_code <- toupper(trimws(as.character(school_code)))
-  if (!nzchar(school_code)) school_code <- toupper(trimws(Sys.getenv("TEAM_CODE", "LSU")))
+  if (!nzchar(school_code)) school_code <- toupper(trimws(Sys.getenv("TEAM_CODE", "LEAGUE")))
   force_resync <- pitch_data_parse_bool(Sys.getenv("PITCH_DATA_FORCE_RESYNC", "0"), default = FALSE)
+  cfg <- list()
+  cfg_path <- file.path("config", "school_config.R")
+  if (file.exists(cfg_path)) {
+    cfg_env <- new.env(parent = baseenv())
+    try(sys.source(cfg_path, envir = cfg_env), silent = TRUE)
+    if (exists("school_config", envir = cfg_env, inherits = FALSE)) {
+      cfg <- get("school_config", envir = cfg_env, inherits = FALSE)
+    }
+  }
+  league_mode <- is.list(cfg) && isTRUE(cfg$league_mode)
 
   schema <- gsub("[^A-Za-z0-9_]", "_", Sys.getenv("PITCH_DATA_DB_SCHEMA", "public"))
   mtbl <- DBI::Id(schema = schema, table = "pitch_data_files")
@@ -913,8 +923,7 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
     show_col_types = FALSE
   ))
 
-  # Strict school-row filter:
-  # Only keep rows where PitcherTeam or BatterTeam explicitly matches this school's markers.
+  # School-row filter for school repos; league mode intentionally keeps all rows.
   get_team_markers <- function(default_school_code) {
     markers <- c(default_school_code)
     cfg_path <- file.path("config", "school_config.R")
@@ -954,7 +963,7 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
   }
 
   team_markers <- get_team_markers(school_code)
-  if (length(team_markers)) {
+  if (!isTRUE(league_mode) && length(team_markers)) {
     team_markers_norm <- normalize_team_code(team_markers)
     pitcher_team_col <- pick_col_ci(df, c("PitcherTeam", "pitcherteam", "pitcher_team"))
     batter_team_col <- pick_col_ci(df, c("BatterTeam", "batterteam", "batter_team"))
@@ -1006,7 +1015,7 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
 
   # Derive session/date fields used for indexing and keyset paging.
   file_lower <- tolower(csv_path)
-  session_type <- if (grepl("[/\\\\]practice[/\\\\]", file_lower)) "Bullpen" else "Live"
+  session_type <- if (isTRUE(league_mode)) "Season" else if (grepl("[/\\\\]practice[/\\\\]", file_lower)) "Bullpen" else "Live"
 
   if (!"SessionType" %in% names(df) || all(is.na(df$SessionType) | !nzchar(df$SessionType))) {
     df$SessionType <- session_type
@@ -1199,6 +1208,26 @@ sync_csv_tree_to_neon <- function(data_dir = file.path("data"), school_code = ""
     error = function(e) message("Pitch-key unique guard ensure skipped: ", e$message)
   )
 
+  cfg <- list()
+  cfg_path <- file.path("config", "school_config.R")
+  if (file.exists(cfg_path)) {
+    cfg_env <- new.env(parent = baseenv())
+    try(sys.source(cfg_path, envir = cfg_env), silent = TRUE)
+    if (exists("school_config", envir = cfg_env, inherits = FALSE)) {
+      cfg <- get("school_config", envir = cfg_env, inherits = FALSE)
+    }
+  }
+  league_mode <- is.list(cfg) && isTRUE(cfg$league_mode)
+  sync_v3_only <- is.list(cfg) && isTRUE(cfg$sync_v3_only)
+  excluded_tokens <- if (is.list(cfg) && length(cfg$exclude_filename_tokens)) {
+    tolower(trimws(as.character(cfg$exclude_filename_tokens)))
+  } else character(0)
+  excluded_tokens <- excluded_tokens[nzchar(excluded_tokens)]
+  sync_start_date <- as.Date(NA)
+  if (is.list(cfg) && !is.null(cfg$sync_start_date) && nzchar(as.character(cfg$sync_start_date))) {
+    sync_start_date <- suppressWarnings(as.Date(as.character(cfg$sync_start_date)))
+  }
+
   if (is.null(csv_paths)) {
     csvs <- list.files(data_dir, pattern = "\\.csv$", recursive = TRUE, full.names = TRUE)
   } else {
@@ -1206,7 +1235,26 @@ sync_csv_tree_to_neon <- function(data_dir = file.path("data"), school_code = ""
   }
   csvs <- csvs[file.exists(csvs)]
   csvs <- csvs[grepl("\\.csv$", csvs, ignore.case = TRUE)]
-  csvs <- csvs[grepl("([/\\\\]practice[/\\\\])|([/\\\\]v3[/\\\\])", tolower(csvs))]
+  if (isTRUE(league_mode) || isTRUE(sync_v3_only)) {
+    csvs <- csvs[grepl("([/\\\\]v3[/\\\\])", tolower(csvs))]
+  } else {
+    csvs <- csvs[grepl("([/\\\\]practice[/\\\\])|([/\\\\]v3[/\\\\])", tolower(csvs))]
+  }
+  if (length(excluded_tokens)) {
+    csv_base <- tolower(basename(csvs))
+    keep <- !vapply(csv_base, function(bn) any(vapply(excluded_tokens, grepl, logical(1), x = bn, fixed = TRUE)), logical(1))
+    csvs <- csvs[keep]
+  }
+  if (!is.na(sync_start_date)) {
+    extract_dt <- function(path) {
+      m <- stringr::str_match(basename(path), "^(?:v3|practice)_(20\\d{2})_(0[1-9]|1[0-2])_(0[1-9]|[12]\\d|3[01])_")
+      if (all(is.na(m))) return(as.Date(NA))
+      suppressWarnings(as.Date(sprintf("%s-%s-%s", m[2], m[3], m[4])))
+    }
+    file_dates <- vapply(csvs, extract_dt, as.Date(NA))
+    keep <- !is.na(file_dates) & file_dates >= sync_start_date
+    csvs <- csvs[keep]
+  }
   csvs <- unique(normalizePath(csvs, winslash = "/", mustWork = FALSE))
   if (!length(csvs)) {
     message("No pitch CSV files found under ", data_dir)
@@ -1219,7 +1267,7 @@ sync_csv_tree_to_neon <- function(data_dir = file.path("data"), school_code = ""
   # Fast pre-skip: one manifest query + local mtime comparison to avoid re-checking
   # unchanged files one-by-one every run.
   school_code_norm <- toupper(trimws(as.character(school_code)))
-  if (!nzchar(school_code_norm)) school_code_norm <- toupper(trimws(Sys.getenv("TEAM_CODE", "LSU")))
+  if (!nzchar(school_code_norm)) school_code_norm <- toupper(trimws(Sys.getenv("TEAM_CODE", "LEAGUE")))
   schema <- gsub("[^A-Za-z0-9_]", "_", Sys.getenv("PITCH_DATA_DB_SCHEMA", "public"))
   mtbl <- DBI::Id(schema = schema, table = "pitch_data_files")
   etbl <- DBI::Id(schema = schema, table = Sys.getenv("PITCH_DATA_DB_TABLE", "pitch_events"))
