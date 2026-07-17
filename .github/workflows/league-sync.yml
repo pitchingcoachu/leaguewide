@@ -36,7 +36,7 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     env:
-      R_LIBS_USER: packrat/lib-R
+      R_LIBS_USER: .r-sync-lib
 
     steps:
       - name: Checkout repository
@@ -54,22 +54,8 @@ jobs:
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
-            libfontconfig1-dev \
-            libharfbuzz-dev \
-            libfribidi-dev \
-            libfreetype6-dev \
-            libpng-dev \
-            libjpeg-dev \
-            libtiff-dev \
-            libfontconfig1 \
-            libxcb1 \
             libicu-dev \
-            libcairo2-dev \
-            libgdal-dev \
-            libgeos-dev \
-            libproj-dev \
-            libudunits2-dev \
-            librsvg2-dev
+            libpq-dev
 
       - name: Write .Renviron
         run: |
@@ -90,25 +76,26 @@ jobs:
           TM_SYNC_LEAGUE_FULL_SCAN=${{ github.event.inputs.full_scan == 'true' && '1' || '0' }}
           EOF
 
-      - name: Ensure Packrat library path
-        run: mkdir -p packrat/lib-R
+      - name: Ensure sync library path
+        run: mkdir -p .r-sync-lib
 
-      - name: Cache Packrat library
+      - name: Cache sync R library
         uses: actions/cache@v4
         with:
-          path: packrat/lib-R
-          key: ${{ runner.os }}-r-packrat-${{ hashFiles('packrat/packrat.lock') }}
+          path: .r-sync-lib
+          key: ${{ runner.os }}-r-league-sync-v1
           restore-keys: |
-            ${{ runner.os }}-r-packrat-
+            ${{ runner.os }}-r-league-sync-
 
-      - name: Install R packages
+      - name: Install sync R packages
         env:
-          R_LIBS_USER: packrat/lib-R
-        run: Rscript install_packages.R
+          R_LIBS_USER: .r-sync-lib
+        run: |
+          Rscript -e 'options(repos = c(CRAN = "https://cloud.r-project.org/")); pkgs <- c("curl", "readr", "dplyr", "lubridate", "stringr", "glue", "rlang", "tibble", "DBI", "RPostgres", "digest"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing)) install.packages(missing) else message("All sync packages already installed")'
 
       - name: Sync LEAGUE data
         env:
-          R_LIBS_USER: packrat/lib-R
+          R_LIBS_USER: .r-sync-lib
         run: Rscript --vanilla automated_data_sync.R
 
       - name: Upload dry-run manifest
