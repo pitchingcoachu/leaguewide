@@ -31,7 +31,9 @@ pitch_data_default_columns <- function() {
     "ThrowSpeed", "ExchangeTime", "PopTime", "TimeToBase",
     "BasePositionX", "BasePositionY", "BasePositionZ", "TargetBase",
     "Batter", "Catcher", "VideoClip", "VideoClip2", "VideoClip3",
-    "PitcherTeam", "BatterTeam", "HomeTeam", "AwayTeam",
+    "PitcherId", "BatterId", "CatcherId",
+    "PitcherTeam", "BatterTeam", "CatcherTeam", "HomeTeam", "AwayTeam",
+    "Level", "League", "GameID", "GameUID",
     "PitchUID", "PitchID", "PitchGuid", "SourceFile", "PitchKey"
   )
 }
@@ -134,10 +136,18 @@ pitch_data_storage_name_map <- function() {
     OutsOnPlay = "outsonplay",
     Batter = "batter",
     Catcher = "catcher",
+    PitcherId = "pitcherid",
+    BatterId = "batterid",
+    CatcherId = "catcherid",
     PitcherTeam = "pitcherteam",
     BatterTeam = "batterteam",
+    CatcherTeam = "catcherteam",
     HomeTeam = "hometeam",
     AwayTeam = "awayteam",
+    Level = "level",
+    League = "league",
+    GameID = "gameid",
+    GameUID = "gameuid",
     VideoClip = "videoclip",
     VideoClip2 = "videoclip2",
     VideoClip3 = "videoclip3",
@@ -346,7 +356,7 @@ pitch_data_cache_file <- function(school_code = "") {
   dir.create(dir, recursive = TRUE, showWarnings = FALSE)
 
   # Bump whenever the expected column shape changes.
-  cache_shape_version <- "2026-02-26-spray-catch"
+  cache_shape_version <- "2026-07-17-league-level-player-ids"
   cfg <- pitch_data_backend_config()
   fingerprint <- if (identical(cfg$type, "postgres")) {
     paste(
@@ -691,7 +701,8 @@ load_pitch_data_from_postgres <- function(school_code = "", startup_logger = NUL
     required_cols <- c(
       "BackendRowID", "Distance", "Direction", "ThrowSpeed", "ExchangeTime", "PopTime",
       "ContactPositionX", "ContactPositionY", "ContactPositionZ",
-      "BatSpeed", "VerticalAttackAngle", "HorizontalAttackAngle", "HitSpinRate"
+      "BatSpeed", "VerticalAttackAngle", "HorizontalAttackAngle", "HitSpinRate",
+      "PitcherId", "BatterId", "CatcherId", "CatcherTeam", "Level"
     )
     min_cache_rows <- suppressWarnings(as.integer(Sys.getenv("PITCH_DATA_CACHE_MIN_ROWS", "100")))
     if (is.na(min_cache_rows) || min_cache_rows < 0L) min_cache_rows <- 0L
@@ -981,6 +992,12 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
   canon_aliases <- list(
     PitcherTeam      = c("pitcherteam", "pitcher_team", "Pitcher Team"),
     BatterTeam       = c("batterteam", "batter_team", "Batter Team"),
+    CatcherTeam      = c("catcherteam", "catcher_team", "Catcher Team"),
+    PitcherId        = c("pitcherid", "pitcher_id", "Pitcher ID"),
+    BatterId         = c("batterid", "batter_id", "Batter ID"),
+    CatcherId        = c("catcherid", "catcher_id", "Catcher ID"),
+    GameID           = c("gameid", "game_id", "Game ID"),
+    GameUID          = c("gameuid", "game_uid", "Game UID"),
     InducedVertBreak = c("IVB"),
     HorzBreak        = c("HB"),
     RelSpeed         = c("Velo"),
@@ -1011,6 +1028,17 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
 
   for (nm in cols_needed) {
     if (!nm %in% names(df)) df[[nm]] <- rep(NA_character_, nrow(df))
+  }
+
+  if (isTRUE(league_mode)) {
+    pitch_uid <- trimws(as.character(df$PitchUID))
+    pitch_uid[is.na(pitch_uid)] <- ""
+    missing_pitch_uid <- !nzchar(pitch_uid)
+    if (any(missing_pitch_uid)) {
+      cat("Skipping", sum(missing_pitch_uid), "league rows without PitchUID in", basename(csv_path), "\n")
+      df <- df[!missing_pitch_uid, , drop = FALSE]
+    }
+    if (!nrow(df)) return(invisible(0L))
   }
 
   # Derive session/date fields used for indexing and keyset paging.
@@ -1143,6 +1171,18 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
         for (i in seq(1L, length(unique_keys), by = chunk_size)) {
           key_chunk <- unique_keys[i:min(i + chunk_size - 1L, length(unique_keys))]
           in_sql <- paste(vapply(key_chunk, function(k) as.character(DBI::dbQuoteLiteral(con, k)), character(1)), collapse = ", ")
+          if (isTRUE(league_mode) && !grepl("unverified", basename(source_file), ignore.case = TRUE)) {
+            replace_sql <- sprintf(
+              "DELETE FROM %s
+               WHERE school_code = %s
+                 AND pitch_key IN (%s)
+                 AND lower(coalesce(source_file, '')) LIKE '%%unverified%%'",
+              as.character(DBI::dbQuoteIdentifier(con, etbl)),
+              as.character(DBI::dbQuoteLiteral(con, school_code)),
+              in_sql
+            )
+            pitch_data_db_execute(con, replace_sql)
+          }
           key_sql <- sprintf(
             "SELECT pitch_key FROM %s WHERE school_code = %s AND pitch_key IN (%s)",
             as.character(DBI::dbQuoteIdentifier(con, etbl)),
@@ -1227,6 +1267,8 @@ sync_csv_tree_to_neon <- function(data_dir = file.path("data"), school_code = ""
   if (is.list(cfg) && !is.null(cfg$sync_start_date) && nzchar(as.character(cfg$sync_start_date))) {
     sync_start_date <- suppressWarnings(as.Date(as.character(cfg$sync_start_date)))
   }
+  min_filename_year <- suppressWarnings(as.integer(Sys.getenv("TM_SYNC_MIN_FILENAME_YEAR", "2026")))
+  if (is.na(min_filename_year) || min_filename_year < 2000) min_filename_year <- 2026
 
   if (is.null(csv_paths)) {
     csvs <- list.files(data_dir, pattern = "\\.csv$", recursive = TRUE, full.names = TRUE)
@@ -1242,8 +1284,39 @@ sync_csv_tree_to_neon <- function(data_dir = file.path("data"), school_code = ""
   }
   if (length(excluded_tokens)) {
     csv_base <- tolower(basename(csvs))
-    keep <- !vapply(csv_base, function(bn) any(vapply(excluded_tokens, grepl, logical(1), x = bn, fixed = TRUE)), logical(1))
+    hard_excludes <- setdiff(excluded_tokens, "unverified")
+    keep <- !vapply(csv_base, function(bn) any(vapply(hard_excludes, grepl, logical(1), x = bn, fixed = TRUE)), logical(1))
     csvs <- csvs[keep]
+  }
+  if (length(csvs)) {
+    csv_data_year <- function(path) {
+      bn <- basename(as.character(path))
+      m <- stringr::str_match(bn, "^(?:v3|practice)_\\d{4}_\\d{2}_\\d{2}_(\\d{4})")
+      if (is.na(m[1, 2])) {
+        m <- stringr::str_match(bn, "^(\\d{4})")
+      }
+      suppressWarnings(as.integer(m[1, 2]))
+    }
+    data_years <- vapply(csvs, csv_data_year, integer(1))
+    csvs <- csvs[!is.na(data_years) & data_years >= min_filename_year]
+  }
+  if (length(csvs)) {
+    normalize_variant_key <- function(x) {
+      bn <- basename(tolower(trimws(as.character(x))))
+      bn <- sub("\\.csv$", "", bn, ignore.case = TRUE)
+      bn <- sub("_unverified$", "", bn, ignore.case = TRUE)
+      bn <- sub("_verified$", "", bn, ignore.case = TRUE)
+      bn <- sub("-unverified$", "", bn, ignore.case = TRUE)
+      bn <- sub("-verified$", "", bn, ignore.case = TRUE)
+      bn
+    }
+    variant_key <- normalize_variant_key(csvs)
+    is_unverified <- grepl("unverified", basename(csvs), ignore.case = TRUE)
+    selected <- unlist(lapply(split(seq_along(csvs), variant_key), function(idx) {
+      preferred <- idx[!is_unverified[idx]]
+      if (length(preferred)) preferred else idx
+    }), use.names = FALSE)
+    csvs <- csvs[sort(selected)]
   }
   if (!is.na(sync_start_date)) {
     extract_dt <- function(path) {

@@ -71,6 +71,18 @@ CREATE TABLE IF NOT EXISTS public.pitch_events (
   OutsOnPlay text,
   Batter text,
   Catcher text,
+  PitcherId text,
+  BatterId text,
+  CatcherId text,
+  PitcherTeam text,
+  BatterTeam text,
+  CatcherTeam text,
+  HomeTeam text,
+  AwayTeam text,
+  Level text,
+  League text,
+  GameID text,
+  GameUID text,
   VideoClip text,
   VideoClip2 text,
   VideoClip3 text,
@@ -125,3 +137,27 @@ ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS BasePositionX text;
 ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS BasePositionY text;
 ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS BasePositionZ text;
 ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS TargetBase text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS PitcherId text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS BatterId text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS CatcherId text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS PitcherTeam text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS BatterTeam text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS CatcherTeam text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS HomeTeam text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS AwayTeam text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS Level text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS League text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS GameID text;
+ALTER TABLE public.pitch_events ADD COLUMN IF NOT EXISTS GameUID text;
+
+CREATE INDEX IF NOT EXISTS idx_pitch_events_school_level_date
+  ON public.pitch_events (school_code, Level, session_date DESC);
+
+CREATE INDEX IF NOT EXISTS idx_pitch_events_school_pitcherid_date
+  ON public.pitch_events (school_code, PitcherId, session_date DESC);
+
+CREATE INDEX IF NOT EXISTS idx_pitch_events_school_batterid_date
+  ON public.pitch_events (school_code, BatterId, session_date DESC);
+
+CREATE INDEX IF NOT EXISTS idx_pitch_events_school_catcherid_date
+  ON public.pitch_events (school_code, CatcherId, session_date DESC);

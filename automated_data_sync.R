@@ -60,8 +60,109 @@ TM_SYNC_LOOKBACK_DAYS <- suppressWarnings(as.integer(Sys.getenv("TM_SYNC_LOOKBAC
 if (is.na(TM_SYNC_LOOKBACK_DAYS) || TM_SYNC_LOOKBACK_DAYS < 1L) TM_SYNC_LOOKBACK_DAYS <- 1L
 TM_SYNC_INITIAL_FULL <- tolower(trimws(Sys.getenv("TM_SYNC_INITIAL_FULL", "0"))) %in% c("1", "true", "yes", "y")
 TM_SYNC_LEAGUE_FULL_SCAN <- tolower(trimws(Sys.getenv("TM_SYNC_LEAGUE_FULL_SCAN", "0"))) %in% c("1", "true", "yes", "y")
+TM_SYNC_DRY_RUN <- tolower(trimws(Sys.getenv("TM_SYNC_DRY_RUN", "0"))) %in% c("1", "true", "yes", "y")
+TM_SYNC_WINDOW_START <- suppressWarnings(as.Date(Sys.getenv("TM_SYNC_WINDOW_START", "")))
+TM_SYNC_WINDOW_END <- suppressWarnings(as.Date(Sys.getenv("TM_SYNC_WINDOW_END", "")))
+TM_SYNC_MIN_FILENAME_YEAR <- suppressWarnings(as.integer(Sys.getenv("TM_SYNC_MIN_FILENAME_YEAR", "2026")))
+if (is.na(TM_SYNC_MIN_FILENAME_YEAR) || TM_SYNC_MIN_FILENAME_YEAR < 2000) TM_SYNC_MIN_FILENAME_YEAR <- 2026
 FTP_THROTTLE_SEC <- suppressWarnings(as.numeric(Sys.getenv("TM_FTP_THROTTLE_SEC", "0")))
 if (is.na(FTP_THROTTLE_SEC) || FTP_THROTTLE_SEC < 0) FTP_THROTTLE_SEC <- 0
+SYNC_DRY_RUN_MANIFEST <- data.frame(
+  source = character(),
+  remote_path = character(),
+  local_path = character(),
+  file_name = character(),
+  file_date = as.Date(character()),
+  is_unverified = logical(),
+  stringsAsFactors = FALSE
+)
+SYNC_SELECTED_LOCAL_FILES <- character(0)
+
+record_selected_local_file <- function(local_path) {
+  local_path <- as.character(local_path)
+  local_path <- local_path[nzchar(local_path)]
+  if (!length(local_path)) return(invisible(FALSE))
+  SYNC_SELECTED_LOCAL_FILES <<- unique(c(SYNC_SELECTED_LOCAL_FILES, local_path))
+  invisible(TRUE)
+}
+
+record_sync_candidate <- function(source, remote_path, local_path, file_date = NA) {
+  entry <- data.frame(
+    source = as.character(source),
+    remote_path = as.character(remote_path),
+    local_path = as.character(local_path),
+    file_name = basename(as.character(remote_path)),
+    file_date = suppressWarnings(as.Date(file_date)),
+    is_unverified = grepl("unverified", basename(as.character(remote_path)), ignore.case = TRUE),
+    stringsAsFactors = FALSE
+  )
+  SYNC_DRY_RUN_MANIFEST <<- rbind(SYNC_DRY_RUN_MANIFEST, entry)
+  invisible(TRUE)
+}
+
+write_sync_dry_run_manifest <- function() {
+  if (!isTRUE(TM_SYNC_DRY_RUN)) return(invisible(NULL))
+  dir.create(LOCAL_DATA_DIR, recursive = TRUE, showWarnings = FALSE)
+  stamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+  out_path <- file.path(LOCAL_DATA_DIR, paste0("league_sync_manifest_", stamp, ".csv"))
+  readr::write_csv(SYNC_DRY_RUN_MANIFEST, out_path)
+  cat("Dry-run manifest written:", out_path, "\n")
+  cat("Dry-run selected files:", nrow(SYNC_DRY_RUN_MANIFEST), "\n")
+  if (nrow(SYNC_DRY_RUN_MANIFEST)) {
+    cat("Dry-run unverified selected:", sum(SYNC_DRY_RUN_MANIFEST$is_unverified, na.rm = TRUE), "\n")
+    by_month <- SYNC_DRY_RUN_MANIFEST %>%
+      dplyr::mutate(month = format(file_date, "%Y-%m")) %>%
+      dplyr::count(source, month, is_unverified, name = "files")
+    print(as.data.frame(by_month), row.names = FALSE)
+  }
+  invisible(out_path)
+}
+
+filter_sync_csv_candidates <- function(csv_files) {
+  csv_files <- as.character(csv_files)
+  csv_files <- csv_files[nzchar(csv_files)]
+  csv_files <- csv_files[grepl("\\.csv$", csv_files, ignore.case = TRUE)]
+  if (!length(csv_files)) return(character(0))
+
+  csv_data_year <- function(path) {
+    bn <- basename(as.character(path))
+    m <- stringr::str_match(bn, "^(?:v3|practice)_\\d{4}_\\d{2}_\\d{2}_(\\d{4})")
+    if (is.na(m[1, 2])) {
+      m <- stringr::str_match(bn, "^(\\d{4})")
+    }
+    suppressWarnings(as.integer(m[1, 2]))
+  }
+  data_years <- vapply(csv_files, csv_data_year, integer(1))
+  csv_files <- csv_files[!is.na(data_years) & data_years >= TM_SYNC_MIN_FILENAME_YEAR]
+  if (!length(csv_files)) return(character(0))
+
+  hard_excludes <- setdiff(SYNC_FILE_EXCLUDES, "unverified")
+  if (length(hard_excludes)) {
+    keep <- !vapply(tolower(basename(csv_files)), function(bn) {
+      any(vapply(hard_excludes, grepl, logical(1), x = bn, fixed = TRUE))
+    }, logical(1))
+    csv_files <- csv_files[keep]
+  }
+  if (!length(csv_files)) return(character(0))
+
+  normalize_variant_key <- function(x) {
+    bn <- basename(tolower(trimws(as.character(x))))
+    bn <- sub("\\.csv$", "", bn, ignore.case = TRUE)
+    bn <- sub("_unverified$", "", bn, ignore.case = TRUE)
+    bn <- sub("_verified$", "", bn, ignore.case = TRUE)
+    bn <- sub("-unverified$", "", bn, ignore.case = TRUE)
+    bn <- sub("-verified$", "", bn, ignore.case = TRUE)
+    bn
+  }
+
+  variant_key <- normalize_variant_key(csv_files)
+  is_unverified <- grepl("unverified", basename(csv_files), ignore.case = TRUE)
+  selected <- unlist(lapply(split(seq_along(csv_files), variant_key), function(idx) {
+    preferred <- idx[!is_unverified[idx]]
+    if (length(preferred)) preferred else idx
+  }), use.names = FALSE)
+  csv_files[sort(selected)]
+}
 
 # Ensure data directories exist
 dir.create(LOCAL_DATA_DIR, recursive = TRUE, showWarnings = FALSE)
@@ -139,9 +240,14 @@ recent_sync_years <- function() {
     if (!isTRUE(TM_SYNC_LEAGUE_FULL_SCAN)) {
       lookback_start <- Sys.Date() - TM_SYNC_LOOKBACK_DAYS
       league_start <- max(SYNC_START_DATE_OVERRIDE, lookback_start)
-      return(as.character(seq(lubridate::year(league_start), lubridate::year(Sys.Date()))))
+      if (!is.na(TM_SYNC_WINDOW_START)) league_start <- max(league_start, TM_SYNC_WINDOW_START)
+      league_end <- if (!is.na(TM_SYNC_WINDOW_END)) TM_SYNC_WINDOW_END else Sys.Date()
+      return(as.character(seq(lubridate::year(league_start), lubridate::year(league_end))))
     }
-    return(as.character(seq(lubridate::year(SYNC_START_DATE_OVERRIDE), lubridate::year(Sys.Date()))))
+    league_start <- SYNC_START_DATE_OVERRIDE
+    if (!is.na(TM_SYNC_WINDOW_START)) league_start <- max(league_start, TM_SYNC_WINDOW_START)
+    league_end <- if (!is.na(TM_SYNC_WINDOW_END)) TM_SYNC_WINDOW_END else Sys.Date()
+    return(as.character(seq(lubridate::year(league_start), lubridate::year(league_end))))
   }
   if (!file.exists(LAST_SYNC_FILE) && isTRUE(TM_SYNC_INITIAL_FULL)) {
     return(as.character(SYNC_START_YEAR:year(Sys.Date())))
@@ -156,6 +262,9 @@ sync_window_start_date <- function() {
   if (!is.na(SYNC_START_DATE_OVERRIDE)) {
     hard_floor <- max(hard_floor, SYNC_START_DATE_OVERRIDE)
   }
+  if (!is.na(TM_SYNC_WINDOW_START)) {
+    hard_floor <- max(hard_floor, TM_SYNC_WINDOW_START)
+  }
   if (isTRUE(LEAGUE_MODE)) {
     if (!isTRUE(TM_SYNC_LEAGUE_FULL_SCAN)) {
       lookback_start <- Sys.Date() - TM_SYNC_LOOKBACK_DAYS
@@ -165,6 +274,11 @@ sync_window_start_date <- function() {
   }
   lookback_start <- Sys.Date() - TM_SYNC_LOOKBACK_DAYS
   max(hard_floor, lookback_start)
+}
+
+sync_window_end_date <- function() {
+  if (!is.na(TM_SYNC_WINDOW_END)) return(TM_SYNC_WINDOW_END)
+  as.Date(NA)
 }
 
 # Function to sync practice data (2025 folder with MM/DD structure)
@@ -195,23 +309,25 @@ sync_practice_data <- function() {
         cat("Processing practice date:", full_date_path, "\n")
         
         files_in_day <- list_ftp_files(day_path)
-        csv_files <- files_in_day[grepl("\\.csv$", files_in_day, ignore.case = TRUE)]
-        
-        if (length(SYNC_FILE_EXCLUDES)) {
-          pat <- paste(SYNC_FILE_EXCLUDES, collapse = "|")
-          csv_files <- csv_files[!grepl(pat, csv_files, ignore.case = TRUE)]
-        } else {
-          csv_files <- csv_files[!grepl("playerpositioning", csv_files, ignore.case = TRUE)]
-        }
+        csv_files <- filter_sync_csv_candidates(files_in_day)
         
         for (file in csv_files) {
           remote_path <- paste0(day_path, file)
           local_path <- file.path(LOCAL_PRACTICE_DIR, paste0("practice_", yr, "_", month_dir, "_", day_dir, "_", file))
-          
-          if (download_csv(remote_path, local_path)) {
-            downloaded_count <- downloaded_count + 1
-            downloaded_paths <- c(downloaded_paths, local_path)
+          file_date <- as.Date(paste(yr, month_dir, day_dir, sep = "-"))
+          if (isTRUE(TM_SYNC_DRY_RUN)) {
+            record_sync_candidate("practice", remote_path, local_path, file_date)
+            next
           }
+          
+          if (file.exists(local_path)) {
+            cat("Selected existing file:", basename(local_path), "\n")
+            record_selected_local_file(local_path)
+          } else if (download_csv(remote_path, local_path)) {
+            downloaded_count <- downloaded_count + 1
+            record_selected_local_file(local_path)
+          }
+          downloaded_paths <- c(downloaded_paths, local_path)
           
           if (FTP_THROTTLE_SEC > 0) Sys.sleep(FTP_THROTTLE_SEC)
         }
@@ -237,6 +353,8 @@ is_date_in_range <- function(file_path) {
   
   # Enforce rolling incremental window with a hard lower bound by start year.
   start_date <- sync_window_start_date()
+  end_date <- sync_window_end_date()
+  if (!is.na(end_date) && file_date > end_date) return(FALSE)
   return(file_date >= start_date)
 }
 
@@ -275,19 +393,12 @@ sync_v3_data <- function() {
         
         if ("CSV" %in% files_in_day) {
           csv_path <- paste0(day_path, "CSV/")
-          csv_files <- list_ftp_files(csv_path)
-          csv_files <- csv_files[grepl("\\.csv$", csv_files, ignore.case = TRUE)]
-          
-          if (length(SYNC_FILE_EXCLUDES)) {
-            pat <- paste(SYNC_FILE_EXCLUDES, collapse = "|")
-            csv_files <- csv_files[!grepl(pat, csv_files, ignore.case = TRUE)]
-          } else {
-            csv_files <- csv_files[!grepl("playerpositioning|unverified", csv_files, ignore.case = TRUE)]
-          }
+          csv_files <- filter_sync_csv_candidates(list_ftp_files(csv_path))
           
           for (file in csv_files) {
             if (!nzchar(file)) next
             remote_path <- paste0(csv_path, file)
+            file_date <- as.Date(paste(yr, month_dir, day_dir, sep = "-"))
             # De-dupe by full remote path, not basename, so same filename on new dates is still synced.
             file_key <- tolower(trimws(remote_path))
             if (file_key %in% seen_v3_files) {
@@ -297,27 +408,29 @@ sync_v3_data <- function() {
             seen_v3_files <- c(seen_v3_files, file_key)
 
             local_path <- file.path(LOCAL_V3_DIR, paste0("v3_", yr, "_", month_dir, "_", day_dir, "_", file))
-            
-            if (download_csv(remote_path, local_path)) {
-              downloaded_count <- downloaded_count + 1
-              downloaded_paths <- c(downloaded_paths, local_path)
+            if (isTRUE(TM_SYNC_DRY_RUN)) {
+              record_sync_candidate("v3", remote_path, local_path, file_date)
+              next
             }
+            
+            if (file.exists(local_path)) {
+              cat("Selected existing file:", basename(local_path), "\n")
+              record_selected_local_file(local_path)
+            } else if (download_csv(remote_path, local_path)) {
+              downloaded_count <- downloaded_count + 1
+              record_selected_local_file(local_path)
+            }
+            downloaded_paths <- c(downloaded_paths, local_path)
             
             if (FTP_THROTTLE_SEC > 0) Sys.sleep(FTP_THROTTLE_SEC)
           }
         } else {
-          csv_files <- files_in_day[grepl("\\.csv$", files_in_day, ignore.case = TRUE)]
-          
-          if (length(SYNC_FILE_EXCLUDES)) {
-            pat <- paste(SYNC_FILE_EXCLUDES, collapse = "|")
-            csv_files <- csv_files[!grepl(pat, csv_files, ignore.case = TRUE)]
-          } else {
-            csv_files <- csv_files[!grepl("playerpositioning|unverified", csv_files, ignore.case = TRUE)]
-          }
+          csv_files <- filter_sync_csv_candidates(files_in_day)
           
           for (file in csv_files) {
             if (!nzchar(file)) next
             remote_path <- paste0(day_path, file)
+            file_date <- as.Date(paste(yr, month_dir, day_dir, sep = "-"))
             # De-dupe by full remote path, not basename, so same filename on new dates is still synced.
             file_key <- tolower(trimws(remote_path))
             if (file_key %in% seen_v3_files) {
@@ -327,11 +440,19 @@ sync_v3_data <- function() {
             seen_v3_files <- c(seen_v3_files, file_key)
 
             local_path <- file.path(LOCAL_V3_DIR, paste0("v3_", yr, "_", month_dir, "_", day_dir, "_", file))
-            
-            if (download_csv(remote_path, local_path)) {
-              downloaded_count <- downloaded_count + 1
-              downloaded_paths <- c(downloaded_paths, local_path)
+            if (isTRUE(TM_SYNC_DRY_RUN)) {
+              record_sync_candidate("v3", remote_path, local_path, file_date)
+              next
             }
+            
+            if (file.exists(local_path)) {
+              cat("Selected existing file:", basename(local_path), "\n")
+              record_selected_local_file(local_path)
+            } else if (download_csv(remote_path, local_path)) {
+              downloaded_count <- downloaded_count + 1
+              record_selected_local_file(local_path)
+            }
+            downloaded_paths <- c(downloaded_paths, local_path)
             
             if (FTP_THROTTLE_SEC > 0) Sys.sleep(FTP_THROTTLE_SEC)
           }
@@ -601,13 +722,19 @@ cleanup_irrelevant_team_csvs <- function(filters = list()) {
 # Main sync function
 main_sync <- function() {
   cat("Starting VMI data sync at", as.character(Sys.time()), "\n")
+  if (isTRUE(TM_SYNC_DRY_RUN)) {
+    cat("Dry-run mode enabled: FTP files will be listed but not downloaded or uploaded.\n")
+  }
+  if (!is.na(TM_SYNC_WINDOW_START) || !is.na(TM_SYNC_WINDOW_END)) {
+    cat("Sync date window:", as.character(sync_window_start_date()), "to", as.character(sync_window_end_date()), "\n")
+  }
   
   start_time <- Sys.time()
   team_filters <- load_team_filters()
   
   # Only clean old files if this is the first run (no last_sync.txt exists)
   # This prevents re-downloading everything on subsequent runs
-  if (!file.exists(LAST_SYNC_FILE)) {
+  if (!isTRUE(TM_SYNC_DRY_RUN) && !file.exists(LAST_SYNC_FILE)) {
     cat("First run detected - cleaning old data files\n")
     old_files <- list.files(LOCAL_DATA_DIR, pattern = "\\.(csv|txt)$", full.names = TRUE, recursive = TRUE)
     if (length(old_files) > 0) {
@@ -621,6 +748,10 @@ main_sync <- function() {
   # Sync both data sources
   practice_downloaded <- if (isTRUE(LEAGUE_MODE) || isTRUE(SYNC_V3_ONLY)) character(0) else sync_practice_data()
   v3_downloaded <- sync_v3_data()
+  if (isTRUE(TM_SYNC_DRY_RUN)) {
+    write_sync_dry_run_manifest()
+    return(FALSE)
+  }
   practice_updated <- length(practice_downloaded) > 0
   v3_updated <- length(v3_downloaded) > 0
   
@@ -714,7 +845,7 @@ main_sync <- function() {
           },
           error = function(e) TRUE
         )
-        changed_csvs <- unique(c(practice_downloaded, v3_downloaded))
+        changed_csvs <- unique(c(SYNC_SELECTED_LOCAL_FILES, practice_downloaded, v3_downloaded))
         sync_csv_tree_to_neon(
           data_dir = LOCAL_DATA_DIR,
           school_code = Sys.getenv("TEAM_CODE", "LEAGUE"),

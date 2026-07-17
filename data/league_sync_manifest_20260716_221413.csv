@@ -1,0 +1,11 @@
+source,remote_path,local_path,file_name,file_date,is_unverified
+v3,/v3/2026/01/24/CSV/20260123-BowiesBallpark-1.csv,data//v3/v3_2026_01_24_20260123-BowiesBallpark-1.csv,20260123-BowiesBallpark-1.csv,2026-01-24,FALSE
+v3,/v3/2026/01/24/CSV/20260123-CypressCollege-1.csv,data//v3/v3_2026_01_24_20260123-CypressCollege-1.csv,20260123-CypressCollege-1.csv,2026-01-24,FALSE
+v3,/v3/2026/01/24/CSV/20260123-GoldenWestCollege-1.csv,data//v3/v3_2026_01_24_20260123-GoldenWestCollege-1.csv,20260123-GoldenWestCollege-1.csv,2026-01-24,FALSE
+v3,/v3/2026/01/24/CSV/20260123-MarichFieldLaptop-2_unverified.csv,data//v3/v3_2026_01_24_20260123-MarichFieldLaptop-2_unverified.csv,20260123-MarichFieldLaptop-2_unverified.csv,2026-01-24,TRUE
+v3,/v3/2026/01/24/CSV/20260123-PaulDemieMainieriField-1_unverified.csv,data//v3/v3_2026_01_24_20260123-PaulDemieMainieriField-1_unverified.csv,20260123-PaulDemieMainieriField-1_unverified.csv,2026-01-24,TRUE
+v3,/v3/2026/01/24/CSV/20260123-PaulDemieMainieriField-2_unverified.csv,data//v3/v3_2026_01_24_20260123-PaulDemieMainieriField-2_unverified.csv,20260123-PaulDemieMainieriField-2_unverified.csv,2026-01-24,TRUE
+v3,/v3/2026/01/24/CSV/20260124-BowiesBallpark-1_unverified.csv,data//v3/v3_2026_01_24_20260124-BowiesBallpark-1_unverified.csv,20260124-BowiesBallpark-1_unverified.csv,2026-01-24,TRUE
+v3,/v3/2026/01/24/CSV/20260124-BowiesBallpark-2_unverified.csv,data//v3/v3_2026_01_24_20260124-BowiesBallpark-2_unverified.csv,20260124-BowiesBallpark-2_unverified.csv,2026-01-24,TRUE
+v3,/v3/2026/01/24/CSV/20260124-PaulDemieMainieriField-1_unverified.csv,data//v3/v3_2026_01_24_20260124-PaulDemieMainieriField-1_unverified.csv,20260124-PaulDemieMainieriField-1_unverified.csv,2026-01-24,TRUE
+v3,/v3/2026/01/24/CSV/20260124-PershingPark-1_unverified.csv,data//v3/v3_2026_01_24_20260124-PershingPark-1_unverified.csv,20260124-PershingPark-1_unverified.csv,2026-01-24,TRUE

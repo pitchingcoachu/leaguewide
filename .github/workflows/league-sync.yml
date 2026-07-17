@@ -2,9 +2,17 @@ name: League Data Sync
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 10 * * *"
   workflow_dispatch:
     inputs:
+      mode:
+        description: "Dry-run manifest or upload"
+        required: false
+        default: "sync"
+        type: choice
+        options:
+          - "sync"
+          - "dry_run"
       full_scan:
         description: "Run a full historical scan from league start date"
         required: false
@@ -13,6 +21,16 @@ on:
         options:
           - "false"
           - "true"
+      window_start:
+        description: "Optional start date for a bounded backfill window, YYYY-MM-DD"
+        required: false
+        default: ""
+        type: string
+      window_end:
+        description: "Optional end date for a bounded backfill window, YYYY-MM-DD"
+        required: false
+        default: ""
+        type: string
 
 jobs:
   sync:
@@ -65,6 +83,10 @@ jobs:
           TM_SYNC_START_YEAR=2026
           TM_SYNC_LOOKBACK_DAYS=2
           TM_SYNC_INITIAL_FULL=0
+          TM_SYNC_DRY_RUN=${{ github.event.inputs.mode == 'dry_run' && '1' || '0' }}
+          TM_SYNC_WINDOW_START=${{ github.event.inputs.window_start }}
+          TM_SYNC_WINDOW_END=${{ github.event.inputs.window_end }}
+          TM_SYNC_MIN_FILENAME_YEAR=2026
           TM_SYNC_LEAGUE_FULL_SCAN=${{ github.event.inputs.full_scan == 'true' && '1' || '0' }}
           EOF
 
@@ -88,3 +110,11 @@ jobs:
         env:
           R_LIBS_USER: packrat/lib-R
         run: Rscript --vanilla automated_data_sync.R
+
+      - name: Upload dry-run manifest
+        if: ${{ github.event.inputs.mode == 'dry_run' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: league-sync-manifest
+          path: data/league_sync_manifest_*.csv
+          if-no-files-found: warn

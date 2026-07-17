@@ -10,8 +10,8 @@ school_config <- list(
   allowed_campers = character(0),
   league_mode = TRUE,
   sync_v3_only = TRUE,
-  sync_start_date = "2026-02-13",
-  exclude_filename_tokens = c("unverified", "fhc", "playerpositioning", "json", "private"),
+  sync_start_date = "2026-01-23",
+  exclude_filename_tokens = c("fhc", "playerpositioning", "json", "private"),
   colors = list(
     primary             = "#461d7c",   # purple from the LSU logo
     accent              = "#461d7c",   # deep purple gradient start
