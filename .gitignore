@@ -8,3 +8,4 @@ data/last_sync.txt
 data/new_data_flag.txt
 data/allowed_campers_clean.csv
 .Renviron
+data/last_sync.txt
