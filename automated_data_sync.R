@@ -267,6 +267,7 @@ sync_window_start_date <- function() {
   }
   if (isTRUE(LEAGUE_MODE)) {
     if (!isTRUE(TM_SYNC_LEAGUE_FULL_SCAN)) {
+      if (!is.na(TM_SYNC_WINDOW_START)) return(hard_floor)
       lookback_start <- Sys.Date() - TM_SYNC_LOOKBACK_DAYS
       return(max(hard_floor, lookback_start))
     }
