@@ -378,9 +378,7 @@ sync_v3_data <- function() {
       
       days <- list_ftp_files(month_path)
       day_dirs <- days[grepl("^\\d{2}$", days)]  # Match DD format
-      if (length(days) > 0 && length(day_dirs) == 0) {
-        cat("FTP month", yr, month_dir, "- entries found but none matched DD format:", paste(head(days, 10), collapse = ", "), "\n")
-      }
+      cat("FTP month", yr, month_dir, "- raw entries (", length(days), "):", paste(head(days, 10), collapse = ", "), "\n")
 
       for (day_dir in day_dirs) {
         day_path <- paste0(month_path, day_dir, "/")
