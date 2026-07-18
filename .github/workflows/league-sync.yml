@@ -97,6 +97,10 @@ jobs:
       - name: Sync LEAGUE data
         env:
           R_LIBS_USER: .r-sync-lib
+          TM_SYNC_LEAGUE_FULL_SCAN: ${{ github.event.inputs.full_scan == 'true' && '1' || '0' }}
+          TM_SYNC_DRY_RUN: ${{ github.event.inputs.mode == 'dry_run' && '1' || '0' }}
+          TM_SYNC_WINDOW_START: ${{ github.event.inputs.window_start }}
+          TM_SYNC_WINDOW_END: ${{ github.event.inputs.window_end }}
         run: Rscript --vanilla automated_data_sync.R
 
       - name: Upload dry-run manifest
