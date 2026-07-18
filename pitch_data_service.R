@@ -1195,7 +1195,7 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
           }
         }
         if (length(existing_keys)) {
-          # Backfill level for existing rows that have it blank
+          # Backfill level for existing rows that have it blank — bulk UPDATE per level value
           if ("level" %in% names(db_df)) {
             level_update_df <- db_df[
               nzchar(db_df$pitch_key) &
@@ -1205,15 +1205,23 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
               drop = FALSE
             ]
             if (nrow(level_update_df)) {
-              for (i in seq_len(nrow(level_update_df))) {
-                upd_sql <- sprintf(
-                  "UPDATE %s SET level = %s WHERE school_code = %s AND pitch_key = %s AND NULLIF(TRIM(COALESCE(level, '')), '') IS NULL",
-                  as.character(DBI::dbQuoteIdentifier(con, etbl)),
-                  as.character(DBI::dbQuoteLiteral(con, level_update_df$level[i])),
-                  as.character(DBI::dbQuoteLiteral(con, level_update_df$school_code[i])),
-                  as.character(DBI::dbQuoteLiteral(con, level_update_df$pitch_key[i]))
-                )
-                tryCatch(pitch_data_db_execute(con, upd_sql), error = function(e) NULL)
+              tbl_sql <- as.character(DBI::dbQuoteIdentifier(con, etbl))
+              for (lvl in unique(level_update_df$level)) {
+                keys_for_lvl <- level_update_df$pitch_key[level_update_df$level == lvl]
+                sc <- level_update_df$school_code[level_update_df$level == lvl][1]
+                chunk_size <- 500L
+                for (i in seq(1L, length(keys_for_lvl), by = chunk_size)) {
+                  key_chunk <- keys_for_lvl[i:min(i + chunk_size - 1L, length(keys_for_lvl))]
+                  in_sql <- paste(vapply(key_chunk, function(k) as.character(DBI::dbQuoteLiteral(con, k)), character(1)), collapse = ", ")
+                  upd_sql <- sprintf(
+                    "UPDATE %s SET level = %s WHERE school_code = %s AND pitch_key IN (%s) AND NULLIF(TRIM(COALESCE(level, '')), '') IS NULL",
+                    tbl_sql,
+                    as.character(DBI::dbQuoteLiteral(con, lvl)),
+                    as.character(DBI::dbQuoteLiteral(con, sc)),
+                    in_sql
+                  )
+                  tryCatch(pitch_data_db_execute(con, upd_sql), error = function(e) NULL)
+                }
               }
             }
           }
