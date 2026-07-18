@@ -1195,6 +1195,28 @@ sync_csv_file_to_neon <- function(con, csv_path, school_code = "") {
           }
         }
         if (length(existing_keys)) {
+          # Backfill level for existing rows that have it blank
+          if ("level" %in% names(db_df)) {
+            level_update_df <- db_df[
+              nzchar(db_df$pitch_key) &
+              db_df$pitch_key %in% unique(existing_keys) &
+              !is.na(db_df$level) & nzchar(trimws(db_df$level)),
+              c("pitch_key", "level", "school_code"),
+              drop = FALSE
+            ]
+            if (nrow(level_update_df)) {
+              for (i in seq_len(nrow(level_update_df))) {
+                upd_sql <- sprintf(
+                  "UPDATE %s SET level = %s WHERE school_code = %s AND pitch_key = %s AND NULLIF(TRIM(COALESCE(level, '')), '') IS NULL",
+                  as.character(DBI::dbQuoteIdentifier(con, etbl)),
+                  as.character(DBI::dbQuoteLiteral(con, level_update_df$level[i])),
+                  as.character(DBI::dbQuoteLiteral(con, level_update_df$school_code[i])),
+                  as.character(DBI::dbQuoteLiteral(con, level_update_df$pitch_key[i]))
+                )
+                tryCatch(pitch_data_db_execute(con, upd_sql), error = function(e) NULL)
+              }
+            }
+          }
           keep <- !nzchar(db_df$pitch_key) | !(db_df$pitch_key %in% unique(existing_keys))
           db_df <- db_df[keep, , drop = FALSE]
         }
