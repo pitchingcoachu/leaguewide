@@ -361,6 +361,7 @@ is_date_in_range <- function(file_path) {
 # Function to sync v3 data with date filtering
 sync_v3_data <- function() {
   cat("Syncing v3 data with date filtering...\n")
+  cat("DEBUG sync window: start=", as.character(sync_window_start_date()), " end=", as.character(sync_window_end_date()), " full_scan=", TM_SYNC_LEAGUE_FULL_SCAN, " start_override=", as.character(SYNC_START_DATE_OVERRIDE), "\n")
   years <- recent_sync_years()
   downloaded_count <- 0
   downloaded_paths <- character(0)
