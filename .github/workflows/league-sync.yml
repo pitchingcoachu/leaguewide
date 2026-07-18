@@ -58,29 +58,24 @@ jobs:
             libpq-dev
 
       - name: Write .Renviron
-        env:
-          PITCH_DATA_DB_URL: ${{ secrets.PITCH_DATA_DB_URL }}
-          TM_DRY_RUN: ${{ github.event.inputs.mode == 'dry_run' && '1' || '0' }}
-          TM_WINDOW_START: ${{ github.event.inputs.window_start }}
-          TM_WINDOW_END: ${{ github.event.inputs.window_end }}
-          TM_FULL_SCAN: ${{ github.event.inputs.full_scan == 'true' && '1' || '0' }}
         run: |
-          cat > .Renviron << RENVIRON
-TEAM_CODE=LEAGUE
-PITCH_DATA_BACKEND=postgres
-PITCH_DATA_DB_URL=${PITCH_DATA_DB_URL}
-PITCH_DATA_SYNC_AFTER_FTP=1
-PITCH_DATA_SYNC_WORKERS=1
-PITCH_DATA_FORCE_RESYNC=0
-TM_SYNC_START_YEAR=2026
-TM_SYNC_LOOKBACK_DAYS=2
-TM_SYNC_INITIAL_FULL=0
-TM_SYNC_DRY_RUN=${TM_DRY_RUN}
-TM_SYNC_WINDOW_START=${TM_WINDOW_START}
-TM_SYNC_WINDOW_END=${TM_WINDOW_END}
-TM_SYNC_MIN_FILENAME_YEAR=2026
-TM_SYNC_LEAGUE_FULL_SCAN=${TM_FULL_SCAN}
-RENVIRON
+          cat > .Renviron <<'EOF'
+          TEAM_CODE=LEAGUE
+          PITCH_DATA_BACKEND=postgres
+          PITCH_DATA_DB_URL=${{ secrets.PITCH_DATA_DB_URL }}
+          PITCH_DATA_SYNC_AFTER_FTP=1
+          PITCH_DATA_SYNC_WORKERS=1
+          PITCH_DATA_FORCE_RESYNC=0
+          TM_SYNC_START_YEAR=2026
+          TM_SYNC_LOOKBACK_DAYS=2
+          TM_SYNC_INITIAL_FULL=0
+          TM_SYNC_DRY_RUN=${{ github.event.inputs.mode == 'dry_run' && '1' || '0' }}
+          TM_SYNC_WINDOW_START=${{ github.event.inputs.window_start }}
+          TM_SYNC_WINDOW_END=${{ github.event.inputs.window_end }}
+          TM_SYNC_MIN_FILENAME_YEAR=2026
+          TM_SYNC_LEAGUE_FULL_SCAN=${{ github.event.inputs.full_scan == 'true' && '1' || '0' }}
+          EOF
+          sed -i 's/^[[:space:]]*//' .Renviron
 
       - name: Ensure sync library path
         run: mkdir -p .r-sync-lib
