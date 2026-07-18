@@ -105,3 +105,19 @@ jobs:
           name: league-sync-manifest
           path: data/league_sync_manifest_*.csv
           if-no-files-found: warn
+
+      - name: Setup Node.js
+        if: ${{ github.event.inputs.mode != 'dry_run' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node dependencies
+        if: ${{ github.event.inputs.mode != 'dry_run' }}
+        run: npm install --no-save pg dotenv
+
+      - name: Backfill level from CSV files
+        if: ${{ github.event.inputs.mode != 'dry_run' }}
+        env:
+          DATABASE_URL: ${{ secrets.PITCH_DATA_DB_URL }}
+        run: node scripts/backfill-league-level-from-csv.mjs --data-dir=./data/v3
